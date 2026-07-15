@@ -1,11 +1,12 @@
-import ClassTask from "./Classtask"
+
+import ClassTask from "./ClassTask"
 import StudentSearch from "./StudentSearch"
 
 
 const Thirteen = () => {
   return (
   <>
- <ClassTask/>
+<ClassTask/>
  <br />
  <hr/>
 <br />
