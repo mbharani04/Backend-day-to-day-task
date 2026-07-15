@@ -43,7 +43,7 @@ const AppRonetoeighteen = () => {
 <>
 
 
- <div className="min-h-screen bg-slate-950 text-slate-100">
+  <div className="min-h-screen bg-white text-slate-900">
       <Navbar/>
       <main className="px-4 py-8 sm:px-6 lg:px-8">
         <Routes>
