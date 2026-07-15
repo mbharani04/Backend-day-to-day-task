@@ -1,4 +1,4 @@
-import ClassTask from "./classtask"
+import ClassTask from "./Classtask"
 import StudentSearch from "./StudentSearch"
 
 
