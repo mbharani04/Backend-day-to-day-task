@@ -8,7 +8,10 @@ const ClassTask = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   // Fetch API
-  const gettingData = async () => {
+
+
+  useEffect(() => {
+      const gettingData = async () => {
     try {
       const response = await fetch("https://dummyjson.com/products");
       const data = await response.json();
@@ -17,10 +20,9 @@ const ClassTask = () => {
       console.log("Error:", error);
     }
   };
-
-  useEffect(() => {
     gettingData();
-  }, []);
+    
+  },[]);
 
   // 👉 Step 1: Calculate unique categories directly inline during render
   const categories = datagetting.map((item) => item.category);
