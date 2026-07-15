@@ -1,0 +1,34 @@
+<script>
+
+
+    const mainFunction= (cb)=>{
+
+   cb()
+    }
+
+       const balanceAmount =() =>{
+            console.log("this is shows bankbalance");
+            
+       }
+
+
+        const withdrawAmount = () => {
+        console.log("this is shows withdrawAmount");
+    }
+
+       const availableAmount = ()=>{
+                console.log("this is shows availableAmount");
+
+       }
+
+       
+      setTimeout(() => {
+        mainFunction(withdrawAmount);
+      }, 2000);
+
+       mainFunction(balanceAmount)
+     
+       mainFunction(availableAmount)
+
+
+</script>

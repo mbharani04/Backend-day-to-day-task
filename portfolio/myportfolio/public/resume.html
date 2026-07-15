@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - Bharani M</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --secondary: #3b82f6;
+      --text: #1f2937;
+      --text-light: #4b5563;
+      --bg: #ffffff;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background-color: #f3f4f6;
+      line-height: 1.5;
+      padding: 40px 20px;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .resume-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--bg);
+      padding: 48px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Header styling */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.025em;
+      margin-bottom: 8px;
+    }
+
+    .contact-info {
+      font-size: 13px;
+      color: var(--text-light);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .contact-info span::after {
+      content: "|";
+      margin-left: 12px;
+      color: var(--border);
+    }
+
+    .contact-info span:last-child::after {
+      content: "";
+    }
+
+    .social-links {
+      font-size: 13px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .social-links a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Section structures */
+    section {
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+
+    p, li {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .skill-item {
+      display: flex;
+      font-size: 13px;
+    }
+
+    .skill-category {
+      font-weight: 600;
+      width: 180px;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+
+    /* Projects & Experiences */
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .item-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .item-subtitle {
+      font-size: 13px;
+      color: var(--text-light);
+      font-style: italic;
+    }
+
+    .item-date {
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .item-details {
+      margin-top: 2px;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      list-style-position: outside;
+      margin-left: 18px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .tech-stack {
+      font-size: 12px;
+      margin-top: 4px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .tech-stack span {
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    .project-link {
+      font-size: 12px;
+      color: var(--secondary);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .project-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Education Box */
+    .edu-box {
+      margin-bottom: 8px;
+    }
+
+    .score-badge {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Action bar */
+    .action-bar {
+      max-width: 800px;
+      margin: 0 auto 16px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    .back-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      color: var(--text);
+    }
+
+    /* Print styles overrides */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      .resume-container {
+        padding: 0;
+        box-shadow: none;
+      }
+      .action-bar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Print and Go Back Top Bar -->
+  <div class="action-bar">
+    <a href="/" class="back-link">← Back to Portfolio</a>
+    <button onclick="window.print()" class="btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      Print / Save as PDF
+    </button>
+  </div>
+
+  <div class="resume-container">
+    
+    <!-- HEADER -->
+    <header>
+      <h1>BHARANI M</h1>
+      <div class="contact-info">
+        <span>Chennai, Tamil Nadu</span>
+        <span>+91 944-556-4242</span>
+        <span>bharani2004m@gmail.com</span>
+      </div>
+      <div class="social-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/mbharani04/" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </header>
+
+    <!-- CAREER OBJECTIVE -->
+    <section>
+      <h2>Career Objective</h2>
+      <p>
+        Final-year Electronics and Communication Engineering student with hands-on experience in full-stack development, embedded systems, and AI-assisted workflows. Skilled in building end-to-end projects combining hardware, software, and database integration. Seeking a Junior Software Developer / Full Stack Developer role to apply strong problem-solving skills and a passion for building intelligent, real-world solutions.
+      </p>
+    </section>
+
+    <!-- TECHNICAL SKILLS -->
+    <section>
+      <h2>Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="skill-category">Programming Languages:</div>
+          <div>Python, C, C++</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-category">Web Technologies:</div>
+          <div>HTML5, CSS3, JavaScript, React.js</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-category">Database:</div>
+          <div>MySQL</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-category">Embedded & Hardware:</div>
+          <div>Arduino, ESP32, Proteus, Wokwi Simulation</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-category">Tools & Platforms:</div>
+          <div>Git, GitHub, VS Code, MS Office (Word, Excel, PowerPoint), Antigravity</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-category">AI Tools:</div>
+          <div>ChatGPT, Claude (AI-assisted development and prompt engineering)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section>
+      <h2>Projects</h2>
+      
+      <!-- Project 1 -->
+      <div class="item-details">
+        <div class="item-header">
+          <span class="item-title">Smart E-Cycle Rental System</span>
+          <span class="item-subtitle">Personal Project</span>
+        </div>
+        <ul>
+          <li>Designed and simulated a smart e-cycle rental system inspired by government smart-bike-parking initiatives, using embedded hardware simulation on Wokwi.</li>
+          <li>Implemented payment verification, automatic lock/unlock mechanism, and user-defined rental timing with real-time ride duration tracking.</li>
+          <li>Built expiry alerts and auto-lock logic to enhance security and reduce unauthorized usage.</li>
+        </ul>
+        <div class="tech-stack">Tech Stack: <span>Arduino, ESP32, C/C++, Wokwi Simulation, Proteus</span></div>
+        <a href="https://wokwi.com/projects/437832574866624513" target="_blank" class="project-link">Project Simulation Link</a>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="item-details">
+        <div class="item-header">
+          <span class="item-title">E-Voting System with Real-Time Result Calculation</span>
+          <span class="item-subtitle">Final Year Project</span>
+        </div>
+        <ul>
+          <li>Developed a secure offline e-voting system integrating Python, MySQL, and Arduino Nano for real-time hardware-software interaction.</li>
+          <li>Implemented role-based authentication and unique code verification to enforce one-person-one-vote integrity and restrict unauthorized database access.</li>
+          <li>Automated the end-to-end voting workflow and built an admin dashboard for live result monitoring.</li>
+        </ul>
+        <div class="tech-stack">Tech Stack: <span>Python, MySQL, Arduino Nano, Hardware Integration</span></div>
+        <a href="https://linkedin.com" target="_blank" class="project-link">Project Demonstration (LinkedIn)</a>
+      </div>
+    </section>
+
+    <!-- INTERNSHIP EXPERIENCE -->
+    <section>
+      <h2>Internship Experience</h2>
+      <div class="item-details">
+        <div class="item-header">
+          <span class="item-title">Embedded Systems Internship — Smart E-Cycle Rental System</span>
+          <span class="item-date">1 Month</span>
+        </div>
+        <ul>
+          <li>Worked on the design and simulation of a smart e-cycle rental prototype, contributing to embedded logic and payment/lock-unlock integration.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section>
+      <h2>Education</h2>
+      <div class="edu-box">
+        <div class="item-header">
+          <span class="item-title">B.E. Electronics and Communication Engineering</span>
+          <span class="item-date">2022 – 2026</span>
+        </div>
+        <div class="item-header" style="margin-top: 2px;">
+          <span class="item-subtitle" style="font-style: normal;">Meenakshi College of Engineering</span>
+          <span class="item-date">CGPA / Percentage: <strong class="score-badge">82.0%</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS & ACHIEVEMENTS -->
+    <section>
+      <h2>Certifications & Achievements</h2>
+      <ul>
+        <li>Full Stack Web Development — Online Certification (1 Month)</li>
+        <li>Embedded C Programming — NSIC (1 Month)</li>
+        <li>Generative AI Mastermind Workshop — Outskill (2 Days)</li>
+        <li>English Typewriting Certification</li>
+        <li>Recognized for academic and technical achievements during engineering coursework</li>
+      </ul>
+    </section>
+
+    <!-- SOFT SKILLS -->
+    <section>
+      <h2>Soft Skills</h2>
+      <p style="font-weight: 500;">
+        Communication &bull; Time Management &bull; Teamwork &bull; Adaptability &bull; Self-Motivated &bull; Presentation Skills
+      </p>
+    </section>
+
+  </div>
+
+</body>
+</html>

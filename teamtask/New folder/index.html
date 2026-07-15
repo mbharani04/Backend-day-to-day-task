@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JS Learn — Master JavaScript</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tailwind (Play CDN) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#0B0F17',
+          surface: '#121826',
+          surface2: '#1A2333',
+          jsyellow: '#F7DF1E',
+          accent: '#3B82F6',
+          muted: '#8B96AA',
+        },
+        fontFamily: {
+          display: ['Space Grotesk', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+        },
+        boxShadow: {
+          glow: '0 0 60px -10px rgba(247,223,30,0.35)',
+          card: '0 8px 30px rgba(0,0,0,0.35)',
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #0B0F17; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0B0F17; }
+  ::-webkit-scrollbar-thumb { background: #2A3448; border-radius: 8px; }
+
+  .glass {
+    background: rgba(18, 24, 38, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  @keyframes floatY { 0%,100%{ transform: translateY(0px);} 50%{ transform: translateY(-14px);} }
+  .float { animation: floatY 6s ease-in-out infinite; }
+  .float-slow { animation: floatY 9s ease-in-out infinite; }
+  .float-delay { animation: floatY 7s ease-in-out infinite; animation-delay: 1.2s; }
+
+  @keyframes pulseGlow { 0%,100%{ opacity:.5; } 50%{ opacity:1; } }
+  .pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+
+  @keyframes fadeUp { from { opacity:0; transform: translateY(16px);} to {opacity:1; transform: translateY(0);} }
+  .fade-up { animation: fadeUp .6s ease both; }
+
+  @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
+  .caret { animation: blink 1s step-end infinite; }
+
+  .grid-fade {
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  .code-scroll::-webkit-scrollbar { display:none; }
+
+  .link-underline { position: relative; }
+  .link-underline::after {
+    content:''; position:absolute; left:0; bottom:-6px; height:2px; width:0%;
+    background: #F7DF1E; transition: width .25s ease;
+  }
+  .link-underline:hover::after, .link-active::after { width:100%; }
+</style>
+</head>
+<body class="font-body text-slate-200 antialiased">
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react,env">
+const { useState, useEffect, useContext, createContext, useRef, useMemo } = React;
+
+/* ============================================================
+   DATA — topics.js equivalent
+   ============================================================ */
+const TOPICS = [
+  {
+    id: 1, slug: 'variables', title: 'Variables', difficulty: 'Beginner', readingTime: '6 min',
+    icon: '🧩',
+    description: 'How JavaScript stores and names data using var, let, and const.',
+    definition: 'A variable is a named container that holds a value which can be referenced and reused throughout a program.',
+    syntax: 'let name = value;\nconst name = value;\nvar name = value;',
+    example: 'let age = 25;\nconst PI = 3.14159;\nvar legacy = "old-style";\n\nage = 26; // allowed\n// PI = 3.14; // ❌ error, const cannot be reassigned',
+    output: '26',
+    realWorldExample: 'Storing a logged-in user\'s ID for the duration of a session, or a config constant like an API base URL.',
+    advantages: ['let/const are block-scoped, reducing bugs', 'const signals intent — value won\'t be reassigned', 'Clear, readable naming of data'],
+    disadvantages: ['var is function-scoped and can cause hoisting bugs', 'Overusing let for values that never change reduces clarity'],
+    bestPractices: ['Default to const, use let only when reassignment is needed', 'Avoid var in modern code', 'Use descriptive camelCase names'],
+    interviewQuestions: [
+      'What is the difference between var, let, and const?',
+      'Why does const not make an object immutable?',
+      'What is the Temporal Dead Zone?'
+    ],
+    summary: 'Variables name and store data. Prefer const by default and let when reassignment is required; avoid var.'
+  },
+  {
+    id: 2, slug: 'data-types', title: 'Data Types', difficulty: 'Beginner', readingTime: '7 min',
+    icon: '🔢',
+    description: 'Primitive and reference types that make up every value in JS.',
+    definition: 'JavaScript has 7 primitive types (string, number, boolean, undefined, null, bigint, symbol) and one reference type: object (including arrays and functions).',
+    syntax: 'typeof value // returns the type as a string',
+    example: 'typeof "hi"      // "string"\ntypeof 42        // "number"\ntypeof true       // "boolean"\ntypeof undefined  // "undefined"\ntypeof null       // "object" (quirk!)\ntypeof {}         // "object"\ntypeof []         // "object"',
+    output: '"string" "number" "boolean" "undefined" "object" "object" "object"',
+    realWorldExample: 'Validating a form field is a number before submitting, or checking a response payload\'s type before using it.',
+    advantages: ['Dynamic typing speeds up prototyping', 'Primitives are compared by value, simple and predictable'],
+    disadvantages: ['typeof null returning "object" is a long-standing quirk', 'Implicit type coercion can cause subtle bugs'],
+    bestPractices: ['Use === instead of == to avoid coercion surprises', 'Use Array.isArray() to check arrays, not typeof'],
+    interviewQuestions: ['What are the primitive types in JS?', 'Why does typeof null return "object"?', 'What is the difference between null and undefined?'],
+    summary: 'JS values are either primitives (copied by value) or objects (copied by reference). Know how typeof behaves and its quirks.'
+  },
+  {
+    id: 3, slug: 'functions', title: 'Functions', difficulty: 'Beginner', readingTime: '8 min',
+    icon: '⚙️',
+    description: 'Reusable blocks of logic — the core building block of JS programs.',
+    definition: 'A function is a reusable block of code designed to perform a task, defined once and invoked (called) any number of times.',
+    syntax: 'function name(params) {\n  // body\n  return value;\n}',
+    example: 'function add(a, b) {\n  return a + b;\n}\n\nconsole.log(add(2, 3));',
+    output: '5',
+    realWorldExample: 'A calculateTotal(cartItems) function used across a checkout page to compute the cart total.',
+    advantages: ['Encourages DRY, reusable code', 'Improves readability by naming behaviour', 'Supports parameters/defaults for flexibility'],
+    disadvantages: ['Function declarations are hoisted, which can hide bugs', 'Overly long functions hurt readability'],
+    bestPractices: ['Keep functions small and single-purpose', 'Use default parameters instead of manual checks', 'Name functions with verbs (getUser, calculateTotal)'],
+    interviewQuestions: ['What is the difference between a parameter and an argument?', 'What is function hoisting?', 'What is a pure function?'],
+    summary: 'Functions package logic for reuse. Keep them small, named clearly, and prefer pure functions where possible.'
+  },
+  {
+    id: 4, slug: 'arrow-functions', title: 'Arrow Functions', difficulty: 'Beginner', readingTime: '6 min',
+    icon: '➡️',
+    description: 'A concise function syntax introduced in ES6 with lexical this.',
+    definition: 'Arrow functions are a shorter syntax for writing functions that do not have their own this, arguments, or super binding — they inherit these from the enclosing scope.',
+    syntax: 'const name = (params) => expression;\nconst name = (params) => { statements };',
+    example: 'const greet = (name) => `Hello, ${name}!`;\nconsole.log(greet("Dev"));',
+    output: '"Hello, Dev!"',
+    realWorldExample: 'Callback functions in array methods like array.map(item => item.id), where lexical this avoids binding issues.',
+    advantages: ['Concise syntax for simple functions', 'Lexical this avoids common binding bugs in callbacks', 'Implicit return for one-liners'],
+    disadvantages: ['Cannot be used as constructors', 'No own arguments object', 'Less clear stack traces when anonymous'],
+    bestPractices: ['Use for callbacks and short pure functions', 'Avoid for object methods that need their own this', 'Name-bind complex arrow functions to a const for readability'],
+    interviewQuestions: ['How does this differ in arrow vs regular functions?', 'Can arrow functions be used as constructors?', 'When would you avoid an arrow function?'],
+    summary: 'Arrow functions offer concise syntax and lexical this, ideal for callbacks but not for methods needing dynamic this.'
+  },
+  {
+    id: 5, slug: 'scope', title: 'Scope', difficulty: 'Intermediate', readingTime: '7 min',
+    icon: '🔭',
+    description: 'The rules that determine where variables are accessible.',
+    definition: 'Scope defines the region of code where a variable is visible and accessible: global scope, function scope, and block scope.',
+    syntax: '{ let x = 1; } // x is block-scoped\nfunction f() { var y = 2; } // y is function-scoped',
+    example: 'function outer() {\n  let a = 10;\n  if (true) {\n    let b = 20;\n    console.log(a, b);\n  }\n  // console.log(b); ❌ b not accessible here\n}\nouter();',
+    output: '10 20',
+    realWorldExample: 'Keeping a loop counter or temp variable from leaking into surrounding logic and causing naming collisions.',
+    advantages: ['Encapsulates variables, avoiding naming collisions', 'Block scope (let/const) is predictable and safe'],
+    disadvantages: ['var\'s function scope can leak variables unexpectedly', 'Deeply nested scopes hurt readability'],
+    bestPractices: ['Declare variables in the smallest scope needed', 'Avoid polluting global scope', 'Prefer let/const for predictable block scoping'],
+    interviewQuestions: ['What is the difference between global, function, and block scope?', 'What is lexical scoping?', 'How does scope relate to closures?'],
+    summary: 'Scope controls variable visibility. Block-scoped let/const are safer defaults than function-scoped var.'
+  },
+  {
+    id: 6, slug: 'closures', title: 'Closures', difficulty: 'Intermediate', readingTime: '9 min',
+    icon: '🔒',
+    description: 'Functions that remember the scope they were created in.',
+    definition: 'A closure is a function that retains access to variables from its lexical scope even after the outer function has finished executing.',
+    syntax: 'function outer() {\n  let count = 0;\n  return function inner() {\n    count++;\n    return count;\n  };\n}',
+    example: 'function makeCounter() {\n  let count = 0;\n  return () => ++count;\n}\nconst counter = makeCounter();\nconsole.log(counter());\nconsole.log(counter());',
+    output: '1\n2',
+    realWorldExample: 'A useState-like counter, a debounce/throttle function, or private state in a module pattern.',
+    advantages: ['Enables data privacy/encapsulation without classes', 'Powers patterns like memoization, debouncing, currying'],
+    disadvantages: ['Can cause memory leaks if references are held unnecessarily', 'Overuse can make code harder to trace'],
+    bestPractices: ['Use closures for private state (module pattern)', 'Be mindful of variables captured inside loops', 'Release references you no longer need'],
+    interviewQuestions: ['What is a closure? Give a real example.', 'Why do closures inside loops sometimes capture the wrong value?', 'How do closures enable private variables?'],
+    summary: 'Closures let inner functions "remember" their outer scope, enabling private state and powerful functional patterns.'
+  },
+  {
+    id: 7, slug: 'arrays', title: 'Arrays & Methods (map/filter/reduce)', difficulty: 'Intermediate', readingTime: '10 min',
+    icon: '📚',
+    description: 'Ordered collections and the functional methods used to transform them.',
+    definition: 'An array is an ordered, list-like object. map() transforms every item into a new array, filter() keeps items matching a condition, and reduce() folds the array into a single accumulated value.',
+    syntax: 'array.map(item => transformed)\narray.filter(item => condition)\narray.reduce((acc, item) => acc + item, initial)',
+    example: 'const nums = [1, 2, 3, 4, 5];\nconst doubled = nums.map(n => n * 2);\nconst evens = nums.filter(n => n % 2 === 0);\nconst sum = nums.reduce((acc, n) => acc + n, 0);\n\nconsole.log(doubled, evens, sum);',
+    output: '[2,4,6,8,10] [2,4] 15',
+    realWorldExample: 'Transforming an API response into UI-ready objects (map), showing only completed todos (filter), and computing a cart total (reduce).',
+    advantages: ['Declarative and readable compared to manual loops', 'Immutable by default (return new arrays)', 'Chainable for pipeline-style transformations'],
+    disadvantages: ['Chaining many methods can hurt performance on huge arrays', 'Easy to misuse reduce and hurt readability'],
+    bestPractices: ['Prefer map/filter/reduce over manual for-loops for clarity', 'Always provide an initial value to reduce', 'Avoid deeply nested chains — extract named steps'],
+    interviewQuestions: ['What is the difference between map and forEach?', 'How does reduce work internally?', 'How would you flatten a nested array?'],
+    summary: 'map, filter, and reduce are the core functional tools for transforming arrays declaratively without mutating the original.'
+  },
+  {
+    id: 8, slug: 'objects', title: 'Objects', difficulty: 'Beginner', readingTime: '7 min',
+    icon: '🧱',
+    description: 'Key-value structures used to model real-world entities.',
+    definition: 'An object is a collection of key-value pairs (properties), used to represent structured data and entities.',
+    syntax: 'const obj = {\n  key: value,\n  method() { }\n};',
+    example: 'const user = {\n  name: "Bharani",\n  role: "Developer",\n  greet() {\n    return `Hi, I\'m ${this.name}`;\n  }\n};\nconsole.log(user.greet());',
+    output: '"Hi, I\'m Bharani"',
+    realWorldExample: 'Representing a user profile, a product from an API, or config settings as a single structured value.',
+    advantages: ['Natural way to model real-world entities', 'Flexible — properties can be added/removed dynamically', 'Supports nesting for complex data structures'],
+    disadvantages: ['No built-in type safety (fixed by TypeScript)', 'Deep cloning/comparison require extra care'],
+    bestPractices: ['Use object destructuring for cleaner access', 'Prefer const for objects since properties can still mutate', 'Use spread syntax for shallow copies instead of mutating originals'],
+    interviewQuestions: ['How do you clone an object deeply vs shallowly?', 'What is the difference between Object.freeze and const?', 'What is optional chaining and why is it useful?'],
+    summary: 'Objects model structured, named data. Use destructuring and spread for clean, immutable-style access.'
+  },
+  {
+    id: 9, slug: 'dom', title: 'DOM Manipulation', difficulty: 'Intermediate', readingTime: '8 min',
+    icon: '🖥️',
+    description: 'Reading and updating the page structure with JavaScript.',
+    definition: 'The DOM (Document Object Model) is a tree representation of the HTML page that JavaScript can read and modify to update what the user sees.',
+    syntax: 'document.querySelector(selector)\nelement.textContent = value\nelement.classList.add(className)',
+    example: 'const btn = document.querySelector("#btn");\nbtn.textContent = "Clicked!";\nbtn.classList.add("active");',
+    output: 'Button text changes to "Clicked!" and gets the "active" class',
+    realWorldExample: 'Toggling a mobile menu, updating a live character counter, or highlighting a selected tab.',
+    advantages: ['Direct control over what the user sees', 'No framework needed for simple interactivity'],
+    disadvantages: ['Manual DOM updates don\'t scale well for complex UIs (frameworks solve this)', 'Frequent reflows/repaints can hurt performance'],
+    bestPractices: ['Batch DOM updates where possible', 'Use event delegation instead of many individual listeners', 'Cache DOM queries instead of repeating querySelector'],
+    interviewQuestions: ['What is the difference between innerHTML and textContent?', 'What is event delegation and why use it?', 'What causes layout thrashing?'],
+    summary: 'The DOM lets JS read and update the page. Frameworks like React abstract this, but the underlying model is the same.'
+  },
+  {
+    id: 10, slug: 'events', title: 'Events', difficulty: 'Beginner', readingTime: '6 min',
+    icon: '🖱️',
+    description: 'How JavaScript reacts to user and browser actions.',
+    definition: 'An event is a signal that something has happened (click, input, load, etc.), which JS can listen for and respond to via event handlers.',
+    syntax: 'element.addEventListener("event", handlerFunction);',
+    example: 'document.querySelector("#btn")\n  .addEventListener("click", () => {\n    console.log("Button clicked!");\n  });',
+    output: '"Button clicked!" logged on click',
+    realWorldExample: 'Form submission handling, live search-as-you-type, or drag-and-drop interactions.',
+    advantages: ['Enables interactive, responsive UIs', 'Decouples logic from markup via addEventListener'],
+    disadvantages: ['Too many listeners can hurt performance/memory', 'Forgetting to remove listeners can cause leaks'],
+    bestPractices: ['Use event delegation for lists of similar elements', 'Remove listeners when elements are destroyed', 'Debounce high-frequency events like scroll/input'],
+    interviewQuestions: ['What is event bubbling vs capturing?', 'What does event.preventDefault() do?', 'What is event delegation?'],
+    summary: 'Events let JS respond to user interaction. Use delegation and cleanup to keep handlers efficient.'
+  },
+  {
+    id: 11, slug: 'promises', title: 'Promises', difficulty: 'Intermediate', readingTime: '9 min',
+    icon: '🤝',
+    description: 'A structured way to handle asynchronous operations.',
+    definition: 'A Promise is an object representing the eventual completion (or failure) of an asynchronous operation, with states: pending, fulfilled, or rejected.',
+    syntax: 'new Promise((resolve, reject) => { ... })\n  .then(result => {})\n  .catch(error => {});',
+    example: 'const wait = new Promise((resolve) => {\n  setTimeout(() => resolve("Done!"), 1000);\n});\nwait.then(result => console.log(result));',
+    output: '"Done!" (after 1 second)',
+    realWorldExample: 'Fetching data from an API and reacting once the response arrives, without blocking the rest of the page.',
+    advantages: ['Avoids deeply nested "callback hell"', 'Chainable and composable with .then/.catch', 'Foundation for async/await'],
+    disadvantages: ['Chained .then() calls can still get hard to read', 'Unhandled rejections fail silently if not caught'],
+    bestPractices: ['Always attach a .catch() or try/catch', 'Use Promise.all for parallel independent operations', 'Prefer async/await for readability on complex chains'],
+    interviewQuestions: ['What are the three states of a Promise?', 'What is the difference between Promise.all and Promise.race?', 'How do you handle multiple parallel async calls?'],
+    summary: 'Promises model future values from async work, replacing nested callbacks with chainable, composable code.'
+  },
+  {
+    id: 12, slug: 'async-await', title: 'Async / Await', difficulty: 'Intermediate', readingTime: '8 min',
+    icon: '⏳',
+    description: 'Syntactic sugar over Promises that reads like synchronous code.',
+    definition: 'async/await lets you write asynchronous, Promise-based code as if it were synchronous, improving readability while keeping non-blocking behaviour.',
+    syntax: 'async function fn() {\n  const result = await somePromise;\n}',
+    example: 'async function getUser() {\n  const res = await fetch("/api/user");\n  const data = await res.json();\n  return data;\n}',
+    output: 'Returns the parsed user object once the fetch resolves',
+    realWorldExample: 'Loading a user\'s profile, submitting a form to a backend, or sequencing multiple dependent API calls.',
+    advantages: ['Reads like synchronous code — easier to follow', 'Works naturally with try/catch for error handling', 'Avoids .then() chaining clutter'],
+    disadvantages: ['Sequential awaits can be slower than Promise.all when calls are independent', 'Errors are easy to forget without try/catch'],
+    bestPractices: ['Wrap awaits in try/catch', 'Use Promise.all when operations don\'t depend on each other', 'Avoid mixing .then() and await in the same function'],
+    interviewQuestions: ['What does await actually do under the hood?', 'How do you handle errors in async/await?', 'Can you use await outside an async function?'],
+    summary: 'async/await makes asynchronous code read synchronously while staying non-blocking; pair with try/catch for errors.'
+  },
+  {
+    id: 13, slug: 'es6-features', title: 'ES6+ Features', difficulty: 'Beginner', readingTime: '8 min',
+    icon: '✨',
+    description: 'The modern syntax upgrades that reshaped how JS is written.',
+    definition: 'ES6 (2015) and later versions introduced let/const, arrow functions, template literals, destructuring, spread/rest, classes, and modules — the foundation of modern JS.',
+    syntax: '`template ${literal}`\nconst { a, b } = obj;\nconst [x, y] = arr;\nconst merged = { ...obj1, ...obj2 };',
+    example: 'const user = { name: "Dev", age: 24 };\nconst { name, age } = user;\nconsole.log(`${name} is ${age}`);',
+    output: '"Dev is 24"',
+    realWorldExample: 'Destructuring props in a React component, or spreading state to update it immutably.',
+    advantages: ['Significantly more concise and readable syntax', 'Reduces boilerplate for common patterns', 'Widely supported across all modern browsers'],
+    disadvantages: ['Older environments may need transpilation (Babel)', 'Too much destructuring nesting can reduce clarity'],
+    bestPractices: ['Use template literals over string concatenation', 'Destructure function parameters for clarity', 'Use spread for immutable updates instead of mutating'],
+    interviewQuestions: ['What are the most impactful ES6 features and why?', 'What is the difference between spread and rest syntax?', 'How does destructuring work with defaults?'],
+    summary: 'ES6+ modernized JS syntax with destructuring, template literals, spread/rest, and more — now standard practice.'
+  },
+  {
+    id: 14, slug: 'classes', title: 'Classes', difficulty: 'Intermediate', readingTime: '8 min',
+    icon: '🏗️',
+    description: 'Syntactic sugar over prototypes for object-oriented JavaScript.',
+    definition: 'A class is a template for creating objects, encapsulating data (fields) and behaviour (methods), built on top of JS\'s prototype system.',
+    syntax: 'class Name {\n  constructor(params) { }\n  method() { }\n}',
+    example: 'class Animal {\n  constructor(name) { this.name = name; }\n  speak() { return `${this.name} makes a sound.`; }\n}\nconst dog = new Animal("Rex");\nconsole.log(dog.speak());',
+    output: '"Rex makes a sound."',
+    realWorldExample: 'Modeling entities like User, Product, or ApiClient with shared behaviour across many instances.',
+    advantages: ['Organizes related data and behaviour together', 'Supports inheritance via extends for shared logic', 'Familiar OOP syntax for developers from other languages'],
+    disadvantages: ['Can encourage over-engineering for simple data', 'Inheritance chains can become rigid; composition is often preferred'],
+    bestPractices: ['Favor composition over deep inheritance chains', 'Keep constructors focused on setup only', 'Use private fields (#field) to encapsulate internal state'],
+    interviewQuestions: ['How do JS classes relate to prototypes?', 'What is the difference between extends and composition?', 'What are private class fields?'],
+    summary: 'Classes provide a clean OOP syntax over JS prototypes. Use them for shared behaviour, but favor composition when it fits better.'
+  },
+];
+
+const DIFFICULTY_COLOR = {
+  Beginner: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30',
+  Intermediate: 'text-amber-400 bg-amber-400/10 border-amber-400/30',
+  Advanced: 'text-rose-400 bg-rose-400/10 border-rose-400/30',
+};
+
+/* ============================================================
+   AUTH CONTEXT — localStorage based
+   ============================================================ */
+const AuthContext = createContext(null);
+const useAuth = () => useContext(AuthContext);
+
+function AuthProvider({ children }) {
+  const [user, setUser] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('jslearn_user')) || null; } catch { return null; }
+  });
+  const [otp, setOtp] = useState(() => localStorage.getItem('jslearn_otp') || null);
+  const [isVerified, setIsVerified] = useState(() => localStorage.getItem('jslearn_verified') === 'true');
+  const [bookmarks, setBookmarks] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('jslearn_bookmarks')) || []; } catch { return []; }
+  });
+  const [completed, setCompleted] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('jslearn_completed')) || []; } catch { return []; }
+  });
+
+  const generateOtp = () => {
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    localStorage.setItem('jslearn_otp', code);
+    setOtp(code);
+    return code;
+  };
+
+  const register = (formData) => {
+    const newUser = { name: formData.name, email: formData.email, password: formData.password };
+    localStorage.setItem('jslearn_user', JSON.stringify(newUser));
+    localStorage.setItem('jslearn_verified', 'false');
+    setUser(newUser);
+    setIsVerified(false);
+    return generateOtp();
+  };
+
+  const verifyOtp = (code) => {
+    const stored = localStorage.getItem('jslearn_otp');
+    if (code === stored) {
+      localStorage.setItem('jslearn_verified', 'true');
+      setIsVerified(true);
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => {
+    localStorage.removeItem('jslearn_user');
+    localStorage.removeItem('jslearn_verified');
+    localStorage.removeItem('jslearn_otp');
+    setUser(null);
+    setIsVerified(false);
+  };
+
+  const toggleBookmark = (topicId) => {
+    setBookmarks(prev => {
+      const next = prev.includes(topicId) ? prev.filter(id => id !== topicId) : [...prev, topicId];
+      localStorage.setItem('jslearn_bookmarks', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const markCompleted = (topicId) => {
+    setCompleted(prev => {
+      if (prev.includes(topicId)) return prev;
+      const next = [...prev, topicId];
+      localStorage.setItem('jslearn_completed', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, otp, isVerified, bookmarks, completed, generateOtp, register, verifyOtp, logout, toggleBookmark, markCompleted }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+/* ============================================================
+   SHARED COMPONENTS
+   ============================================================ */
+function Loader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-bg">
+      <div className="relative w-16 h-16">
+        <div className="absolute inset-0 rounded-full border-4 border-surface2"></div>
+        <div className="absolute inset-0 rounded-full border-4 border-jsyellow border-t-transparent animate-spin"></div>
+      </div>
+    </div>
+  );
+}
+
+function SectionTitle({ eyebrow, title, subtitle, center }) {
+  return (
+    <div className={`mb-10 ${center ? 'text-center' : ''}`}>
+      {eyebrow && <p className="text-jsyellow font-mono text-sm mb-2 tracking-wide">{eyebrow}</p>}
+      <h2 className="font-display text-3xl md:text-4xl font-bold text-white">{title}</h2>
+      {subtitle && <p className="text-muted mt-3 max-w-2xl mx-auto">{subtitle}</p>}
+    </div>
+  );
+}
+
+function CodeBlock({ code, output }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+  return (
+    <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#0d1220] shadow-card">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-surface2 border-b border-white/5">
+        <div className="flex gap-1.5">
+          <span className="w-3 h-3 rounded-full bg-red-500/70"></span>
+          <span className="w-3 h-3 rounded-full bg-yellow-500/70"></span>
+          <span className="w-3 h-3 rounded-full bg-green-500/70"></span>
+        </div>
+        <button onClick={copy} className="text-xs font-mono text-muted hover:text-jsyellow transition">
+          {copied ? '✓ Copied' : 'Copy code'}
+        </button>
+      </div>
+      <pre className="p-4 text-sm font-mono text-emerald-300 overflow-x-auto code-scroll leading-relaxed"><code>{code}</code></pre>
+      {output && (
+        <div className="border-t border-white/5 px-4 py-3 bg-black/30">
+          <p className="text-xs text-muted font-mono mb-1">// output</p>
+          <p className="text-sm font-mono text-jsyellow">{output}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FloatingCodeWindow() {
+  const lines = [
+    { t: 'const', c: 'text-purple-400' }, { t: ' greet ', c: '' }, { t: '=', c: 'text-jsyellow' },
+  ];
+  return (
+    <div className="relative w-full max-w-md mx-auto">
+      <div className="absolute -inset-10 bg-jsyellow/10 blur-3xl rounded-full pulse-glow"></div>
+      <div className="absolute -top-8 -right-6 text-5xl float">🟨</div>
+      <div className="absolute top-10 -left-10 text-4xl float-delay opacity-80">⚛️</div>
+      <div className="absolute -bottom-8 right-8 text-3xl float-slow opacity-70">{'{ }'}</div>
+
+      <div className="relative glass rounded-2xl shadow-glow p-5 float-slow">
+        <div className="flex gap-1.5 mb-4">
+          <span className="w-3 h-3 rounded-full bg-red-500/70"></span>
+          <span className="w-3 h-3 rounded-full bg-yellow-500/70"></span>
+          <span className="w-3 h-3 rounded-full bg-green-500/70"></span>
+        </div>
+        <pre className="font-mono text-sm leading-relaxed">
+<code><span className="text-purple-400">const</span> <span className="text-blue-300">greet</span> <span className="text-jsyellow">=</span> (<span className="text-orange-300">name</span>) <span className="text-jsyellow">=&gt;</span> {'{'}
+{'\n  '}<span className="text-purple-400">return</span> <span className="text-emerald-300">`Hello ${'{'}</span><span className="text-orange-300">name</span><span className="text-emerald-300">{'}'}`</span>;
+{'\n'}{'}'};
+{'\n\n'}<span className="text-blue-300">console</span>.<span className="text-jsyellow">log</span>(<span className="text-blue-300">greet</span>(<span className="text-emerald-300">"Developer"</span>))<span className="caret text-jsyellow">|</span></code>
+        </pre>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   NAVBAR / FOOTER
+   ============================================================ */
+function Navbar({ route, navigate }) {
+  const { user, isVerified, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  const links = [
+    { key: 'home', label: 'Home' },
+    { key: 'topics', label: 'Topics' },
+    { key: 'dashboard', label: 'Dashboard' },
+    { key: 'about', label: 'About' },
+    { key: 'contact', label: 'Contact' },
+  ];
+  return (
+    <header className="sticky top-0 z-50 glass">
+      <nav className="max-w-7xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
+        <button onClick={() => navigate('home')} className="flex items-center gap-2 font-display font-bold text-lg text-white">
+          <span className="w-8 h-8 rounded-lg bg-jsyellow text-bg flex items-center justify-center font-black">JS</span>
+          <span>Learn</span>
+        </button>
+
+        {isVerified && (
+          <div className="hidden md:flex items-center gap-8">
+            {links.map(l => (
+              <button key={l.key} onClick={() => navigate(l.key)}
+                className={`link-underline text-sm font-medium ${route === l.key ? 'text-jsyellow link-active' : 'text-slate-300 hover:text-white'}`}>
+                {l.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="flex items-center gap-3">
+          {isVerified && user ? (
+            <div className="hidden sm:flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center text-sm font-semibold text-accent">
+                {user.name?.[0]?.toUpperCase() || 'U'}
+              </div>
+              <span className="text-sm text-slate-300">{user.name}</span>
+              <button onClick={() => { logout(); navigate('register'); }} className="text-sm text-muted hover:text-rose-400 transition">Logout</button>
+            </div>
+          ) : (
+            <button onClick={() => navigate('register')} className="text-sm px-4 py-2 rounded-lg bg-jsyellow text-bg font-semibold hover:brightness-95 transition">
+              Get Started
+            </button>
+          )}
+          {isVerified && (
+            <button className="md:hidden text-white" onClick={() => setOpen(!open)}>☰</button>
+          )}
+        </div>
+      </nav>
+      {open && isVerified && (
+        <div className="md:hidden px-5 pb-4 flex flex-col gap-3 border-t border-white/5">
+          {links.map(l => (
+            <button key={l.key} onClick={() => { navigate(l.key); setOpen(false); }}
+              className={`text-left text-sm py-1 ${route === l.key ? 'text-jsyellow' : 'text-slate-300'}`}>
+              {l.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </header>
+  );
+}
+
+function Footer({ navigate }) {
+  return (
+    <footer className="border-t border-white/5 mt-20">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 py-12 grid md:grid-cols-4 gap-10">
+        <div>
+          <div className="flex items-center gap-2 font-display font-bold text-lg text-white mb-3">
+            <span className="w-8 h-8 rounded-lg bg-jsyellow text-bg flex items-center justify-center font-black">JS</span>
+            <span>Learn</span>
+          </div>
+          <p className="text-sm text-muted">A premium platform for learning JavaScript, from fundamentals to interview mastery.</p>
+        </div>
+        <div>
+          <h4 className="text-white font-semibold mb-3 text-sm">Quick Links</h4>
+          <div className="flex flex-col gap-2 text-sm text-muted">
+            <button onClick={() => navigate('home')} className="text-left hover:text-jsyellow">Home</button>
+            <button onClick={() => navigate('topics')} className="text-left hover:text-jsyellow">Topics</button>
+            <button onClick={() => navigate('dashboard')} className="text-left hover:text-jsyellow">Dashboard</button>
+          </div>
+        </div>
+        <div>
+          <h4 className="text-white font-semibold mb-3 text-sm">Resources</h4>
+          <div className="flex flex-col gap-2 text-sm text-muted">
+            <button onClick={() => navigate('about')} className="text-left hover:text-jsyellow">About</button>
+            <button onClick={() => navigate('contact')} className="text-left hover:text-jsyellow">Contact</button>
+          </div>
+        </div>
+        <div>
+          <h4 className="text-white font-semibold mb-3 text-sm">Connect</h4>
+          <div className="flex gap-3 text-xl">
+            <span title="GitHub" className="cursor-pointer hover:text-jsyellow">🐙</span>
+            <span title="LinkedIn" className="cursor-pointer hover:text-jsyellow">💼</span>
+            <span title="Email" className="cursor-pointer hover:text-jsyellow">✉️</span>
+          </div>
+        </div>
+      </div>
+      <div className="border-t border-white/5 py-5 text-center text-xs text-muted">
+        © {new Date().getFullYear()} JS Learn. Built for learning, not affiliated with any of the tools mentioned.
+      </div>
+    </footer>
+  );
+}
+
+/* ============================================================
+   PAGES
+   ============================================================ */
+function Register({ navigate }) {
+  const { register } = useAuth();
+  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
+  const [errors, setErrors] = useState({});
+  const [devOtp, setDevOtp] = useState(null);
+
+  const validate = () => {
+    const e = {};
+    if (!form.name.trim()) e.name = 'Full name is required';
+    if (!form.email.trim()) e.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Enter a valid email';
+    if (!form.password) e.password = 'Password is required';
+    else if (form.password.length < 8) e.password = 'Minimum 8 characters';
+    if (form.confirm !== form.password) e.confirm = 'Passwords do not match';
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    if (!validate()) return;
+    const code = register(form);
+    setDevOtp(code);
+    setTimeout(() => navigate('verify'), 900);
+  };
+
+  return (
+    <div className="min-h-screen grid-fade flex items-center justify-center px-5 py-16">
+      <div className="w-full max-w-md fade-up">
+        <div className="text-center mb-8">
+          <div className="w-12 h-12 rounded-xl bg-jsyellow text-bg flex items-center justify-center font-black text-xl mx-auto mb-4">JS</div>
+          <h1 className="font-display text-2xl font-bold text-white">Create your account</h1>
+          <p className="text-muted text-sm mt-1">Start your JavaScript mastery journey</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="glass rounded-2xl p-6 space-y-4 shadow-card">
+          {[
+            { key: 'name', label: 'Full Name', type: 'text', placeholder: 'Bharani Kumar' },
+            { key: 'email', label: 'Email', type: 'email', placeholder: 'you@example.com' },
+            { key: 'password', label: 'Password', type: 'password', placeholder: 'Minimum 8 characters' },
+            { key: 'confirm', label: 'Confirm Password', type: 'password', placeholder: 'Re-enter password' },
+          ].map(f => (
+            <div key={f.key}>
+              <label className="block text-xs font-medium text-slate-300 mb-1.5">{f.label}</label>
+              <input
+                type={f.type}
+                placeholder={f.placeholder}
+                value={form[f.key]}
+                onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
+                className="w-full bg-surface2 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-jsyellow/60"
+              />
+              {errors[f.key] && <p className="text-rose-400 text-xs mt-1">{errors[f.key]}</p>}
+            </div>
+          ))}
+
+          <button type="submit" className="w-full py-3 rounded-lg bg-jsyellow text-bg font-semibold hover:brightness-95 transition">
+            Register &amp; Send OTP
+          </button>
+
+          {devOtp && (
+            <div className="text-center text-xs font-mono text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2">
+              ✅ OTP Generated Successfully (dev only): <b>{devOtp}</b>
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function VerifyOTP({ navigate }) {
+  const { user, otp, verifyOtp, generateOtp } = useAuth();
+  const [digits, setDigits] = useState(Array(6).fill(''));
+  const [error, setError] = useState('');
+  const [timer, setTimer] = useState(120);
+  const inputsRef = useRef([]);
+
+  useEffect(() => {
+    if (timer <= 0) return;
+    const t = setInterval(() => setTimer(s => s - 1), 1000);
+    return () => clearInterval(t);
+  }, [timer]);
+
+  const mm = String(Math.floor(timer / 60)).padStart(2, '0');
+  const ss = String(timer % 60).padStart(2, '0');
+
+  const handleChange = (i, val) => {
+    if (!/^[0-9]?$/.test(val)) return;
+    const next = [...digits]; next[i] = val; setDigits(next);
+    if (val && i < 5) inputsRef.current[i + 1]?.focus();
+  };
+  const handleKeyDown = (i, e) => {
+    if (e.key === 'Backspace' && !digits[i] && i > 0) inputsRef.current[i - 1]?.focus();
+  };
+  const handlePaste = (e) => {
+    const text = e.clipboardData.getData('text').slice(0, 6).split('');
+    if (text.every(c => /[0-9]/.test(c))) { setDigits([...text, ...Array(6 - text.length).fill('')]); }
+  };
+
+  const handleVerify = () => {
+    const code = digits.join('');
+    if (code.length < 6) { setError('Enter all 6 digits'); return; }
+    if (verifyOtp(code)) { navigate('home'); }
+    else setError('Invalid OTP. Please try again.');
+  };
+
+  const resend = () => { generateOtp(); setTimer(120); setDigits(Array(6).fill('')); setError(''); };
+
+  return (
+    <div className="min-h-screen grid-fade flex items-center justify-center px-5 py-16">
+      <div className="w-full max-w-md fade-up glass rounded-2xl p-6 shadow-card text-center">
+        <div className="w-12 h-12 rounded-xl bg-accent/20 border border-accent/40 text-accent flex items-center justify-center text-2xl mx-auto mb-4">🔐</div>
+        <h1 className="font-display text-2xl font-bold text-white">Verify your email</h1>
+        <p className="text-muted text-sm mt-1 mb-6">Code sent to <span className="text-jsyellow">{user?.email}</span></p>
+
+        <div className="flex justify-center gap-2 mb-4" onPaste={handlePaste}>
+          {digits.map((d, i) => (
+            <input key={i} ref={el => inputsRef.current[i] = el} value={d} maxLength={1}
+              onChange={(e) => handleChange(i, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(i, e)}
+              className="w-11 h-13 md:w-12 md:h-14 text-center text-lg font-mono bg-surface2 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-jsyellow/60" />
+          ))}
+        </div>
+
+        {error && <p className="text-rose-400 text-xs mb-3">{error}</p>}
+
+        <p className="text-xs text-muted mb-1">Code expires in <span className="text-jsyellow font-mono">{mm}:{ss}</span></p>
+        {otp && <p className="text-[11px] text-muted mb-4">(dev preview OTP: <span className="font-mono text-emerald-400">{otp}</span>)</p>}
+
+        <button onClick={handleVerify} className="w-full py-3 rounded-lg bg-jsyellow text-bg font-semibold hover:brightness-95 transition mb-3">
+          Verify &amp; Continue
+        </button>
+        <button onClick={resend} disabled={timer > 0} className="text-xs text-muted hover:text-jsyellow disabled:opacity-40 transition">
+          Resend OTP
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function FeatureChip({ emoji, label }) {
+  return (
+    <div className="glass rounded-xl px-4 py-3 flex items-center gap-2.5 fade-up">
+      <span className="text-xl">{emoji}</span>
+      <span className="text-sm text-slate-200 font-medium">{label}</span>
+    </div>
+  );
+}
+
+function Hero({ navigate }) {
+  return (
+    <section className="relative overflow-hidden grid-fade">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-jsyellow/10 blur-3xl rounded-full"></div>
+      <div className="max-w-7xl mx-auto px-5 md:px-8 pt-16 pb-20 grid md:grid-cols-2 gap-14 items-center relative z-10">
+        <div className="fade-up">
+          <p className="font-mono text-jsyellow text-sm mb-4">// the language of the web</p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
+            Master <span className="text-jsyellow">JavaScript</span><br />The Language of the Web
+          </h1>
+          <p className="text-muted mt-5 text-base md:text-lg max-w-lg">
+            Learn JavaScript from beginner to advanced through interactive lessons, real-world examples, coding challenges, and interview preparation.
+          </p>
+          <div className="flex flex-wrap gap-4 mt-8">
+            <button onClick={() => navigate('topics')} className="px-6 py-3 rounded-lg bg-jsyellow text-bg font-semibold hover:brightness-95 transition">
+              Start Learning →
+            </button>
+            <button onClick={() => navigate('topics')} className="px-6 py-3 rounded-lg border border-white/15 text-white hover:bg-white/5 transition">
+              Explore Topics
+            </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-10 max-w-lg">
+            <FeatureChip emoji="⚡" label="Fast Learning" />
+            <FeatureChip emoji="🌍" label="Beginner to Advanced" />
+            <FeatureChip emoji="💻" label="Developer Friendly" />
+          </div>
+        </div>
+        <FloatingCodeWindow />
+      </div>
+    </section>
+  );
+}
+
+function PageBanner({ eyebrow, title, subtitle, emoji }) {
+  return (
+    <section className="relative overflow-hidden grid-fade border-b border-white/5">
+      <div className="absolute -top-10 right-10 text-6xl float opacity-20">{emoji}</div>
+      <div className="max-w-7xl mx-auto px-5 md:px-8 py-14 relative z-10">
+        <p className="font-mono text-jsyellow text-sm mb-2">{eyebrow}</p>
+        <h1 className="font-display text-3xl md:text-4xl font-bold text-white">{title}</h1>
+        {subtitle && <p className="text-muted mt-3 max-w-2xl">{subtitle}</p>}
+      </div>
+    </section>
+  );
+}
+
+function TopicCard({ topic, navigate, index }) {
+  const { bookmarks, toggleBookmark } = useAuth();
+  const isBookmarked = bookmarks.includes(topic.id);
+  return (
+    <div className="group relative glass rounded-2xl p-5 hover:shadow-glow hover:-translate-y-1 transition-all duration-300 fade-up">
+      <div className="flex items-start justify-between mb-4">
+        <span className="text-xs font-mono text-muted">{String(index + 1).padStart(2, '0')}</span>
+        <button onClick={() => toggleBookmark(topic.id)} className={`text-lg transition ${isBookmarked ? 'text-jsyellow' : 'text-muted hover:text-jsyellow'}`}>
+          {isBookmarked ? '★' : '☆'}
+        </button>
+      </div>
+      <div className="text-4xl mb-3">{topic.icon}</div>
+      <h3 className="font-display text-lg font-semibold text-white mb-2">{topic.title}</h3>
+      <p className="text-sm text-muted mb-4 line-clamp-2">{topic.description}</p>
+      <div className="flex items-center gap-2 mb-4">
+        <span className={`text-[11px] px-2 py-0.5 rounded-full border ${DIFFICULTY_COLOR[topic.difficulty]}`}>{topic.difficulty}</span>
+        <span className="text-[11px] text-muted">⏱ {topic.readingTime}</span>
+      </div>
+      <button onClick={() => navigate('topic-details', topic.slug)}
+        className="text-sm font-medium text-jsyellow group-hover:underline">
+        Learn More →
+      </button>
+    </div>
+  );
+}
+
+function Home({ navigate }) {
+  const [query, setQuery] = useState('');
+  const filtered = TOPICS.filter(t => t.title.toLowerCase().includes(query.toLowerCase())).slice(0, 9);
+
+  return (
+    <div>
+      <Hero navigate={navigate} />
+      <section className="max-w-7xl mx-auto px-5 md:px-8 py-16">
+        <SectionTitle center eyebrow="// interview essentials" title="Top JavaScript Interview Topics" subtitle="Hand-picked concepts that show up in almost every frontend interview." />
+        <div className="max-w-md mx-auto mb-10">
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search topics..."
+            className="w-full bg-surface2 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-jsyellow/60" />
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {filtered.map((t, i) => <TopicCard key={t.id} topic={t} navigate={navigate} index={i} />)}
+        </div>
+        {filtered.length === 0 && <p className="text-center text-muted mt-8">No topics match "{query}".</p>}
+      </section>
+    </div>
+  );
+}
+
+function TopicsPage({ navigate }) {
+  const [query, setQuery] = useState('');
+  const filtered = TOPICS.filter(t => t.title.toLowerCase().includes(query.toLowerCase()));
+  return (
+    <div>
+      <PageBanner emoji="📚" eyebrow="// full curriculum" title="All Topics" subtitle="Everything you need, from variables to async patterns." />
+      <section className="max-w-7xl mx-auto px-5 md:px-8 py-14">
+        <div className="max-w-md mb-10">
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search topics..."
+            className="w-full bg-surface2 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-jsyellow/60" />
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {filtered.map((t, i) => <TopicCard key={t.id} topic={t} navigate={navigate} index={i} />)}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function ListBlock({ title, items, tone }) {
+  return (
+    <div>
+      <h4 className={`font-semibold mb-2 ${tone}`}>{title}</h4>
+      <ul className="space-y-1.5 text-sm text-slate-300">
+        {items.map((it, i) => (
+          <li key={i} className="flex gap-2"><span className={tone}>•</span><span>{it}</span></li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function TopicDetails({ slug, navigate }) {
+  const { bookmarks, toggleBookmark, completed, markCompleted } = useAuth();
+  const idx = TOPICS.findIndex(t => t.slug === slug);
+  const topic = TOPICS[idx];
+  if (!topic) return <NotFound navigate={navigate} />;
+  const prev = TOPICS[idx - 1];
+  const next = TOPICS[idx + 1];
+  const isBookmarked = bookmarks.includes(topic.id);
+  const isCompleted = completed.includes(topic.id);
+
+  useEffect(() => { window.scrollTo(0, 0); }, [slug]);
+
+  return (
+    <div>
+      <section className="relative overflow-hidden grid-fade border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-5 md:px-8 py-12 relative z-10">
+          <button onClick={() => navigate('topics')} className="text-xs text-muted hover:text-jsyellow mb-4">← Back to Topics</button>
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted mb-4">
+            <span>Topics</span><span>/</span><span className="text-jsyellow">{topic.title}</span>
+          </div>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="text-5xl mb-4">{topic.icon}</div>
+              <h1 className="font-display text-3xl md:text-4xl font-bold text-white">{topic.title}</h1>
+              <div className="flex items-center gap-3 mt-3">
+                <span className={`text-xs px-2 py-0.5 rounded-full border ${DIFFICULTY_COLOR[topic.difficulty]}`}>{topic.difficulty}</span>
+                <span className="text-xs text-muted">⏱ {topic.readingTime}</span>
+              </div>
+            </div>
+            <button onClick={() => toggleBookmark(topic.id)} className={`text-2xl ${isBookmarked ? 'text-jsyellow' : 'text-muted hover:text-jsyellow'}`}>
+              {isBookmarked ? '★' : '☆'}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-5 md:px-8 py-12 space-y-10">
+        <div>
+          <h3 className="text-jsyellow font-semibold mb-2 font-mono text-sm">DEFINITION</h3>
+          <p className="text-slate-200">{topic.definition}</p>
+        </div>
+
+        <div>
+          <h3 className="text-jsyellow font-semibold mb-2 font-mono text-sm">SYNTAX</h3>
+          <CodeBlock code={topic.syntax} />
+        </div>
+
+        <div>
+          <h3 className="text-jsyellow font-semibold mb-2 font-mono text-sm">CODE EXAMPLE &amp; OUTPUT</h3>
+          <CodeBlock code={topic.example} output={topic.output} />
+        </div>
+
+        <div>
+          <h3 className="text-jsyellow font-semibold mb-2 font-mono text-sm">REAL-WORLD EXAMPLE</h3>
+          <p className="text-slate-300">{topic.realWorldExample}</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <ListBlock title="Advantages" items={topic.advantages} tone="text-emerald-400" />
+          <ListBlock title="Disadvantages" items={topic.disadvantages} tone="text-rose-400" />
+        </div>
+
+        <ListBlock title="Best Practices" items={topic.bestPractices} tone="text-accent" />
+
+        <div>
+          <h3 className="text-white font-semibold mb-3">Interview Questions</h3>
+          <div className="space-y-2">
+            {topic.interviewQuestions.map((q, i) => (
+              <div key={i} className="glass rounded-lg px-4 py-3 text-sm text-slate-300 flex gap-2">
+                <span className="text-jsyellow font-mono">Q{i + 1}.</span>{q}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="glass rounded-2xl p-5 border-l-4 border-jsyellow">
+          <h4 className="text-white font-semibold mb-1">Summary</h4>
+          <p className="text-slate-300 text-sm">{topic.summary}</p>
+        </div>
+
+        <button onClick={() => markCompleted(topic.id)}
+          className={`w-full py-3 rounded-lg font-semibold transition ${isCompleted ? 'bg-emerald-400/10 text-emerald-400 border border-emerald-400/30' : 'bg-jsyellow text-bg hover:brightness-95'}`}>
+          {isCompleted ? '✓ Completed' : 'Mark as Completed'}
+        </button>
+
+        <div className="flex items-center justify-between pt-6 border-t border-white/5">
+          {prev ? (
+            <button onClick={() => navigate('topic-details', prev.slug)} className="text-sm text-muted hover:text-jsyellow">← {prev.title}</button>
+          ) : <span></span>}
+          {next ? (
+            <button onClick={() => navigate('topic-details', next.slug)} className="text-sm text-muted hover:text-jsyellow">{next.title} →</button>
+          ) : <span></span>}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function StatCard({ label, value, emoji }) {
+  return (
+    <div className="glass rounded-2xl p-5 fade-up">
+      <div className="text-2xl mb-2">{emoji}</div>
+      <div className="text-2xl font-display font-bold text-white">{value}</div>
+      <div className="text-xs text-muted mt-1">{label}</div>
+    </div>
+  );
+}
+
+function Dashboard({ navigate }) {
+  const { user, completed, bookmarks } = useAuth();
+  const total = TOPICS.length;
+  const pct = Math.round((completed.length / total) * 100);
+  const bookmarkedTopics = TOPICS.filter(t => bookmarks.includes(t.id));
+
+  return (
+    <div>
+      <PageBanner emoji="📊" eyebrow={`// welcome back, ${user?.name?.split(' ')[0] || 'learner'}`} title="Your Dashboard" subtitle="Track your progress across the curriculum." />
+      <section className="max-w-7xl mx-auto px-5 md:px-8 py-14 space-y-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <StatCard label="Topics Completed" value={`${completed.length}/${total}`} emoji="✅" />
+          <StatCard label="Bookmarked" value={bookmarks.length} emoji="⭐" />
+          <StatCard label="Overall Progress" value={`${pct}%`} emoji="📈" />
+          <StatCard label="Achievements" value={pct >= 100 ? '🏆 1' : '0'} emoji="🎯" />
+        </div>
+
+        <div>
+          <h3 className="text-white font-semibold mb-3">Learning Progress</h3>
+          <div className="w-full h-3 bg-surface2 rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-jsyellow to-amber-400 transition-all duration-700" style={{ width: `${pct}%` }}></div>
+          </div>
+          <p className="text-xs text-muted mt-2">{pct}% of the curriculum completed</p>
+        </div>
+
+        <div>
+          <h3 className="text-white font-semibold mb-3">Bookmarked Topics</h3>
+          {bookmarkedTopics.length === 0 ? (
+            <p className="text-sm text-muted">No bookmarks yet — star a topic to save it here.</p>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {bookmarkedTopics.map((t, i) => <TopicCard key={t.id} topic={t} navigate={navigate} index={i} />)}
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function About({ navigate }) {
+  return (
+    <div>
+      <PageBanner emoji="🎯" eyebrow="// our story" title="About JS Learn" subtitle="Built by developers who wished this existed when they were learning." />
+      <section className="max-w-5xl mx-auto px-5 md:px-8 py-14 space-y-14">
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="glass rounded-2xl p-6">
+            <h3 className="text-jsyellow font-semibold mb-2">🎯 Mission</h3>
+            <p className="text-slate-300 text-sm">Make JavaScript genuinely understandable — not just memorized — through real examples, clear explanations, and interview-focused practice.</p>
+          </div>
+          <div className="glass rounded-2xl p-6">
+            <h3 className="text-jsyellow font-semibold mb-2">🔭 Vision</h3>
+            <p className="text-slate-300 text-sm">To be the platform freshers and career-switchers turn to when they need to go from "I can code" to "I can explain how it works."</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-white font-semibold mb-4">Platform Statistics</h3>
+          <div className="grid sm:grid-cols-3 gap-5">
+            <StatCard label="Core Topics" value={TOPICS.length} emoji="📚" />
+            <StatCard label="Code Examples" value={TOPICS.length} emoji="💻" />
+            <StatCard label="Interview Questions" value={TOPICS.length * 3} emoji="❓" />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-white font-semibold mb-4">Timeline</h3>
+          <div className="space-y-4 border-l border-white/10 pl-6">
+            {[
+              ['Idea', 'Started as personal interview-prep notes.'],
+              ['V1', 'Built the core topic structure and dark UI.'],
+              ['V2', 'Added auth, OTP verification, and progress tracking.'],
+              ['Today', 'A single-file platform anyone can run instantly.'],
+            ].map(([t, d], i) => (
+              <div key={i} className="relative">
+                <span className="absolute -left-[29px] top-1 w-3 h-3 rounded-full bg-jsyellow"></span>
+                <h4 className="text-white text-sm font-semibold">{t}</h4>
+                <p className="text-muted text-sm">{d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function Contact({ navigate }) {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [sent, setSent] = useState(false);
+
+  const submit = (e) => {
+    e.preventDefault();
+    const messages = JSON.parse(localStorage.getItem('jslearn_messages') || '[]');
+    messages.push({ ...form, date: new Date().toISOString() });
+    localStorage.setItem('jslearn_messages', JSON.stringify(messages));
+    setSent(true);
+    setForm({ name: '', email: '', message: '' });
+    setTimeout(() => setSent(false), 3000);
+  };
+
+  return (
+    <div>
+      <PageBanner emoji="✉️" eyebrow="// let's talk" title="Contact Us" subtitle="Questions, feedback, or found a bug? Send it over." />
+      <section className="max-w-xl mx-auto px-5 md:px-8 py-14">
+        <form onSubmit={submit} className="glass rounded-2xl p-6 space-y-4 shadow-card relative">
+          <div>
+            <label className="block text-xs font-medium text-slate-300 mb-1.5">Name</label>
+            <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+              className="w-full bg-surface2 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-jsyellow/60" />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-300 mb-1.5">Email</label>
+            <input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+              className="w-full bg-surface2 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-jsyellow/60" />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-300 mb-1.5">Message</label>
+            <textarea required rows="4" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
+              className="w-full bg-surface2 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-jsyellow/60"></textarea>
+          </div>
+          <button className="w-full py-3 rounded-lg bg-jsyellow text-bg font-semibold hover:brightness-95 transition">Send Message</button>
+          {sent && (
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-400 text-bg text-xs font-semibold px-4 py-1.5 rounded-full shadow-card">
+              ✓ Message sent!
+            </div>
+          )}
+        </form>
+      </section>
+    </div>
+  );
+}
+
+function NotFound({ navigate }) {
+  return (
+    <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-5">
+      <div className="text-6xl mb-4">🧭</div>
+      <h1 className="font-display text-3xl font-bold text-white mb-2">404 — Page Not Found</h1>
+      <p className="text-muted mb-6">That route doesn't exist in this codebase.</p>
+      <button onClick={() => navigate('home')} className="px-5 py-2.5 rounded-lg bg-jsyellow text-bg font-semibold">Back to Home</button>
+    </div>
+  );
+}
+
+/* ============================================================
+   SCROLL TO TOP + ROOT APP (simple state-based router)
+   ============================================================ */
+function ScrollToTopButton() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  if (!show) return null;
+  return (
+    <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className="fixed bottom-6 right-6 w-11 h-11 rounded-full bg-jsyellow text-bg font-bold shadow-glow z-40">
+      ↑
+    </button>
+  );
+}
+
+function AppShell() {
+  const { isVerified } = useAuth();
+  const [route, setRoute] = useState(isVerified ? 'home' : 'register');
+  const [param, setParam] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => { const t = setTimeout(() => setLoading(false), 600); return () => clearTimeout(t); }, []);
+
+  const navigate = (r, p = null) => { setRoute(r); setParam(p); window.scrollTo(0, 0); };
+
+  useEffect(() => {
+    if (!isVerified && !['register', 'verify'].includes(route)) navigate('register');
+  }, [isVerified]);
+
+  if (loading) return <Loader />;
+
+  const protectedRoutes = ['home', 'topics', 'topic-details', 'dashboard', 'about', 'contact'];
+  if (protectedRoutes.includes(route) && !isVerified) {
+    return <Register navigate={navigate} />;
+  }
+
+  let page;
+  switch (route) {
+    case 'register': page = <Register navigate={navigate} />; break;
+    case 'verify': page = <VerifyOTP navigate={navigate} />; break;
+    case 'home': page = <Home navigate={navigate} />; break;
+    case 'topics': page = <TopicsPage navigate={navigate} />; break;
+    case 'topic-details': page = <TopicDetails slug={param} navigate={navigate} />; break;
+    case 'dashboard': page = <Dashboard navigate={navigate} />; break;
+    case 'about': page = <About navigate={navigate} />; break;
+    case 'contact': page = <Contact navigate={navigate} />; break;
+    default: page = <NotFound navigate={navigate} />;
+  }
+
+  const showChrome = isVerified && !['register', 'verify'].includes(route);
+
+  return (
+    <div className="min-h-screen bg-bg">
+      {showChrome && <Navbar route={route} navigate={navigate} />}
+      <main>{page}</main>
+      {showChrome && <Footer navigate={navigate} />}
+      <ScrollToTopButton />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppShell />
+    </AuthProvider>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>

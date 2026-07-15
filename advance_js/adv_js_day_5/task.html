@@ -1,0 +1,261 @@
+<script>
+
+//Create a student profile using Template Literals and
+// display the student's name, course, city, and institute 
+// in a formatted output.
+
+
+
+const studentProfile= ()=>({name: "bharani", 
+                        course:"MERN",
+                        city: "chennai",
+                        institute: "SLA"
+
+})
+
+console.log(`task1: studentProfile 
+             My name is ${studentProfile().name},
+             COURSE ${studentProfile().course},
+             location ${studentProfile().city},
+             institute ${studentProfile().institute} `);
+
+
+// Create an Arrow Function that accepts employee details and 
+// calculates the yearly salary from the monthly salary.
+
+const employeeDetails = () =>{
+          let salary = 10000
+
+          return salary * 12
+}
+
+console.log("task2:", employeeDetails());
+
+//Create an Arrow Function that accepts a product price and 
+// discount percentage and returns the final discounted price.
+
+
+
+const productDetails = (price, discount) =>
+  price - (price * discount) / 100;
+
+console.log("task3:", productDetails(1000, 20)); 
+console.log(productDetails(5000, 10)); 
+
+
+//Task 4
+
+//Create a user registration function using Default Parameters. If no role is provided, automatically assign a default role.
+
+const registerUser = (username, role = "User") => {
+  return {
+    username,
+    role
+  };
+};
+
+console.log("task4:", registerUser("Bharani"));
+console.log(registerUser("AdminUser", "Admin"));
+
+//task 5
+const calBill = (...prices) => {
+  return prices.reduce((total, price) => total + price, 0);
+};
+
+console.log("task5:", calBill(100, 200, 300, 400));
+
+//task6
+
+const frontend = ["HTML", "CSS", "JavaScript", "React"];
+const backend = ["Node.js", "Express.js", "MongoDB"];
+
+const result = [...frontend, ...backend];
+
+console.log ("task6:", result);
+
+//task7
+const employee = {
+  id: 101,
+  name: "Bharani"
+};
+
+const updatedEmployee = {
+  ...employee,
+  department: "Development",
+  experience: "2 Years",
+  salary: 50000
+};
+
+console.log("task7:", "Original:", employee);
+console.log("Updated:", updatedEmployee);
+
+//task 8
+
+const studentObj = {
+  sname: "Bharani",
+  sage: 22,
+  scourse: "MERN Stack",
+  scity: "Chennai"
+};
+
+const { sname, sage, scourse, scity } = studentObj;
+
+console.log("task8:",sname);
+console.log(sage);
+console.log(scourse);
+console.log(scity);
+
+//task 9
+
+const name = "Bharani";
+const course = "MERN Stack";
+const city = "Chennai";
+
+const student = {
+  name,
+  course,
+  city
+};
+
+console.log("task9:",student);
+
+//task 10
+
+const user = {
+  profile: {
+    address: {
+      city: "Chennai"
+    }
+  }
+};
+
+const ucity = user?.profile?.address?.city ?? "City Not Available";
+
+console.log("task 10:",ucity);
+
+//task 11
+
+const highestMark = (...marks) => {
+  return Math.max(...marks);
+};
+
+console.log(highestMark("task 11:",45, 67, 89, 95, 76));
+
+//task 12
+const mergeCourses = (...courseArrays) => {
+  return [...courseArrays.flat()];
+};
+
+const course1 = ["HTML", "CSS"];
+const course2 = ["JavaScript", "React"];
+const course3 = ["Node.js", "MongoDB"];
+
+console.log(mergeCourses("task 12:",course1, course2, course3));
+
+
+
+//task 13
+
+const product = {
+  id: 1,
+  name: "Laptop",
+  stock: 10
+};
+
+const updateStock = (product, newStock) => ({
+  ...product,
+  stock: newStock
+});
+
+const updatedProduct = updateStock(product, 25);
+
+console.log("Original:", product);
+console.log("Updated:", updatedProduct);
+
+//task 14
+
+const displayUser = ({ name, email, city }) => {
+  console.log(`
+Name  : ${name}
+Email : ${email}
+City  : ${city}
+`);
+};
+
+displayUser({
+  name: "Bharani",
+  email: "bharani@gmail.com",
+  city: "Chennai"
+});
+
+//task 15
+const employees = [];
+
+// Add Employee
+const addEmployee = (
+  id,
+  name,
+  department = "General",
+  basicSalary = 0
+) => {
+  const employee = {
+    id,
+    name,
+    department,
+    basicSalary
+  };
+
+  employees.push(employee);
+};
+
+// Update Employee
+const updateEmployee = (id, updates = {}) => {
+  const index = employees.findIndex(emp => emp.id === id);
+
+  if (index !== -1) {
+    employees[index] = {
+      ...employees[index],
+      ...updates
+    };
+  }
+};
+
+// Display Employee
+const displayEmployee = () => {
+  employees.forEach(emp => {
+    const { id, name, department, basicSalary } = emp;
+
+    console.log(`
+Employee ID : ${id}
+Name        : ${name}
+Department  : ${department}
+Salary      : ${basicSalary}
+`);
+  });
+};
+
+// Calculate Salary
+const calculateSalary = (...salaries) =>
+  salaries.reduce((total, salary) => total + salary, 0);
+
+// Add Employees
+addEmployee(101, "Bharani", "Developer", 50000);
+addEmployee(102, "Kumar", "Tester", 40000);
+
+// Update Employee
+updateEmployee(101, {
+  department: "Full Stack Developer",
+  basicSalary: 65000
+});
+
+// Display
+displayEmployee();
+
+// Salary Calculation
+console.log(
+  `Total Salary = ₹${calculateSalary(
+    ...employees.map(emp => emp.basicSalary)
+  )}`
+);
+</script>
+

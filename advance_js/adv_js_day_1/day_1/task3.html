@@ -1,0 +1,25 @@
+<script>
+const grandParent = () => {
+
+    let grandParentMoney = 10000;
+
+    const parent = () => {
+
+        let parentMoney = 5000;
+
+        const child = () => {
+
+            console.log(grandParentMoney);
+            console.log(parentMoney);
+
+        };
+
+        child();
+    };
+
+    parent();
+};
+
+grandParent();
+</script>
+

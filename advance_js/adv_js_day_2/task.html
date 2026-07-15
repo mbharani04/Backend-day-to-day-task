@@ -1,0 +1,49 @@
+<script>
+const name =()=>{
+
+    const FirstName = "sri"
+
+    const lastName = "valli"
+
+    let result = FirstName + " " + lastName
+    
+  
+console.log("fname and lname : ", result);
+
+}
+name()
+
+
+const productItems = () => {
+
+    let productPrice = 500
+    let quantity = 6
+
+    return productPrice * quantity
+
+}
+console.log ("product and quantity : ", productItems())
+
+const votingEligible = () =>{
+
+    let age = 18 
+    
+    const resultage = age >= 18 ? "elgible to vote " : "not eligible to vote"
+
+    return resultage
+}
+console.log (votingEligible());
+
+const largestnumber = (a,b,c) =>{
+//condi 1? expression that is retun value : condi 2
+ return a >= b && a >= c ? a : b >= c ? b : c ;
+
+}
+console.log(largestnumber(34,654,76));
+
+const gmailopen = (username = "guest" , password ="") =>{
+
+    return {username , password};
+}
+console.log(gmailopen(undefined, 1234));
+</script>

@@ -1,0 +1,35 @@
+<script>
+
+const account = () =>{
+
+    let balance = 1000;
+   
+
+
+    // multiple function means use object 
+    return {
+withdraw : (amount)=> {
+
+    balance-= amount
+    
+},
+savings : (amount) =>{
+    balance+=amount
+}
+
+    }
+
+     console.log(balance)
+
+
+}
+const bank = account()
+
+bank.withdraw(200)
+bank.savings(500)
+bank.balance()
+
+
+
+
+</script>

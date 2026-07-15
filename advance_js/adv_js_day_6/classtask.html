@@ -1,0 +1,148 @@
+<script>
+//task 1
+const getDatas =  new Promise ((resolve,reject) => {
+
+    setTimeout(()=>{
+resolve("sudhan")
+
+    },2000)
+  
+})
+getDatas.then((data)=>{
+    console.log(data)
+})
+
+
+
+//task 2
+
+const getEmployee = new Promise ((resolve,reject) => {
+    setTimeout(()=>{
+       resolve( {id: 1,
+
+      name: "Sudhan",
+
+      role: "Trainer"});
+
+    },3000)
+})
+getEmployee.then((res)=>{
+    console.log(res)
+})
+
+
+//task 3
+const login = new Promise ((res,rej) => {
+
+  setTimeout(() => {
+
+    res("login sucess")
+
+  }, 2000);
+
+});
+login.then((passingar)=>{
+  console.log(passingar)
+})
+
+//task4 
+
+
+const getProducts = new Promise ((resolve,reject) =>{
+
+setTimeout(()=>{
+
+  resolve ([
+
+      "Laptop",
+
+      "Mobile",
+
+      "Keyboard"
+
+    ])
+},2000)
+
+})
+getProducts.then((data)=>{
+  console.log(data);
+  
+})
+
+//task 5
+
+const orderFood = new Promise ((resolve,reject)=>{
+setTimeout(() => {
+  resolve("Pizza Delivered")
+},4000)
+
+})
+
+orderFood.then((data)=>{
+     console.log(data);
+})
+
+//task 6
+const getUser = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("User Fetched");
+      resolve();
+    }, 1000);
+  });
+};
+
+const getOrders = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("Orders Fetched");
+      resolve();
+    }, 1000);
+  });
+};
+
+const getPayments = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("Payments Fetched");
+      resolve();
+    }, 1000);
+  });
+};
+
+getUser()
+  .then(() => getOrders())
+  .then(() => getPayments())
+  .then(() => {
+    console.log("Completed");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+
+  // task 7
+
+  const payment = () => {
+  return new Promise((resolve, reject) => {
+
+    const status = false;
+
+    if (status) {
+      resolve("Payment Success");
+    } else {
+      reject("Payment Failed");
+    }
+
+  });
+};
+
+payment()
+  .then((message) => {
+    console.log(message);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+</script>

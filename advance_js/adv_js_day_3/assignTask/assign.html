@@ -1,0 +1,188 @@
+<script>
+//task 1
+
+const createBankAccount = (initialBalance) => {
+    let balance = initialBalance;
+
+    return {
+        deposit: (amount) => {
+            balance += amount;
+            console.log(`Balance: ${balance}`);
+        },
+
+        withdraw: (amount) => {
+            if (amount <= balance) {
+                balance -= amount;
+                console.log(`after withdraw : ${amount}`);
+                console.log (`withdrawblance: ${balance}`);
+            } else {
+                console.log("Insufficient Balance");
+            }
+        }
+    };
+};
+
+const account = createBankAccount(1000);
+
+account.deposit(500);  
+account.withdraw(200); 
+
+
+//task 2
+
+const attendanceCounter = () => {
+    let attendance = 0;
+
+    return () => {
+        attendance++;
+        console.log(`Attendance Count: ${attendance}`);
+    };
+};
+
+const markAttendance = attendanceCounter();
+
+markAttendance(); 
+markAttendance(); 
+markAttendance(); 
+
+//task 3
+
+const visitorCounter = () => {
+    let visitors = 0;
+
+    return () => {
+        visitors++;
+        console.log(`Total Visitors: ${visitors}`);
+    };
+};
+
+const visitWebsite = visitorCounter();
+
+visitWebsite(); 
+visitWebsite(); 
+visitWebsite(); 
+
+//task 4
+
+const createCart = () => {
+    let itemCount = 0;
+
+    return {
+        addProduct: () => {
+            itemCount++;
+            console.log(`Items in cart: ${itemCount}`);
+        },
+
+        removeProduct: () => {
+            if (itemCount > 0) {
+                itemCount--;
+            }
+            console.log(`removeproduct: ${itemCount}`);
+        },
+
+        totalItems: () => {
+            console.log(`Total Items: ${itemCount}`);
+        }
+    };
+};
+
+const cart = createCart();
+
+cart.addProduct();  
+cart.addProduct();   
+cart.removeProduct(); 
+cart.totalItems();   
+
+
+
+//task 5
+
+const createATM = (initialBalance) => {
+    let balance = initialBalance;
+
+    return {
+        withdraw: (amount) => {
+            if (amount <= balance) {
+                balance -= amount;
+                console.log(`Withdrawn: ${amount}`);
+                console.log(`Remaining Balance: ${balance}`);
+            } else {
+                console.log("Insufficient Balance");
+            }
+        },
+
+        checkBalance: () => {
+            console.log(`Current Balance: ${balance}`);
+        }
+    };
+};
+
+const atm = createATM(5000);
+
+atm.checkBalance();
+atm.withdraw(1000);
+atm.withdraw(6000);
+atm.checkBalance();
+
+
+//task 6
+
+const loginTracker = () => {
+    let attempts = 0;
+
+    return () => {
+        attempts++;
+        console.log(`Login Attempt: ${attempts}`);
+    };
+};
+
+const login = loginTracker();
+
+login(); 
+login(); 
+login(); 
+
+//task 7
+const processPayment = (callback) => {
+    console.log("Processing Payment...");
+    callback();
+};
+
+const gpay = () => {
+    console.log("Payment done using GPay");
+};
+
+const phonePe = () => {
+    console.log("Payment done using PhonePe");
+};
+
+const paytm = () => {
+    console.log("Payment done using Paytm");
+};
+
+processPayment(gpay);
+processPayment(phonePe);
+processPayment(paytm);
+
+//task 8
+const executeAction = (callback) => {
+    console.log("Executing User Action...");
+    callback();
+};
+
+
+const loginUser = () => {
+    console.log("User Logged In");
+};
+
+const logout = () => {
+    console.log("User Logged Out");
+};
+
+const register = () => {
+    console.log("User Registered");
+};
+executeAction(loginUser);
+executeAction(logout);
+executeAction(register);
+</script>
