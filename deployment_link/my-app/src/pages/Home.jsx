@@ -217,6 +217,28 @@ const tasksData = [
     ]
   },
   {
+    day: "Day 20",
+    title: "Custom Hooks — useCounter, useToggle, useFetch, useLocalStorage, useSearch",
+    description: "Five production-ready custom hooks: independent counters, password toggle, API product fetch with loading/error states, localStorage persistence, and dynamic student search filtering.",
+    category: "State & Hooks",
+    tags: ["Custom Hooks", "useFetch", "useLocalStorage", "useSearch"],
+    difficulty: "Hard",
+    routes: [
+      { label: "Day Twenty", path: "/daytwenty" }
+    ]
+  },
+  {
+    day: "Day 21",
+    title: "useMemo — Product Search, Cart Total, Student & Employee Dashboard",
+    description: "Four useMemo-powered dashboards: filtered product search, shopping cart grand total with tax/discount, student placement stats, and employee salary expense — all with Theme Change to prove zero recalculation.",
+    category: "State & Hooks",
+    tags: ["useMemo", "Performance", "Memoization"],
+    difficulty: "Hard",
+    routes: [
+      { label: "Day Twenty One", path: "/twentyone" }
+    ]
+  },
+  {
     day: "Day 22",
     title: "Advanced React Context & Stores",
     description: "Investigating store patterns and dispatch actions to manipulate state records in real time.",

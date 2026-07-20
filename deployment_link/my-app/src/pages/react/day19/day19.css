@@ -1,0 +1,341 @@
+/* ============================
+   Day 19 — Auth / Protected Routes
+   Dark glassmorphism design
+   ============================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+.d19-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  font-family: "Inter", sans-serif;
+}
+
+/* ---- Auth Card ---- */
+.d19-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: d19-fadeUp 0.45s ease both;
+}
+
+@keyframes d19-fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.d19-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.d19-logo-icon {
+  font-size: 2.8rem;
+  filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.7));
+  animation: d19-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes d19-pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
+
+.d19-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.5px;
+}
+
+.d19-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  margin: 0 0 1.8rem;
+}
+
+/* ---- Form ---- */
+.d19-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.d19-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.d19-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.d19-input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-size: 0.95rem;
+  font-family: "Inter", sans-serif;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+.d19-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.d19-input:focus {
+  border-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+/* ---- Error ---- */
+.d19-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  color: #fca5a5;
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* ---- Button ---- */
+.d19-btn {
+  margin-top: 0.4rem;
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  box-shadow: 0 6px 20px rgba(109, 40, 217, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+}
+
+.d19-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(109, 40, 217, 0.6);
+}
+
+.d19-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.d19-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.d19-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: d19-spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes d19-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Switch link ---- */
+.d19-switch {
+  text-align: center;
+  margin-top: 1.4rem;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.d19-link {
+  color: #a78bfa;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.d19-link:hover {
+  color: #c4b5fd;
+  text-decoration: underline;
+}
+
+/* ============================
+   Home (Protected) Page
+   ============================ */
+
+.d19-home-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: d19-fadeUp 0.45s ease both;
+}
+
+.d19-home-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.d19-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+}
+
+.d19-home-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.d19-home-email {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0.2rem 0 0;
+}
+
+.d19-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 1.5rem 0;
+}
+
+/* Stat grid */
+.d19-home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.d19-stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.1rem;
+  text-align: center;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.d19-stat-card:hover {
+  background: rgba(139, 92, 246, 0.12);
+  transform: translateY(-3px);
+}
+
+.d19-stat-icon {
+  font-size: 1.6rem;
+}
+
+.d19-stat-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0.4rem 0 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.d19-stat-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #c4b5fd;
+  margin: 0;
+}
+
+/* Info box */
+.d19-home-info {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.d19-info-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e9d5ff;
+  margin: 0 0 0.8rem;
+}
+
+.d19-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.d19-info-list li {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Logout */
+.d19-logout-btn {
+  width: 100%;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1.5px solid rgba(239, 68, 68, 0.4);
+  border-radius: 12px;
+  padding: 0.8rem;
+  color: #fca5a5;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.d19-logout-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  transform: translateY(-2px);
+}

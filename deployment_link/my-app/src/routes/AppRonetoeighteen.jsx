@@ -29,6 +29,8 @@ import TodoList from "../pages/react/day14/TodoList"
 import DaysevenTeen from "../pages/react/day17/DaysevenTeen"
 import UseContextprocess from "../pages/react/day18/UseContextprocess"
 import Ninteen from "../pages/react/day19/Ninteen"
+import Daytwenty from "../pages/react/day20/Daytwenty"
+import TwentyOne from "../pages/react/day21/TwentyOne"
 import TwentyTwo from "../pages/react/day22/TwentyTwo"
 import DayTwentyFour from "../pages/react/day24/DayTwentyFour"
 
@@ -76,7 +78,9 @@ const AppRonetoeighteen = () => {
           <Route path = "/todolist" element = {<TodoList/>}/>
           <Route path = "/dayseventeen" element = {<DaysevenTeen/>}/>
           <Route path = "/dayeightteen" element = {<UseContextprocess/>}/>
-           <Route path = "/dayninteen" element = {<Ninteen/>}/>      
+           <Route path = "/dayninteen/*" element = {<Ninteen/>}/>      
+           <Route path = "/daytwenty" element = {<Daytwenty/>}/>      
+           <Route path = "/twentyone" element = {<TwentyOne/>}/>      
            <Route path = "/twentytwo" element = {<TwentyTwo/>}/>
             <Route path = "/twentyfour" element = {<DayTwentyFour/>}/>
         </Routes>
