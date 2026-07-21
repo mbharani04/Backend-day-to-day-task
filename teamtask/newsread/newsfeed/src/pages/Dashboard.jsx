@@ -1,289 +1,169 @@
 // ─── Dashboard Page ───────────────────────────────────────────────────────────
-// Dynamic statistics dashboard showing user activity from localStorage.
-
-import { useMemo, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import {
-  FiBookmark,
-  FiHeart,
-  FiSearch,
-  FiClock,
-  FiTrendingUp,
-  FiLogOut,
-  FiTag,
-  FiUser,
-  FiBarChart2,
-  FiTrash2,
+  FiBookmark, FiHeart, FiSearch, FiClock, FiActivity,
+  FiTrendingUp, FiExternalLink,
 } from "react-icons/fi";
-import Navbar from "../components/Navbar";
+import Navbar      from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
 import { useBookmarks } from "../context/BookmarkContext";
-import { formatDate, getInitials, getMostFrequent, capitalize } from "../utils/helpers";
-
-// Stat card component — rendered from array of objects
-const StatCard = ({ icon: Icon, label, value, color, bg }) => (
-  <div className={`${bg} border border-slate-700/40 rounded-2xl p-6 flex items-center gap-4`}>
-    <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center flex-shrink-0`}>
-      <Icon className="text-white text-xl" />
-    </div>
-    <div>
-      <p className="text-slate-400 text-sm">{label}</p>
-      <p className="text-white text-2xl font-extrabold">{value}</p>
-    </div>
-  </div>
-);
+import { getMostFrequent, formatDate, timeAgo } from "../utils/helpers";
+import { getInitials } from "../utils/helpers";
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
-  const { bookmarks, likes, bookmarkCount, likeCount } = useBookmarks();
-  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { bookmarks, likes } = useBookmarks();
 
-  // ── Derived data from localStorage ───────────────────────────────────────
-  // useMemo: recompute only when user or bookmarks change
   const recentlyViewed = useMemo(() => {
     if (!user) return [];
-    return JSON.parse(localStorage.getItem(`tf_recent_${user.id}`) || "[]");
-  }, [user, bookmarks]); // eslint-disable-line
+    try { return JSON.parse(localStorage.getItem(`tf_recent_${user.id}`) || "[]"); }
+    catch { return []; }
+  }, [user]);
 
   const searchHistory = useMemo(() => {
     if (!user) return [];
-    return JSON.parse(
-      localStorage.getItem(`tf_search_history_${user.id}`) || "[]"
-    );
+    try { return JSON.parse(localStorage.getItem(`tf_search_history_${user.id}`) || "[]"); }
+    catch { return []; }
   }, [user]);
 
-  // useMemo: compute favorite category from bookmarks using reduce()
   const favoriteCategory = useMemo(() => {
-    // reduce() — build frequency map of categories
-    const cats = bookmarks.reduce((acc, b) => {
-      if (b.category) acc.push(b.category);
-      return acc;
-    }, []);
+    const cats = [...bookmarks, ...likedArticles].map(a => a.category).filter(Boolean);
     return getMostFrequent(cats) || "None yet";
-  }, [bookmarks]);
+  }, [bookmarks, likedArticles]);
 
-  // ── Stats array of objects ────────────────────────────────────────────────
-  const stats = useMemo(
-    () => [
-      {
-        icon: FiBookmark,
-        label: "Bookmarked",
-        value: bookmarkCount,
-        color: "bg-amber-600",
-        bg: "bg-amber-500/5",
-      },
-      {
-        icon: FiHeart,
-        label: "Liked Articles",
-        value: likeCount,
-        color: "bg-rose-600",
-        bg: "bg-rose-500/5",
-      },
-      {
-        icon: FiSearch,
-        label: "Searches",
-        value: searchHistory.length,
-        color: "bg-cyan-600",
-        bg: "bg-cyan-500/5",
-      },
-      {
-        icon: FiClock,
-        label: "Recently Viewed",
-        value: recentlyViewed.length,
-        color: "bg-violet-600",
-        bg: "bg-violet-500/5",
-      },
-    ],
-    [bookmarkCount, likeCount, searchHistory.length, recentlyViewed.length]
-  );
-
-  const handleLogout = useCallback(() => {
-    logout();
-    navigate("/login");
-  }, [logout, navigate]);
-
-  const clearSearchHistory = useCallback(() => {
-    if (!user) return;
-    localStorage.removeItem(`tf_search_history_${user.id}`);
-    // Force re-render by reload (or you can use a state flag)
-    window.location.reload();
-  }, [user]);
+  const stats = [
+    { label: "Bookmarks",     value: bookmarks.length,       icon: FiBookmark, color: "text-amber-400",  bg: "bg-amber-500/10", border: "border-amber-500/20" },
+    { label: "Liked",         value: likedArticles.length,   icon: FiHeart,    color: "text-rose-400",   bg: "bg-rose-500/10",  border: "border-rose-500/20"  },
+    { label: "Searches",      value: searchHistory.length,   icon: FiSearch,   color: "text-indigo-400", bg: "bg-indigo-500/10",border: "border-indigo-500/20"},
+    { label: "Recently Seen", value: recentlyViewed.length,  icon: FiClock,    color: "text-cyan-400",   bg: "bg-cyan-500/10",  border: "border-cyan-500/20"  },
+  ];
 
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-8">
         {/* ── Header ── */}
-        <div className="flex items-start justify-between flex-wrap gap-4 mb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-violet-600 to-cyan-500 rounded-2xl flex items-center justify-center text-white text-xl font-extrabold shadow-lg shadow-violet-500/30">
-              {getInitials(user.fullName)}
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <FiBarChart2 className="text-violet-400" />
-                <span className="text-violet-400 text-sm font-semibold uppercase tracking-wide">
-                  Dashboard
-                </span>
-              </div>
-              <h1 className="text-2xl font-extrabold text-white">
-                Welcome back, {user.fullName.split(" ")[0]}!
-              </h1>
-              <p className="text-slate-400 text-sm">{user.email}</p>
-            </div>
+        <div className="glass rounded-2xl p-6 mb-8 flex items-center gap-5 anim-fade-up">
+          <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold flex-shrink-0"
+            style={{ fontFamily: "'Syne', sans-serif" }}>
+            {getInitials(user.fullName)}
           </div>
-
-          <button
-            id="dashboard-logout"
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 rounded-xl text-sm font-medium transition-all"
-          >
-            <FiLogOut />
-            Logout
-          </button>
+          <div>
+            <div className="flex items-center gap-2 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-0.5">
+              <FiActivity className="text-[10px]" /> Dashboard
+            </div>
+            <h1 className="text-2xl font-bold text-white" style={{ fontFamily: "'Syne', sans-serif" }}>
+              Welcome back, {user.fullName.split(" ")[0]}!
+            </h1>
+            <p className="text-[--text-muted] text-sm">{user.email} · Member since {formatDate(user.createdAt)}</p>
+          </div>
         </div>
 
-        {/* ── Stats Grid ── */}
-        {/* map() — render all stat cards dynamically from array of objects */}
+        {/* ── Stats ── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {stats.map((s) => (
-            <StatCard key={s.label} {...s} />
+          {stats.map(({ label, value, icon: Icon, color, bg, border }, i) => (
+            <div
+              key={label}
+              className={`rounded-2xl p-5 border ${border} ${bg} anim-fade-up d-${i + 1}`}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <Icon className={`text-sm ${color}`} />
+                <span className="text-[--text-muted] text-xs font-medium">{label}</span>
+              </div>
+              <p className={`text-3xl font-bold ${color}`} style={{ fontFamily: "'Syne', sans-serif" }}>
+                {value}
+              </p>
+            </div>
           ))}
         </div>
 
-        {/* ── Favorite Category ── */}
-        <div className="bg-slate-800/40 border border-slate-700/40 rounded-2xl p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <FiTrendingUp className="text-violet-400" />
-            <h2 className="text-white font-bold text-lg">Reading Insights</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-slate-900/60 rounded-xl p-4">
-              <p className="text-slate-400 text-xs uppercase tracking-wide mb-1">Favorite Category</p>
-              <p className="text-white font-bold text-lg capitalize">{favoriteCategory}</p>
+        {/* ── Insights ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div className="glass rounded-2xl p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <FiTrendingUp className="text-indigo-400 text-sm" />
+              <h3 className="text-sm font-bold text-white">Reading Insights</h3>
             </div>
-            <div className="bg-slate-900/60 rounded-xl p-4">
-              <p className="text-slate-400 text-xs uppercase tracking-wide mb-1">Member Since</p>
-              <p className="text-white font-bold text-lg">{formatDate(user.joinedAt)}</p>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-[--text-muted] text-xs">Favourite category</span>
+                <span className="badge badge-general capitalize">{favoriteCategory}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[--text-muted] text-xs">Total saves</span>
+                <span className="text-white font-semibold text-sm">{bookmarks.length + likedArticles.length}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[--text-muted] text-xs">Articles viewed</span>
+                <span className="text-white font-semibold text-sm">{recentlyViewed.length}</span>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* ── Two Column Layout: Recently Viewed + Search History ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
 
           {/* Recently Viewed */}
-          <div className="bg-slate-800/40 border border-slate-700/40 rounded-2xl p-6">
+          <div className="glass rounded-2xl p-5 lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <FiClock className="text-cyan-400" />
-              <h2 className="text-white font-bold">Recently Viewed</h2>
+              <FiClock className="text-cyan-400 text-sm" />
+              <h3 className="text-sm font-bold text-white">Recently Viewed</h3>
             </div>
             {recentlyViewed.length === 0 ? (
-              <p className="text-slate-500 text-sm text-center py-4">
-                No recently viewed articles yet
-              </p>
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <p className="text-[--text-muted] text-sm">No articles viewed yet.</p>
+                <Link to="/" className="text-indigo-400 text-xs mt-2 hover:underline">Browse the feed →</Link>
+              </div>
             ) : (
-              <div className="space-y-3">
-                {/* map() — render recently viewed from array of objects */}
-                {recentlyViewed.slice(0, 5).map((article, idx) => (
-                  <a
-                    key={article.url || idx}
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex gap-3 p-3 bg-slate-900/50 rounded-xl hover:bg-slate-900 transition-all group"
-                  >
-                    <img
-                      src={article.urlToImage || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=100"}
-                      alt=""
-                      className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
-                      onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=100"; }}
-                    />
+              <div className="space-y-2">
+                {recentlyViewed.slice(0, 4).map((article) => (
+                  <div key={article.url} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/4 transition-all">
+                    <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-[--bg-surface2]">
+                      <img
+                        src={article.urlToImage}
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                        onError={e => { e.target.src = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=80"; }}
+                      />
+                    </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-white text-xs font-semibold line-clamp-2 group-hover:text-violet-300 transition-colors">
-                        {article.title}
-                      </p>
-                      <p className="text-slate-500 text-xs mt-1 capitalize">
-                        {article.category} · {article.source?.name}
+                      <p className="text-[--text-primary] text-xs font-medium clamp-1">{article.title}</p>
+                      <p className="text-[--text-muted] text-[10px] mt-0.5">
+                        {article.category} · {article.source?.name} · {timeAgo(article.publishedAt)}
                       </p>
                     </div>
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Search History */}
-          <div className="bg-slate-800/40 border border-slate-700/40 rounded-2xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <FiSearch className="text-amber-400" />
-                <h2 className="text-white font-bold">Search History</h2>
-              </div>
-              {searchHistory.length > 0 && (
-                <button
-                  onClick={clearSearchHistory}
-                  className="text-slate-500 hover:text-rose-400 text-xs flex items-center gap-1 transition-colors"
-                >
-                  <FiTrash2 className="text-xs" />
-                  Clear
-                </button>
-              )}
-            </div>
-            {searchHistory.length === 0 ? (
-              <p className="text-slate-500 text-sm text-center py-4">
-                No search history yet
-              </p>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {/* map() — render search history tags dynamically */}
-                {searchHistory.slice(0, 15).map((term, idx) => (
-                  <span
-                    key={idx}
-                    className="flex items-center gap-1 bg-slate-900/60 border border-slate-700/50 text-slate-300 text-xs px-3 py-1.5 rounded-full"
-                  >
-                    <FiSearch className="text-xs text-slate-500" />
-                    {term}
-                  </span>
+                    <a href={article.url} target="_blank" rel="noreferrer" className="text-[--text-muted] hover:text-indigo-400 transition-colors flex-shrink-0">
+                      <FiExternalLink className="text-xs" />
+                    </a>
+                  </div>
                 ))}
               </div>
             )}
           </div>
         </div>
 
-        {/* ── Liked Articles Preview ── */}
-        {likes.length > 0 && (
-          <div className="bg-slate-800/40 border border-slate-700/40 rounded-2xl p-6">
+        {/* ── Search History ── */}
+        {searchHistory.length > 0 && (
+          <div className="glass rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-4">
-              <FiHeart className="text-rose-400" />
-              <h2 className="text-white font-bold">Liked Articles</h2>
-              <span className="ml-auto text-slate-500 text-sm">{likeCount} total</span>
+              <FiSearch className="text-indigo-400 text-sm" />
+              <h3 className="text-sm font-bold text-white">Recent Searches</h3>
             </div>
-            <div className="space-y-2">
-              {/* map() + slice() — show first 5 liked articles */}
-              {likes.slice(0, 5).map((article, idx) => (
-                <a
-                  key={article.url || idx}
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl hover:bg-slate-900 transition-all group"
+            <div className="flex flex-wrap gap-2">
+              {searchHistory.slice(0, 12).map(q => (
+                <Link
+                  key={q}
+                  to={`/?q=${encodeURIComponent(q)}`}
+                  className="text-indigo-300 text-xs bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 rounded-full hover:bg-indigo-500/20 transition-all"
                 >
-                  <FiHeart className="text-rose-400 flex-shrink-0 text-sm fill-rose-400" />
-                  <p className="text-white text-xs flex-1 line-clamp-1 group-hover:text-rose-300 transition-colors">
-                    {article.title}
-                  </p>
-                  <span className="text-slate-600 text-xs">{article.source?.name}</span>
-                </a>
+                  {q}
+                </Link>
               ))}
             </div>
           </div>
         )}
-      </main>
+      </div>
     </div>
   );
 };

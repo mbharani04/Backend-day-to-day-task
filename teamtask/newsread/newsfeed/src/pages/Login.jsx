@@ -1,6 +1,4 @@
-// ─── Login Page ───────────────────────────────────────────────────────────────
-// Premium animated split-screen login with glassmorphism and floating orbs.
-
+// ─── Login Page — Premium split screen ───────────────────────────────────────
 import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiMail, FiLock, FiEye, FiEyeOff, FiZap, FiAlertCircle, FiArrowRight } from "react-icons/fi";
@@ -9,18 +7,18 @@ import { useAuth } from "../context/AuthContext";
 const Login = () => {
   const { login }  = useAuth();
   const navigate   = useNavigate();
-  const [form, setForm]               = useState({ email: "", password: "" });
-  const [errors, setErrors]           = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading]         = useState(false);
-  const [apiError, setApiError]       = useState("");
+  const [form, setForm]             = useState({ email: "", password: "" });
+  const [errors, setErrors]         = useState({});
+  const [showPwd, setShowPwd]       = useState(false);
+  const [loading, setLoading]       = useState(false);
+  const [apiError, setApiError]     = useState("");
 
   const validate = useCallback(() => {
     const e = {};
-    if (!form.email.trim())              e.email    = "Email is required.";
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Enter a valid email.";
-    if (!form.password)                  e.password = "Password is required.";
-    else if (form.password.length < 6)   e.password = "Min. 6 characters.";
+    if (!form.email.trim())              e.email    = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Enter a valid email";
+    if (!form.password)                  e.password = "Password is required";
+    else if (form.password.length < 6)   e.password = "Min. 6 characters";
     return e;
   }, [form]);
 
@@ -36,73 +34,82 @@ const Login = () => {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 600));
+    await new Promise(r => setTimeout(r, 500));
     const res = login(form.email, form.password);
     setLoading(false);
     if (res.success) navigate("/");
     else setApiError(res.error);
   };
 
+  const FEATURES = ["🗞️  Real-time news feed", "🔖  Smart bookmarks", "🌙  Beautiful dark mode", "⚡  Infinite scroll"];
+
   return (
-    <div className="min-h-screen flex overflow-hidden" style={{background:"#020617"}}>
+    <div className="min-h-screen flex" style={{ background: "var(--bg-base)" }}>
 
-      {/* ── Left panel ── */}
-      <div className="hidden lg:flex lg:w-1/2 relative flex-col items-center justify-center p-16 overflow-hidden"
-        style={{background:"linear-gradient(135deg,rgba(124,58,237,0.2)0%,rgba(6,182,212,0.08)100%)"}}>
+      {/* Left panel */}
+      <div className="hidden lg:flex lg:w-5/12 flex-col items-start justify-between p-12 relative overflow-hidden"
+        style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(34,211,238,0.06) 100%)", borderRight: "1px solid var(--border)" }}>
 
-        {/* Animated orbs */}
-        <div className="absolute top-1/4 left-1/5 w-80 h-80 bg-violet-600/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/5 w-64 h-64 bg-cyan-500/15 rounded-full blur-3xl animate-float" style={{animationDelay:"2s"}} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-violet-500/10 rounded-full blur-2xl animate-slow-spin" />
+        {/* Background blobs */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl" style={{ animation: "float 8s ease-in-out infinite" }} />
+        <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-cyan-500/8 rounded-full blur-3xl" style={{ animation: "float 10s ease-in-out infinite 2s" }} />
 
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5"
-          style={{backgroundImage:"linear-gradient(rgba(124,58,237,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.5) 1px,transparent 1px)",backgroundSize:"40px 40px"}} />
+        {/* Grid */}
+        <div className="absolute inset-0 opacity-[0.04]"
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
 
-        <div className="relative z-10 text-center max-w-sm animate-fade-in-up">
-          <div className="w-20 h-20 bg-gradient-to-br from-violet-600 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-8 animate-glow">
-            <FiZap className="text-white text-3xl" />
+        {/* Logo */}
+        <div className="relative z-10 flex items-center gap-2.5">
+          <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-cyan-500 rounded-xl flex items-center justify-center">
+            <FiZap className="text-white text-sm" />
           </div>
-          <h1 className="text-5xl font-extrabold text-white mb-4" style={{fontFamily:"'Syne',sans-serif"}}>
-            Truth<span className="gradient-text">Feed</span>
-          </h1>
-          <p className="text-slate-300 text-xl font-medium mb-3">Stay Updated.</p>
-          <p className="text-slate-300 text-xl font-medium mb-3">Stay Informed.</p>
-          <p className="text-violet-300 text-xl font-bold">Stay Ahead.</p>
+          <span className="text-xl font-bold text-white" style={{ fontFamily: "'Syne', sans-serif" }}>
+            Truth<span className="text-gradient">Feed</span>
+          </span>
+        </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-3">
-            {["🔴 Live News Feed","🔖 Smart Bookmarks","🌙 Dark Mode","⚡ Infinite Scroll"].map(f => (
-              <div key={f} className="glass text-white text-sm px-4 py-3 rounded-2xl text-left font-medium">
-                {f}
+        {/* Main content */}
+        <div className="relative z-10 space-y-6">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-2 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+              Stay ahead<br />of the news.
+            </h1>
+            <p className="text-[--text-secondary] text-base leading-relaxed">
+              Real-time headlines from trusted sources, personalised just for you.
+            </p>
+          </div>
+          <div className="space-y-2.5">
+            {FEATURES.map(f => (
+              <div key={f} className="flex items-center gap-3 text-[--text-secondary] text-sm">
+                <span>{f}</span>
               </div>
             ))}
           </div>
         </div>
+
+        <p className="relative z-10 text-[--text-muted] text-xs">© 2026 TruthFeed</p>
       </div>
 
-      {/* ── Right panel (form) ── */}
+      {/* Right panel */}
       <div className="flex-1 flex items-center justify-center p-6 lg:p-16">
-        <div className="w-full max-w-sm animate-slide-right">
-
+        <div className="w-full max-w-sm anim-slide-r">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-10">
-            <div className="w-9 h-9 bg-gradient-to-br from-violet-600 to-cyan-500 rounded-xl flex items-center justify-center animate-glow">
+            <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-cyan-500 rounded-xl flex items-center justify-center">
               <FiZap className="text-white text-sm" />
             </div>
-            <span className="text-white font-bold text-xl" style={{fontFamily:"'Syne',sans-serif"}}>
-              Truth<span className="gradient-text">Feed</span>
+            <span className="text-lg font-bold text-white" style={{ fontFamily: "'Syne', sans-serif" }}>
+              Truth<span className="text-gradient">Feed</span>
             </span>
           </div>
 
-          <h2 className="text-3xl font-extrabold text-white mb-1" style={{fontFamily:"'Syne',sans-serif"}}>
-            Welcome back
-          </h2>
-          <p className="text-slate-500 mb-8 text-sm">Sign in to your account</p>
+          <h2 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: "'Syne', sans-serif" }}>Welcome back</h2>
+          <p className="text-[--text-muted] text-sm mb-7">Sign in to your account</p>
 
-          {/* Error */}
+          {/* API error */}
           {apiError && (
-            <div className="flex items-center gap-3 bg-rose-500/10 border border-rose-500/30 text-rose-400 rounded-2xl px-4 py-3 mb-6 text-sm animate-bounce-in">
-              <FiAlertCircle className="flex-shrink-0" />
+            <div className="flex items-center gap-2.5 bg-rose-500/10 border border-rose-500/25 text-rose-400 rounded-xl px-4 py-3 mb-5 text-sm anim-scale-in">
+              <FiAlertCircle className="flex-shrink-0 text-base" />
               {apiError}
             </div>
           )}
@@ -110,85 +117,60 @@ const Login = () => {
           <form onSubmit={handleSubmit} noValidate className="space-y-4">
             {/* Email */}
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                Email Address
-              </label>
-              <div className={`flex items-center gap-3 rounded-2xl px-4 py-3.5 transition-all duration-300 border ${
-                errors.email
-                  ? "bg-rose-500/5 border-rose-500/50"
-                  : "bg-slate-800/60 border-slate-700/50 focus-within:border-violet-500/60 focus-within:bg-slate-800/80 focus-within:shadow-lg focus-within:shadow-violet-500/10"
+              <label className="block text-xs font-semibold text-[--text-muted] uppercase tracking-wider mb-1.5">Email</label>
+              <div className={`flex items-center gap-2.5 rounded-xl px-3.5 py-3 border transition-all ${
+                errors.email ? "border-rose-500/50 bg-rose-500/5" : "border-[--border] bg-[--bg-surface] focus-within:border-indigo-500/50 focus-within:shadow-[0_0_0_3px_rgba(99,102,241,0.08)]"
               }`}>
-                <FiMail className="text-slate-500 flex-shrink-0" />
+                <FiMail className="text-[--text-muted] text-sm flex-shrink-0" />
                 <input
                   id="login-email" name="email" type="email"
                   value={form.email} onChange={handleChange}
                   placeholder="you@example.com"
-                  className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none"
+                  className="flex-1 bg-transparent text-sm text-[--text-primary] placeholder-[--text-muted] outline-none"
                   autoComplete="email"
                 />
               </div>
-              {errors.email && (
-                <p className="text-rose-400 text-xs mt-1.5 flex items-center gap-1">
-                  <FiAlertCircle className="text-xs" /> {errors.email}
-                </p>
-              )}
+              {errors.email && <p className="text-rose-400 text-xs mt-1.5 flex items-center gap-1"><FiAlertCircle className="text-[10px]" /> {errors.email}</p>}
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                Password
-              </label>
-              <div className={`flex items-center gap-3 rounded-2xl px-4 py-3.5 transition-all duration-300 border ${
-                errors.password
-                  ? "bg-rose-500/5 border-rose-500/50"
-                  : "bg-slate-800/60 border-slate-700/50 focus-within:border-violet-500/60 focus-within:bg-slate-800/80 focus-within:shadow-lg focus-within:shadow-violet-500/10"
+              <label className="block text-xs font-semibold text-[--text-muted] uppercase tracking-wider mb-1.5">Password</label>
+              <div className={`flex items-center gap-2.5 rounded-xl px-3.5 py-3 border transition-all ${
+                errors.password ? "border-rose-500/50 bg-rose-500/5" : "border-[--border] bg-[--bg-surface] focus-within:border-indigo-500/50 focus-within:shadow-[0_0_0_3px_rgba(99,102,241,0.08)]"
               }`}>
-                <FiLock className="text-slate-500 flex-shrink-0" />
+                <FiLock className="text-[--text-muted] text-sm flex-shrink-0" />
                 <input
                   id="login-password" name="password"
-                  type={showPassword ? "text" : "password"}
+                  type={showPwd ? "text" : "password"}
                   value={form.password} onChange={handleChange}
                   placeholder="••••••••"
-                  className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none"
+                  className="flex-1 bg-transparent text-sm text-[--text-primary] placeholder-[--text-muted] outline-none"
                   autoComplete="current-password"
                 />
-                <button type="button" onClick={() => setShowPassword(p => !p)}
-                  className="text-slate-500 hover:text-slate-200 transition-colors">
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                <button type="button" onClick={() => setShowPwd(p => !p)} className="text-[--text-muted] hover:text-white transition-colors">
+                  {showPwd ? <FiEyeOff className="text-sm" /> : <FiEye className="text-sm" />}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-rose-400 text-xs mt-1.5 flex items-center gap-1">
-                  <FiAlertCircle className="text-xs" /> {errors.password}
-                </p>
-              )}
+              {errors.password && <p className="text-rose-400 text-xs mt-1.5 flex items-center gap-1"><FiAlertCircle className="text-[10px]" /> {errors.password}</p>}
             </div>
 
             {/* Submit */}
             <button
               id="login-submit" type="submit" disabled={loading}
-              className="btn-glow group w-full flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-bold py-3.5 rounded-2xl mt-2 shadow-xl shadow-violet-500/25 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="btn-primary w-full justify-center py-3 text-sm mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Signing in...
-                </>
+                <><span className="w-4 h-4 border-2 border-white/25 border-t-white rounded-full" style={{ animation: "spin 0.7s linear infinite" }} /> Signing in...</>
               ) : (
-                <>
-                  Sign In
-                  <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </>
+                <>Sign In <FiArrowRight className="text-xs" /></>
               )}
             </button>
           </form>
 
-          <p className="text-center text-slate-500 text-sm mt-6">
+          <p className="text-center text-[--text-muted] text-sm mt-6">
             No account?{" "}
-            <Link to="/register" className="text-violet-400 hover:text-violet-300 font-semibold transition-colors">
-              Create one free →
-            </Link>
+            <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors">Create one free →</Link>
           </p>
         </div>
       </div>

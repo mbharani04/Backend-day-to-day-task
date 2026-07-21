@@ -1,147 +1,132 @@
 // ─── Bookmarks Page ───────────────────────────────────────────────────────────
-// View, search, remove, and clear all bookmarks stored in localStorage.
-
 import { useState, useMemo, useCallback } from "react";
-import { FiBookmark, FiSearch, FiTrash2, FiX, FiExternalLink } from "react-icons/fi";
-import Navbar from "../components/Navbar";
-import NewsCard from "../components/NewsCard";
+import { FiSearch, FiTrash2, FiBookmark, FiGrid, FiList, FiX } from "react-icons/fi";
+import Navbar    from "../components/Navbar";
+import NewsCard  from "../components/NewsCard";
 import { useBookmarks } from "../context/BookmarkContext";
 
 const Bookmarks = () => {
-  const { bookmarks, clearAllBookmarks, bookmarkCount } = useBookmarks();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [showConfirm, setShowConfirm] = useState(false);
+  const { bookmarks, clearAll } = useBookmarks();
+  const [search, setSearch]     = useState("");
+  const [view, setView]         = useState("grid"); // "grid" | "list"
 
-  // useMemo: filter bookmarks only when bookmarks array or search changes
-  const filteredBookmarks = useMemo(() => {
-    if (!searchQuery.trim()) return bookmarks;
-    const q = searchQuery.toLowerCase();
-    // filter() — JavaScript array method
+  const filtered = useMemo(() => {
+    if (!search.trim()) return bookmarks;
+    const q = search.toLowerCase();
     return bookmarks.filter(
-      (b) =>
-        b.title?.toLowerCase().includes(q) ||
-        b.source?.name?.toLowerCase().includes(q) ||
-        b.author?.toLowerCase().includes(q) ||
-        b.category?.toLowerCase().includes(q) ||
-        b.description?.toLowerCase().includes(q)
+      a =>
+        a.title?.toLowerCase().includes(q) ||
+        a.source?.name?.toLowerCase().includes(q) ||
+        a.category?.toLowerCase().includes(q)
     );
-  }, [bookmarks, searchQuery]);
+  }, [bookmarks, search]);
 
-  // useCallback: stable handler for clear all
   const handleClearAll = useCallback(() => {
-    clearAllBookmarks();
-    setShowConfirm(false);
-  }, [clearAllBookmarks]);
+    if (window.confirm("Remove all bookmarks?")) clearAll();
+  }, [clearAll]);
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-        {/* ── Header ── */}
-        <div className="flex items-start justify-between mb-8 gap-4 flex-wrap">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-8">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <FiBookmark className="text-amber-400 text-xl" />
-              <span className="text-amber-400 text-sm font-semibold uppercase tracking-wide">
-                Your Library
-              </span>
+            <div className="flex items-center gap-2 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-1">
+              <FiBookmark className="text-[11px]" /> Your Library
             </div>
-            <h1 className="text-3xl font-extrabold text-white">Bookmarks</h1>
-            <p className="text-slate-400 text-sm mt-1">
-              {bookmarkCount} article{bookmarkCount !== 1 ? "s" : ""} saved
+            <h1 className="text-3xl font-bold text-white" style={{ fontFamily: "'Syne', sans-serif" }}>
+              Bookmarks
+            </h1>
+            <p className="text-[--text-muted] text-sm mt-0.5">
+              {bookmarks.length} {bookmarks.length === 1 ? "article" : "articles"} saved
             </p>
           </div>
 
-          {bookmarkCount > 0 && (
-            <button
-              id="clear-bookmarks-btn"
-              onClick={() => setShowConfirm(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 rounded-xl text-sm font-medium transition-all"
-            >
-              <FiTrash2 />
-              Clear All
-            </button>
+          {bookmarks.length > 0 && (
+            <div className="flex items-center gap-2">
+              {/* View toggle */}
+              <div className="flex items-center gap-1 p-1 rounded-lg bg-[--bg-surface2] border border-[--border]">
+                <button
+                  onClick={() => setView("grid")}
+                  className={`w-8 h-7 flex items-center justify-center rounded text-xs transition-all ${view === "grid" ? "bg-indigo-500 text-white" : "text-[--text-muted] hover:text-white"}`}
+                >
+                  <FiGrid />
+                </button>
+                <button
+                  onClick={() => setView("list")}
+                  className={`w-8 h-7 flex items-center justify-center rounded text-xs transition-all ${view === "list" ? "bg-indigo-500 text-white" : "text-[--text-muted] hover:text-white"}`}
+                >
+                  <FiList />
+                </button>
+              </div>
+              <button onClick={handleClearAll} className="btn-ghost text-rose-400 border-rose-500/20 hover:bg-rose-500/10">
+                <FiTrash2 className="text-xs" /> Clear All
+              </button>
+            </div>
           )}
         </div>
 
-        {/* ── Confirm Dialog ── */}
-        {showConfirm && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-sm w-full shadow-xl">
-              <h3 className="text-white font-bold text-lg mb-2">Clear all bookmarks?</h3>
-              <p className="text-slate-400 text-sm mb-6">
-                This will permanently remove all {bookmarkCount} bookmarked articles.
-              </p>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowConfirm(false)}
-                  className="flex-1 py-2.5 bg-slate-700 text-white rounded-xl text-sm hover:bg-slate-600 transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleClearAll}
-                  className="flex-1 py-2.5 bg-rose-600 text-white rounded-xl text-sm hover:bg-rose-500 transition-all"
-                >
-                  Clear All
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── Search Bar ── */}
-        {bookmarkCount > 0 && (
-          <div className="flex items-center gap-3 bg-slate-800/60 border border-slate-700/60 rounded-xl px-4 py-3 mb-8 focus-within:border-amber-500/50 focus-within:ring-2 focus-within:ring-amber-500/10 transition-all">
-            <FiSearch className="text-slate-400" />
+        {/* Search */}
+        {bookmarks.length > 0 && (
+          <div className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-[--bg-surface] border border-[--border] focus-within:border-indigo-500/50 transition-all mb-6 max-w-md">
+            <FiSearch className="text-[--text-muted] text-sm" />
             <input
-              id="bookmark-search"
               type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search your bookmarks..."
-              className="flex-1 bg-transparent text-white placeholder-slate-500 text-sm outline-none"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search saved articles..."
+              className="flex-1 bg-transparent text-sm text-[--text-primary] placeholder-[--text-muted] outline-none"
             />
-            {searchQuery && (
-              <button onClick={() => setSearchQuery("")} className="text-slate-400 hover:text-white">
-                <FiX />
+            {search && (
+              <button onClick={() => setSearch("")} className="text-[--text-muted] hover:text-white">
+                <FiX className="text-xs" />
               </button>
             )}
           </div>
         )}
 
-        {/* ── Empty State ── */}
-        {bookmarkCount === 0 && (
-          <div className="flex flex-col items-center justify-center py-24 gap-4">
-            <div className="w-20 h-20 bg-amber-500/10 rounded-full flex items-center justify-center">
-              <FiBookmark className="text-amber-400 text-3xl" />
+        {/* Empty state */}
+        {bookmarks.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-28 gap-5 anim-scale-in">
+            <div className="w-20 h-20 rounded-2xl bg-[--bg-surface2] border border-[--border] flex items-center justify-center">
+              <FiBookmark className="text-3xl text-[--text-muted]" />
             </div>
             <div className="text-center">
-              <p className="text-white font-semibold text-lg mb-2">No bookmarks yet</p>
-              <p className="text-slate-400 text-sm max-w-xs">
+              <p className="text-white font-semibold text-xl mb-2">No bookmarks yet</p>
+              <p className="text-[--text-muted] text-sm max-w-xs leading-relaxed">
                 Browse the news feed and click the bookmark icon on any article to save it here.
               </p>
             </div>
           </div>
         )}
 
-        {/* ── No search results ── */}
-        {bookmarkCount > 0 && filteredBookmarks.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-slate-400">No bookmarks match &quot;{searchQuery}&quot;</p>
+        {/* No search results */}
+        {bookmarks.length > 0 && filtered.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-20 gap-4">
+            <div className="text-4xl">🔍</div>
+            <p className="text-white font-semibold">No results for "{search}"</p>
+            <button onClick={() => setSearch("")} className="btn-ghost">Clear search</button>
           </div>
         )}
 
-        {/* ── Bookmarks Grid ── */}
-        {/* map() — render all bookmarks dynamically */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredBookmarks.map((article, idx) => (
-            <NewsCard key={article.url || idx} article={article} />
-          ))}
-        </div>
-      </main>
+        {/* Grid / List */}
+        {filtered.length > 0 && (
+          <div className={view === "grid"
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+            : "space-y-3"}>
+            {filtered.map((article, i) => (
+              <NewsCard
+                key={article.url}
+                article={article}
+                index={i}
+                variant={view === "list" ? "compact" : "default"}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
