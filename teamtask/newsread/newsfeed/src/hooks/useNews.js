@@ -84,7 +84,13 @@ const useNews = (category = "general", searchQuery = "") => {
     }
   }, [loading, hasMore]);
 
-  return { articles, loading, error, hasMore, loadMore, totalResults };
+  // ── Retry on error ────────────────────────────────────────────────────────
+  const retryLoad = useCallback(() => {
+    setError(null);
+    fetchNews(page);
+  }, [fetchNews, page]);
+
+  return { articles, loading, error, hasMore, loadMore, totalResults, retryLoad };
 };
 
 export default useNews;
