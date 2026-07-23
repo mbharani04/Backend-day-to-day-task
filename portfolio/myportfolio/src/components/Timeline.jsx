@@ -1,13 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaBriefcase, FaGraduationCap, FaCalendarAlt, FaAward, FaMapMarkerAlt } from 'react-icons/fa';
+import Galaxy from './Galaxy';
 
 export default function Timeline() {
   return (
     <section id="experience" className="py-24 relative overflow-hidden bg-black/5">
+      {/* Galaxy Background for Experience & Education section */}
+      <div className="absolute inset-0 z-0 opacity-80 pointer-events-auto">
+        <Galaxy 
+          mouseRepulsion={true}
+          mouseInteraction={true}
+          density={1.5}
+          glowIntensity={0.6}
+          saturation={0.8}
+          hueShift={200}
+          transparent={true}
+        />
+      </div>
+
       {/* Decorative gradient blur in background */}
-      <div className="absolute top-[20%] right-[-10%] w-[350px] h-[350px] bg-brand-secondary/5 rounded-full blur-[90px] pointer-events-none" />
-      <div className="absolute bottom-[25%] left-[-10%] w-[350px] h-[350px] bg-brand-accent/5 rounded-full blur-[90px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[-10%] w-[350px] h-[350px] bg-brand-secondary/5 rounded-full blur-[90px] pointer-events-none z-0" />
+      <div className="absolute bottom-[25%] left-[-10%] w-[350px] h-[350px] bg-brand-accent/5 rounded-full blur-[90px] pointer-events-none z-0" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         

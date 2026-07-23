@@ -250,6 +250,17 @@ const tasksData = [
     ]
   },
   {
+    day: "Day 23",
+    title: "Advanced React Context & Stores",
+    description: "Investigating store patterns and dispatch actions to manipulate state records in real time.",
+    category: "Advanced Patterns",
+    tags: ["State Store", "Reducers"],
+    difficulty: "Hard",
+    routes: [
+      { label: "Day Twenty Three", path: "/twentythree" }
+    ]
+  },
+  {
     day: "Day 24",
     title: "Full Stack MERN Connection",
     description: "Integrating backend API requests (Express/Node) with React frontend state, completing MERN loop.",
@@ -324,7 +335,7 @@ const Home = () => {
       {/* Hero Welcome Banner */}
       <section className="mb-10 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-slate-50/50 p-8 md:p-10 backdrop-blur-md shadow-xl shadow-slate-100/50 relative">
         <div className="absolute top-0 right-0 h-40 w-40 bg-gradient-to-bl from-indigo-500/5 to-transparent blur-2xl" />
-        
+
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold tracking-wider text-indigo-600 ring-1 ring-indigo-500/20">
@@ -339,7 +350,7 @@ const Home = () => {
               <span className="font-semibold text-slate-900">Bharani M</span>. Filter, search, and run each demo directly.
             </p>
           </div>
-          
+
           <div className="flex flex-col items-start md:items-end gap-1.5 p-4 rounded-2xl bg-white border border-slate-200 backdrop-blur min-w-[200px] shadow-sm">
             <span className="text-xs uppercase tracking-widest text-slate-400 font-semibold">Workspace Status</span>
             <div className="flex items-center gap-2">
@@ -516,11 +527,10 @@ const Home = () => {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition shrink-0 ring-1 cursor-pointer ${
-                    selectedCategory === cat
-                      ? "bg-indigo-600 text-white ring-indigo-600"
-                      : "bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300 ring-transparent"
-                  }`}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition shrink-0 ring-1 cursor-pointer ${selectedCategory === cat
+                    ? "bg-indigo-600 text-white ring-indigo-600"
+                    : "bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300 ring-transparent"
+                    }`}
                 >
                   {cat}
                 </button>

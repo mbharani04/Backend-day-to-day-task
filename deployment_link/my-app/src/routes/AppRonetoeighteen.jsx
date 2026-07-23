@@ -32,6 +32,7 @@ import Ninteen from "../pages/react/day19/Ninteen"
 import Daytwenty from "../pages/react/day20/Daytwenty"
 import TwentyOne from "../pages/react/day21/TwentyOne"
 import TwentyTwo from "../pages/react/day22/TwentyTwo"
+import TwentyThree from "../pages/react/day23/TwentyThree"
 import DayTwentyFour from "../pages/react/day24/DayTwentyFour"
 
 
@@ -82,6 +83,7 @@ const AppRonetoeighteen = () => {
            <Route path = "/daytwenty" element = {<Daytwenty/>}/>      
            <Route path = "/twentyone" element = {<TwentyOne/>}/>      
            <Route path = "/twentytwo" element = {<TwentyTwo/>}/>
+           <Route path = "/twentythree" element = {<TwentyThree/>}/>
             <Route path = "/twentyfour" element = {<DayTwentyFour/>}/>
         </Routes>
       </main>

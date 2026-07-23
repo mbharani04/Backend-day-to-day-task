@@ -1,0 +1,220 @@
+/* Hero-specific isolated styling for Uiverse Starfield pattern */
+
+.hero-starfield-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse at bottom, #0f172a 0%, #050811 100%);
+}
+
+.hero-starfield-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 8, 17, 0.8) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Layer 1: Small Stars */
+.hero-stars-1 {
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: 
+    384px 1720px #fff, 1420px 850px #fff, 910px 120px #fff, 1650px 1430px #fff, 240px 610px #fff,
+    1150px 1890px #fff, 780px 420px #fff, 1890px 980px #fff, 510px 1230px #fff, 1340px 310px #fff,
+    140px 1560px #fff, 1760px 110px #fff, 990px 1670px #fff, 420px 890px #fff, 1260px 1450px #fff,
+    630px 210px #fff, 1580px 760px #fff, 310px 1380px #fff, 1070px 540px #fff, 1920px 1780px #fff,
+    850px 960px #fff, 460px 1640px #fff, 1490px 480px #fff, 210px 1050px #fff, 1680px 1910px #fff,
+    730px 730px #fff, 1190px 1210px #fff, 50px 390px #fff, 1380px 1690px #fff, 940px 290px #fff,
+    1820px 1320px #fff, 390px 770px #fff, 1030px 1830px #fff, 670px 1140px #fff, 1550px 240px #fff,
+    290px 1950px #fff, 1220px 620px #fff, 810px 1480px #fff, 1710px 870px #fff, 450px 120px #fff,
+    1390px 1010px #fff, 180px 1730px #fff, 1110px 360px #fff, 600px 1590px #fff, 1970px 510px #fff,
+    880px 1870px #fff, 1470px 1180px #fff, 340px 490px #fff, 1630px 1610px #fff, 750px 50px #fff,
+    1290px 840px #fff, 90px 1270px #fff, 1850px 330px #fff, 530px 1790px #fff, 1060px 930px #fff,
+    1740px 1490px #fff, 260px 280px #fff, 1370px 1940px #fff, 690px 660px #fff, 1510px 1370px #fff,
+    410px 1020px #fff, 1140px 170px #fff, 830px 1520px #fff, 1900px 790px #fff, 160px 820px #fff,
+    1270px 1250px #fff, 610px 1980px #fff, 1690px 440px #fff, 980px 1090px #fff, 370px 1460px #fff,
+    1440px 690px #fff, 220px 1860px #fff, 1080px 1310px #fff, 550px 370px #fff, 1780px 1820px #fff;
+  animation: heroAnimStar 50s linear infinite;
+}
+
+.hero-stars-1::after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: 
+    384px 1720px #fff, 1420px 850px #fff, 910px 120px #fff, 1650px 1430px #fff, 240px 610px #fff,
+    1150px 1890px #fff, 780px 420px #fff, 1890px 980px #fff, 510px 1230px #fff, 1340px 310px #fff,
+    140px 1560px #fff, 1760px 110px #fff, 990px 1670px #fff, 420px 890px #fff, 1260px 1450px #fff,
+    630px 210px #fff, 1580px 760px #fff, 310px 1380px #fff, 1070px 540px #fff, 1920px 1780px #fff,
+    850px 960px #fff, 460px 1640px #fff, 1490px 480px #fff, 210px 1050px #fff, 1680px 1910px #fff,
+    730px 730px #fff, 1190px 1210px #fff, 50px 390px #fff, 1380px 1690px #fff, 940px 290px #fff,
+    1820px 1320px #fff, 390px 770px #fff, 1030px 1830px #fff, 670px 1140px #fff, 1550px 240px #fff,
+    290px 1950px #fff, 1220px 620px #fff, 810px 1480px #fff, 1710px 870px #fff, 450px 120px #fff,
+    1390px 1010px #fff, 180px 1730px #fff, 1110px 360px #fff, 600px 1590px #fff, 1970px 510px #fff,
+    880px 1870px #fff, 1470px 1180px #fff, 340px 490px #fff, 1630px 1610px #fff, 750px 50px #fff,
+    1290px 840px #fff, 90px 1270px #fff, 1850px 330px #fff, 530px 1790px #fff, 1060px 930px #fff,
+    1740px 1490px #fff, 260px 280px #fff, 1370px 1940px #fff, 690px 660px #fff, 1510px 1370px #fff,
+    410px 1020px #fff, 1140px 170px #fff, 830px 1520px #fff, 1900px 790px #fff, 160px 820px #fff,
+    1270px 1250px #fff, 610px 1980px #fff, 1690px 440px #fff, 980px 1090px #fff, 370px 1460px #fff,
+    1440px 690px #fff, 220px 1860px #fff, 1080px 1310px #fff, 550px 370px #fff, 1780px 1820px #fff;
+}
+
+/* Layer 2: Medium Glowing Stars */
+.hero-stars-2 {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: 
+    1250px 940px rgba(56, 189, 248, 0.9), 420px 1760px #fff, 1680px 310px rgba(168, 85, 247, 0.8),
+    870px 1380px #fff, 210px 480px #fff, 1540px 1620px rgba(56, 189, 248, 0.9), 980px 610px #fff,
+    1830px 1190px #fff, 640px 1850px rgba(168, 85, 247, 0.9), 1310px 270px #fff, 110px 1410px #fff,
+    1750px 790px rgba(56, 189, 248, 0.8), 790px 190px #fff, 1460px 1080px #fff, 350px 920px #fff,
+    1090px 1670px rgba(168, 85, 247, 0.8), 580px 530px #fff, 1910px 1490px #fff, 830px 1120px #fff,
+    1620px 430px rgba(56, 189, 248, 0.9), 270px 1880px #fff, 1370px 740px #fff, 710px 1550px #fff,
+    1490px 180px rgba(168, 85, 247, 0.9), 490px 1290px #fff, 1180px 860px #fff, 1860px 1640px #fff,
+    920px 380px rgba(56, 189, 248, 0.8), 160px 1010px #fff, 1410px 1810px #fff, 660px 720px #fff,
+    1790px 1280px rgba(168, 85, 247, 0.9), 1040px 210px #fff, 380px 1530px #fff, 1280px 1170px #fff,
+    530px 970px rgba(56, 189, 248, 0.9), 1950px 650px #fff, 860px 1740px #fff, 1570px 910px #fff;
+  animation: heroAnimStar 90s linear infinite;
+}
+
+.hero-stars-2::after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: 
+    1250px 940px rgba(56, 189, 248, 0.9), 420px 1760px #fff, 1680px 310px rgba(168, 85, 247, 0.8),
+    870px 1380px #fff, 210px 480px #fff, 1540px 1620px rgba(56, 189, 248, 0.9), 980px 610px #fff,
+    1830px 1190px #fff, 640px 1850px rgba(168, 85, 247, 0.9), 1310px 270px #fff, 110px 1410px #fff,
+    1750px 790px rgba(56, 189, 248, 0.8), 790px 190px #fff, 1460px 1080px #fff, 350px 920px #fff,
+    1090px 1670px rgba(168, 85, 247, 0.8), 580px 530px #fff, 1910px 1490px #fff, 830px 1120px #fff,
+    1620px 430px rgba(56, 189, 248, 0.9), 270px 1880px #fff, 1370px 740px #fff, 710px 1550px #fff,
+    1490px 180px rgba(168, 85, 247, 0.9), 490px 1290px #fff, 1180px 860px #fff, 1860px 1640px #fff,
+    920px 380px rgba(56, 189, 248, 0.8), 160px 1010px #fff, 1410px 1810px #fff, 660px 720px #fff,
+    1790px 1280px rgba(168, 85, 247, 0.9), 1040px 210px #fff, 380px 1530px #fff, 1280px 1170px #fff,
+    530px 970px rgba(56, 189, 248, 0.9), 1950px 650px #fff, 860px 1740px #fff, 1570px 910px #fff;
+}
+
+/* Layer 3: Large Bright Stars with Twinkle */
+.hero-stars-3 {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 
+    620px 340px #38bdf8, 1480px 1120px #a855f7, 290px 1690px #38bdf8, 1840px 670px #06b6d4,
+    950px 1460px #fff, 1170px 410px #38bdf8, 510px 1150px #a855f7, 1630px 1820px #38bdf8,
+    140px 780px #fff, 1360px 1510px #06b6d4, 820px 830px #a855f7, 1720px 240px #38bdf8,
+    440px 1930px #fff, 1080px 1290px #38bdf8, 1910px 1050px #a855f7, 730px 520px #06b6d4;
+  animation: heroAnimStar 140s linear infinite, heroTwinkle 4s ease-in-out infinite alternate;
+}
+
+.hero-stars-3::after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 
+    620px 340px #38bdf8, 1480px 1120px #a855f7, 290px 1690px #38bdf8, 1840px 670px #06b6d4,
+    950px 1460px #fff, 1170px 410px #38bdf8, 510px 1150px #a855f7, 1630px 1820px #38bdf8,
+    140px 780px #fff, 1360px 1510px #06b6d4, 820px 830px #a855f7, 1720px 240px #38bdf8,
+    440px 1930px #fff, 1080px 1290px #38bdf8, 1910px 1050px #a855f7, 730px 520px #06b6d4;
+}
+
+/* Keyframe Animations */
+@keyframes heroAnimStar {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-2000px);
+  }
+}
+
+@keyframes heroTwinkle {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Shooting Stars Effect */
+.hero-shooting-star {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(-45deg, rgba(56, 189, 248, 1), rgba(168, 85, 247, 0));
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.8));
+  animation: heroTail 3s ease-in-out infinite, heroShooting 3s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.hero-shooting-star-1 {
+  top: 15%;
+  left: 60%;
+  width: 120px;
+  animation-delay: 1.5s;
+}
+
+.hero-shooting-star-2 {
+  top: 35%;
+  left: 20%;
+  width: 160px;
+  animation-delay: 4.2s;
+}
+
+@keyframes heroTail {
+  0% {
+    width: 0;
+  }
+  30% {
+    width: 140px;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes heroShooting {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-35deg);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-400px) translateY(280px) rotate(-35deg);
+    opacity: 0;
+  }
+}
+
+/* Accessibility / Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-stars-1,
+  .hero-stars-2,
+  .hero-stars-3,
+  .hero-shooting-star {
+    animation: none !important;
+  }
+}
