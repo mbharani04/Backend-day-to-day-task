@@ -1,0 +1,61 @@
+/* PillNav.css - React Bits PillNav Component Styles */
+
+.pill-nav-container {
+  will-change: transform, opacity;
+}
+
+.pill-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 9999px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.pill-hover-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: center bottom;
+  will-change: transform, opacity;
+}
+
+.pill-text-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 1.25rem; /* Matches line height of navigation label */
+}
+
+.pill-text-default,
+.pill-text-hover {
+  display: block;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+  will-change: transform;
+}
+
+.pill-text-hover {
+  position: absolute;
+  transform: translateY(100%);
+}
+
+/* Reduced Motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .pill-hover-bg,
+  .pill-text-default,
+  .pill-text-hover {
+    transition: none !important;
+    animation: none !important;
+  }
+}

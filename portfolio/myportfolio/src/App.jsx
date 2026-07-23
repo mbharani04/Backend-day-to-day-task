@@ -5,8 +5,8 @@ import Background from './components/Background';
 import CursorGlow from './components/CursorGlow';
 import Hero from './components/Hero';
 import About from './components/About';
-import Skills from './components/Skills';
 import Projects from './components/Projects';
+import TechnicalSkills from './components/TechnicalSkills';
 import Timeline from './components/Timeline';
 import Certifications from './components/Certifications';
 import SkillsFeatures from './components/SkillsFeatures';
@@ -86,10 +86,10 @@ export default function App() {
             <About />
             
             <div className="max-w-6xl mx-auto border-t border-white/5" />
-            <Skills />
+            <Projects />
             
             <div className="max-w-6xl mx-auto border-t border-white/5" />
-            <Projects />
+            <TechnicalSkills />
             
             <div className="max-w-6xl mx-auto border-t border-white/5" />
             <Timeline />

@@ -1,0 +1,71 @@
+/* LogoLoop.css - Animated Marquee for Technical Skills */
+
+@keyframes logoloop-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes logoloop-scroll-reverse {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.logoloop-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+
+.logoloop-track {
+  display: flex;
+  width: max-content;
+  gap: 1.25rem;
+  will-change: transform;
+  animation: logoloop-scroll var(--logoloop-duration, 32s) linear infinite;
+}
+
+.logoloop-wrapper:hover .logoloop-track.pause-on-hover {
+  animation-play-state: paused;
+}
+
+.logoloop-track.direction-reverse {
+  animation-name: logoloop-scroll-reverse;
+}
+
+/* Reduced motion accessibility adjustment */
+@media (prefers-reduced-motion: reduce) {
+  .logoloop-wrapper {
+    mask-image: none;
+    -webkit-mask-image: none;
+    overflow-x: auto;
+  }
+
+  .logoloop-track {
+    animation: none !important;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
