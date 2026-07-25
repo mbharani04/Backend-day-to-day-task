@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>❤️ One Important Question... ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 35%, #a1c4fd 70%, #c2e9fb 100%);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(255, 255, 255, 0.9);
+      --card-shadow: 0 15px 35px rgba(255, 105, 180, 0.25);
+      --primary-pink: #ff477e;
+      --deep-pink: #ff0055;
+      --purple: #7209b7;
+      --text-dark: #2b2d42;
+      --text-sub: #4a4e69;
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      background-size: 300% 300%;
+      animation: gradientAnim 14s ease infinite;
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientAnim {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Background Floating Hearts & Emojis */
+    .bg-emoji {
+      position: fixed;
+      font-size: 2.2rem;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      50% { transform: translateY(-35px) rotate(15deg) scale(1.15); }
+      100% { transform: translateY(20px) rotate(-15deg) scale(0.95); }
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Main Container */
+    .app-card {
+      width: 100%;
+      max-width: 580px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow);
+      padding: 36px 28px;
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .app-card:hover {
+      box-shadow: 0 20px 45px rgba(255, 71, 126, 0.3);
+    }
+
+    /* Sound Control Button */
+    .sound-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 71, 126, 0.3);
+      color: var(--primary-pink);
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .sound-btn:hover {
+      transform: scale(1.06);
+      background: #ffffff;
+    }
+
+    /* Titles */
+    h1.main-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--deep-pink);
+      margin-bottom: 8px;
+      line-height: 1.3;
+      text-shadow: 0 2px 10px rgba(255, 0, 85, 0.15);
+    }
+
+    p.subtitle {
+      color: var(--text-sub);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    /* Buttons */
+    .btn-cute {
+      background: linear-gradient(135deg, var(--primary-pink) 0%, var(--deep-pink) 100%);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 16px 32px;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255, 0, 85, 0.3);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-cute:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(255, 0, 85, 0.45);
+    }
+
+    .btn-cute:active {
+      transform: translateY(1px);
+    }
+
+    /* Stage 1: Welcome */
+    .welcome-stage {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    /* Stage 2: Question Section */
+    .question-stage {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .q-badge {
+      display: inline-block;
+      background: #ffe5ec;
+      color: var(--deep-pink);
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .q-text {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.45rem;
+      color: var(--text-dark);
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: #ffffff;
+      border: 2px solid #ffccd5;
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      color: var(--text-dark);
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .option-btn:hover {
+      background: #fff0f3;
+      border-color: var(--primary-pink);
+      transform: translateX(6px);
+      box-shadow: 0 6px 18px rgba(255, 71, 126, 0.2);
+    }
+
+    /* Reaction Overlay Banner */
+    .reaction-banner {
+      display: none;
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      border: 3px solid var(--primary-pink);
+      border-radius: 30px;
+      padding: 14px 28px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      box-shadow: 0 10px 30px rgba(255, 0, 85, 0.3);
+      z-index: 2000;
+      animation: popDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popDown {
+      from { top: -60px; opacity: 0; }
+      to { top: 25px; opacity: 1; }
+    }
+
+    /* Stage 3: Loading Screen */
+    .loading-stage {
+      display: none;
+      padding: 20px 0;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .pulse-heart {
+      font-size: 4.5rem;
+      animation: heartBeat 1.2s infinite ease-in-out;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.25); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.25); }
+      70% { transform: scale(1); }
+    }
+
+    .loading-messages {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px dashed var(--primary-pink);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--purple);
+    }
+
+    /* Stage 4: Results & Emotional Message */
+    .result-stage {
+      display: none;
+      animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 480px) {
+      .badge-grid { grid-template-columns: 1fr; }
+      h1.main-title { font-size: 1.8rem; }
+    }
+
+    .badge-card {
+      background: #ffffff;
+      border: 2px solid #ffccd5;
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--deep-pink);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .emotional-box {
+      background: linear-gradient(135deg, #fff0f3 0%, #ffe5ec 100%);
+      border: 2px solid var(--primary-pink);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      margin: 24px 0;
+      text-align: center;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--text-dark);
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(255, 71, 126, 0.15);
+    }
+
+    /* Stage 5: Runaway NO Prank Screen */
+    .prank-stage {
+      display: none;
+      animation: fadeIn 0.4s ease;
+      position: relative;
+      min-height: 280px;
+    }
+
+    .runaway-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 30px;
+      min-height: 120px;
+      position: relative;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #38b000 0%, #007200 100%);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      padding: 14px 36px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(56, 176, 0, 0.35);
+      transition: transform 0.2s;
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.1);
+    }
+
+    .btn-no {
+      background: linear-gradient(135deg, #ff4d6d 0%, #c9184a 100%);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      padding: 14px 36px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(255, 77, 109, 0.35);
+      position: absolute;
+      transition: all 0.15s ease-out;
+    }
+
+    .runaway-hint {
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      color: var(--primary-pink);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* Stage 6: Final Grand Celebration */
+    .celebration-stage {
+      display: none;
+      animation: zoomIn 0.5s ease;
+    }
+
+    .yay-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.8rem;
+      color: var(--deep-pink);
+      margin-bottom: 12px;
+      text-shadow: 0 4px 15px rgba(255, 0, 85, 0.3);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.85); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Emojis -->
+  <div class="bg-emoji" style="top: 10%; left: 8%;">❤️</div>
+  <div class="bg-emoji" style="top: 75%; left: 6%;">✨</div>
+  <div class="bg-emoji" style="top: 15%; right: 10%;">🫶</div>
+  <div class="bg-emoji" style="top: 80%; right: 8%;">🍕</div>
+  <div class="bg-emoji" style="top: 45%; left: 88%;">💖</div>
+  <div class="bg-emoji" style="top: 50%; left: 4%;">🥺</div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Reaction Banner Toast -->
+  <div class="reaction-banner" id="reactionBanner">
+    Reaction message here...
+  </div>
+
+  <!-- App Card -->
+  <div class="app-card" id="mainCard">
+
+    <!-- Sound Toggle -->
+    <button class="sound-btn" onclick="toggleSound()">
+      <span id="soundIcon">🔊</span> <span id="soundText">Sound ON</span>
+    </button>
+
+    <!-- STAGE 1: Welcome -->
+    <div id="welcomeStage" class="welcome-stage">
+      <h1 class="main-title">❤️ One Important Question... ❤️</h1>
+      <p class="subtitle">Before you continue, you must answer honestly. No cheating! 👀</p>
+      
+      <div style="font-size: 5rem; margin: 25px 0;">🥺👉👈</div>
+      
+      <button class="btn-cute" onclick="startTest()">
+        Start Friendship Test 🚀
+      </button>
+    </div>
+
+    <!-- STAGE 2: Questions -->
+    <div id="questionStage" class="question-stage">
+      <span class="q-badge" id="qBadge">Question 1 of 6</span>
+      <h2 class="q-text" id="qText">Question text goes here...</h2>
+
+      <div class="options-grid" id="optionsGrid">
+        <!-- Dynamic Option Buttons -->
+      </div>
+    </div>
+
+    <!-- STAGE 3: Loading Screen -->
+    <div id="loadingStage" class="loading-stage">
+      <div class="pulse-heart">❤️</div>
+      <h3 style="font-family: 'Fredoka'; font-size: 1.5rem; color: var(--deep-pink); margin-bottom: 12px;">
+        Analyzing Friendship Data...
+      </h3>
+
+      <div class="loading-messages" id="loadingBox">
+        <span id="loadingLine">Initializing scanner...</span>
+      </div>
+    </div>
+
+    <!-- STAGE 4: Results & Emotional Message -->
+    <div id="resultStage" class="result-stage">
+      <h1 class="main-title" style="font-size: 1.9rem; color: var(--deep-pink);">
+        ❤️ FRIENDSHIP TEST RESULT ❤️
+      </h1>
+      <p style="font-size: 1.25rem; font-weight: 800; color: var(--purple); margin: 6px 0 16px;">
+        Congratulations! 🎉
+      </p>
+
+      <p style="font-size: 1.05rem; font-weight: 700; color: var(--text-sub);">
+        After carefully analyzing your answers...
+      </p>
+
+      <h2 style="font-family: 'Fredoka'; font-size: 1.8rem; color: var(--deep-pink); margin: 10px 0 16px;">
+        YOU STILL LIKE ME! 😂❤️
+      </h2>
+
+      <div class="badge-grid">
+        <div class="badge-card">Friendship Level:<br/><span style="font-size: 1.2rem; color: var(--purple);">1000000%</span></div>
+        <div class="badge-card">Best Friend Status:<br/><span style="font-size: 1.1rem;">CONFIRMED ✅</span></div>
+        <div class="badge-card">Escape Option:<br/><span style="font-size: 1.1rem; color: #d62828;">NOT AVAILABLE ❌</span></div>
+        <div class="badge-card">Friendship Contract:<br/><span style="font-size: 1.1rem;">PERMANENT 🤝❤️</span></div>
+      </div>
+
+      <div class="emotional-box">
+        <p style="margin-bottom: 10px;">Honestly... 😂❤️</p>
+        <p style="margin-bottom: 10px;">
+          No matter how much we annoy each other,<br/>
+          fight with each other,<br/>
+          roast each other,<br/>
+          or ignore each other...
+        </p>
+        <p style="margin-bottom: 10px; color: var(--deep-pink);">
+          I'm really glad you're my friend. 🥺❤️
+        </p>
+        <p style="margin-bottom: 10px;">
+          You're stuck with me forever now. 😂🫶
+        </p>
+        <p style="font-family: 'Fredoka'; font-size: 1.4rem; color: var(--purple); margin-top: 14px;">
+          BEST FRIENDS FOREVER ❤️
+        </p>
+      </div>
+
+      <button class="btn-cute" onclick="openPrankStage()">
+        🥺 One Last Thing...
+      </button>
+    </div>
+
+    <!-- STAGE 5: Runaway "NO" Button Prank -->
+    <div id="prankStage" class="prank-stage">
+      <h1 class="main-title">Do you still like me? 👀❤️</h1>
+      <p class="subtitle">Choose very carefully... 😜</p>
+
+      <div class="runaway-container" id="runawayArea">
+        <button class="btn-yes" onclick="triggerFinalCelebration()">YES ❤️</button>
+        <button class="btn-no" id="noBtn" onmouseover="dodgeNoButton()" onclick="dodgeNoButton()">NO 😭</button>
+        <span class="runaway-hint" id="runawayHint"></span>
+      </div>
+    </div>
+
+    <!-- STAGE 6: Final Grand Celebration -->
+    <div id="celebrationStage" class="celebration-stage">
+      <div class="yay-title">YAYYYYY! 🥳❤️</div>
+      <h2 style="font-family: 'Fredoka'; font-size: 2rem; color: var(--purple); margin-bottom: 12px;">
+        I KNEW IT! 😂
+      </h2>
+      <p style="font-size: 1.4rem; font-weight: 800; color: var(--deep-pink); margin-bottom: 24px;">
+        YOU STILL LIKE ME! ❤️✨
+      </p>
+
+      <div style="font-size: 5.5rem; margin: 20px 0; animation: heartBeat 1s infinite;">
+        💖🫶🥳
+      </div>
+
+      <p style="font-size: 1.1rem; font-weight: 700; color: var(--text-sub); margin-top: 15px;">
+        You're officially trapped in this friendship forever! No refunds! 😂🤝❤️
+      </p>
+
+      <button class="btn-cute" style="margin-top: 25px;" onclick="location.reload()">
+        🔄 Play Test Again
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    /* ======================================================
+       AUDIO SYNTHESIZER (Pure Browser Web Audio API)
+       ====================================================== */
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('soundIcon').innerText = soundEnabled ? '🔊' : '🔇';
+      document.getElementById('soundText').innerText = soundEnabled ? 'Sound ON' : 'Sound OFF';
+      if (soundEnabled) playPopSound();
+    }
+
+    function playPopSound() {
+      if (!soundEnabled) return;
+      initAudio();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(450, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(900, audioCtx.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.08);
+    }
+
+    function playChime() {
+      if (!soundEnabled) return;
+      initAudio();
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0, audioCtx.currentTime + i * 0.08);
+        gain.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + i * 0.08 + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.08 + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(audioCtx.currentTime + i * 0.08);
+        osc.stop(audioCtx.currentTime + i * 0.08 + 0.35);
+      });
+    }
+
+    /* ======================================================
+       QUESTIONS DATA & REACTION LOGIC
+       ====================================================== */
+    let currentQ = 0;
+
+    const questionsList = [
+      {
+        question: "Do you still like me as your friend? 🥺❤️",
+        options: [
+          { text: "Of course! ❤️", positive: true },
+          { text: "Obviously, idiot 😂", positive: true },
+          { text: "Maybe... 👀", positive: false },
+          { text: "I need to think 🤔", positive: false }
+        ]
+      },
+      {
+        question: "Are we still best friends? 🫶",
+        options: [
+          { text: "Forever! ❤️", positive: true },
+          { text: "Obviously YES 😂", positive: true },
+          { text: "Depends... buy me food first 🍕", positive: false },
+          { text: "Let me check my friendship list 🤔", positive: false }
+        ]
+      },
+      {
+        question: "If we fight, will you still talk to me later? 🥺",
+        options: [
+          { text: "Yes, always ❤️", positive: true },
+          { text: "I'll wait 5 minutes 😂", positive: true },
+          { text: "I'll pretend I'm angry first 😤", positive: false },
+          { text: "Of course, you're stuck with me!", positive: true }
+        ]
+      },
+      {
+        question: "Who is more annoying between us? 😂",
+        options: [
+          { text: "Definitely you 😭", positive: false },
+          { text: "Definitely me 😂", positive: true },
+          { text: "Both of us 💀", positive: true },
+          { text: "It's a tie 🤝", positive: true }
+        ]
+      },
+      {
+        question: "If I disappear for one day, will you miss me? 👀",
+        options: [
+          { text: "YES! 😭❤️", positive: true },
+          { text: "Maybe a little 😂", positive: true },
+          { text: "I'll enjoy the peace first 😌", positive: false },
+          { text: "I'll immediately call you!", positive: true }
+        ]
+      },
+      {
+        question: "Will you be my friend forever? 🥺❤️",
+        options: [
+          { text: "YES ❤️", positive: true },
+          { text: "Forever and ever 🫶", positive: true },
+          { text: "Unfortunately, yes 😂", positive: true },
+          { text: "You can't get rid of me now 💀", positive: true }
+        ]
+      }
+    ];
+
+    /* ======================================================
+       TEST FLOW FUNCTIONS
+       ====================================================== */
+    function startTest() {
+      playPopSound();
+      document.getElementById('welcomeStage').style.display = 'none';
+      document.getElementById('questionStage').style.display = 'block';
+      currentQ = 0;
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questionsList[currentQ];
+      document.getElementById('qBadge').innerText = `Question ${currentQ + 1} of ${questionsList.length}`;
+      document.getElementById('qText').innerText = q.question;
+
+      const grid = document.getElementById('optionsGrid');
+      grid.innerHTML = '';
+
+      q.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span>${opt.text}</span> <span>➜</span>`;
+        btn.onclick = () => handleAnswer(opt.positive);
+        grid.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(isPositive) {
+      playPopSound();
+
+      if (isPositive) {
+        showBanner("🥺 Awwww... I knew you still liked me! ❤️", 1800);
+      } else {
+        showBanner("🚨 WARNING! Friendship levels dropping...", 1800);
+        setTimeout(() => {
+          showBanner("😂 Just kidding! You can't escape me!", 1800);
+        }, 1900);
+      }
+
+      const delay = isPositive ? 1600 : 3600;
+
+      setTimeout(() => {
+        currentQ++;
+        if (currentQ < questionsList.length) {
+          renderQuestion();
+        } else {
+          startLoadingStage();
+        }
+      }, delay);
+    }
+
+    function showBanner(text, duration) {
+      const banner = document.getElementById('reactionBanner');
+      banner.innerText = text;
+      banner.style.display = 'block';
+      setTimeout(() => {
+        banner.style.display = 'none';
+      }, duration);
+    }
+
+    /* ======================================================
+       LOADING STAGE
+       ====================================================== */
+    function startLoadingStage() {
+      document.getElementById('questionStage').style.display = 'none';
+      document.getElementById('loadingStage').style.display = 'block';
+
+      const loadingMessages = [
+        "Analyzing your answers...",
+        "Checking friendship history...",
+        "Searching for embarrassing memories...",
+        "Calculating how much you tolerate each other...",
+        "Contacting the Friendship Department...",
+        "Final answer loading... 👀"
+      ];
+
+      const lineElem = document.getElementById('loadingLine');
+
+      loadingMessages.forEach((msg, idx) => {
+        setTimeout(() => {
+          lineElem.innerText = msg;
+          playPopSound();
+        }, (idx + 1) * 700);
+      });
+
+      setTimeout(() => {
+        showResultsStage();
+      }, loadingMessages.length * 700 + 800);
+    }
+
+    function showResultsStage() {
+      document.getElementById('loadingStage').style.display = 'none';
+      document.getElementById('resultStage').style.display = 'block';
+      playChime();
+      triggerConfetti();
+    }
+
+    function openPrankStage() {
+      playPopSound();
+      document.getElementById('resultStage').style.display = 'none';
+      document.getElementById('prankStage').style.display = 'block';
+      resetNoButtonPosition();
+    }
+
+    /* ======================================================
+       RUNAWAY "NO" BUTTON LOGIC
+       ====================================================== */
+    const hintMessages = [
+      "Nice try! 😜",
+      "Nope! 🏃‍♂️",
+      "Can't touch this! 😂",
+      "Too slow! 🐢",
+      "Never! 🔒",
+      "Wrong choice! 😝"
+    ];
+
+    function dodgeNoButton() {
+      playPopSound();
+      const noBtn = document.getElementById('noBtn');
+      const area = document.getElementById('mainCard');
+      const areaRect = area.getBoundingClientRect();
+
+      // Calculate random positions within card boundaries
+      const maxX = areaRect.width - noBtn.offsetWidth - 40;
+      const maxY = areaRect.height - noBtn.offsetHeight - 40;
+
+      const randomX = Math.max(20, Math.floor(Math.random() * maxX) - (areaRect.width / 2) + 80);
+      const randomY = Math.max(20, Math.floor(Math.random() * maxY) - (areaRect.height / 2) + 60);
+
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+      const randomHint = hintMessages[Math.floor(Math.random() * hintMessages.length)];
+      document.getElementById('runawayHint').innerText = randomHint;
+    }
+
+    function resetNoButtonPosition() {
+      const noBtn = document.getElementById('noBtn');
+      noBtn.style.transform = 'translate(60px, 0px)';
+      document.getElementById('runawayHint').innerText = '';
+    }
+
+    /* Touch support for mobile devices */
+    document.addEventListener('DOMContentLoaded', () => {
+      const noBtn = document.getElementById('noBtn');
+      if (noBtn) {
+        noBtn.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          dodgeNoButton();
+        });
+      }
+    });
+
+    /* ======================================================
+       FINAL CELEBRATION
+       ====================================================== */
+    function triggerFinalCelebration() {
+      playChime();
+      document.getElementById('prankStage').style.display = 'none';
+      document.getElementById('celebrationStage').style.display = 'block';
+      triggerConfetti();
+    }
+
+    /* ======================================================
+       CANVAS CONFETTI & HEARTS
+       ====================================================== */
+    function triggerConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#ff477e', '#ff0055', '#7209b7', '#38b000', '#ffee32', '#ffffff'];
+      const shapes = ['square', 'circle', 'heart'];
+
+      for (let i = 0; i < 140; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          size: Math.random() * 12 + 6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          shape: shapes[Math.floor(Math.random() * shapes.length)],
+          speedY: Math.random() * 3.5 + 2.5,
+          speedX: Math.random() * 3 - 1.5,
+          rotation: Math.random() * 360,
+          rotSpeed: Math.random() * 6 - 3
+        });
+      }
+
+      let animId;
+      const startTime = Date.now();
+
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+
+        particles.forEach(p => {
+          p.y += p.speedY;
+          p.x += p.speedX;
+          p.rotation += p.rotSpeed;
+
+          if (p.y < canvas.height) active = true;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+
+          if (p.shape === 'circle') {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          }
+          ctx.restore();
+        });
+
+        if (active && Date.now() - startTime < 4500) {
+          animId = requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          cancelAnimationFrame(animId);
+        }
+      }
+
+      render();
+    }
+
+    window.addEventListener('resize', () => {
+      const canvas = document.getElementById('confetti-canvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
