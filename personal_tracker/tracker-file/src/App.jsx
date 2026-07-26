@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ProductivityProvider } from './context/ProductivityContext';
 import Sidebar from './components/layout/Sidebar';
 import Header from './components/layout/Header';
-import QuickAddButton from './components/common/QuickAddButton';
 import QuickAddModal from './components/common/QuickAddModal';
 import CommandSearchModal from './components/common/CommandSearchModal';
 import OnboardingModal from './components/common/OnboardingModal';
@@ -54,8 +53,7 @@ export function App() {
             </main>
           </div>
 
-          {/* Floating Action Speed Dial & Modals */}
-          <QuickAddButton />
+          {/* Modals */}
           <QuickAddModal />
           <CommandSearchModal />
           <OnboardingModal />
