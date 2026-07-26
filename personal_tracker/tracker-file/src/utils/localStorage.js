@@ -24,12 +24,12 @@ export const DEFAULT_PROFILE = {
   name: 'Enter your name',
   email: 'Enter your email',
   phone: 'Enter your phone number',
-  education: 'BRANCH/DEGREE',
+  education: 'BRANCH / DEGREE',
   role: 'Job title',
-  bio: 'Passionate about building high-quality applications and achieving daily productivity milestones.',
-  skills: ['React', 'JavaScript', 'Node.js', 'Tailwind CSS'],
+  bio: 'Enter your main goal or bio',
+  skills: [],
   profileAvatar: lionAvatar,
-  onboarded: true,
+  onboarded: false,
 };
 
 const DEFAULT_TIMER = {

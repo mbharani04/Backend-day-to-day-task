@@ -8,9 +8,9 @@ export const OnboardingModal = () => {
   const { profile, updateProfile } = useProductivity();
 
   const [form, setForm] = useState({
-    name: 'Bharani',
-    role: 'Full-Stack Developer',
-    mainGoal: 'Master consistent daily focus and deep work',
+    name: '',
+    role: '',
+    mainGoal: '',
     profileAvatar: lionAvatar,
   });
 
@@ -23,10 +23,13 @@ export const OnboardingModal = () => {
 
     updateProfile({
       ...form,
-      email: `${form.name.toLowerCase().replace(/\s+/g, '')}@example.com`,
-      phone: '+1 (555) 000-0000',
-      education: 'Self-Improvement & CS',
-      bio: form.mainGoal,
+      name: form.name.trim(),
+      role: form.role.trim() || 'Productivity User',
+      mainGoal: form.mainGoal.trim() || 'Master consistent daily focus and deep work',
+      email: `${form.name.trim().toLowerCase().replace(/\s+/g, '') || 'user'}@example.com`,
+      phone: 'Enter your phone number',
+      education: 'BRANCH / DEGREE',
+      bio: form.mainGoal.trim() || 'Master consistent daily focus and deep work',
       skills: [],
       onboarded: true,
     });
@@ -57,10 +60,11 @@ export const OnboardingModal = () => {
             <input
               type="text"
               required
-              placeholder="e.g. Bharani"
+              placeholder="Enter your name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-white/10 text-sm text-slate-100 placeholder-slate-500 focus:outline-hidden focus:border-indigo-500"
+              autoFocus
             />
           </div>
 
@@ -68,7 +72,7 @@ export const OnboardingModal = () => {
             <label className="block text-slate-300 font-semibold mb-1">Your Role / Focus</label>
             <input
               type="text"
-              placeholder="e.g. Full-Stack Developer & Student"
+              placeholder="Enter your role"
               value={form.role}
               onChange={(e) => setForm({ ...form, role: e.target.value })}
               className="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-white/10 text-sm text-slate-100 placeholder-slate-500 focus:outline-hidden focus:border-indigo-500"
@@ -79,7 +83,7 @@ export const OnboardingModal = () => {
             <label className="block text-slate-300 font-semibold mb-1">Your Main Goal</label>
             <input
               type="text"
-              placeholder="e.g. 100 Days of Deep Work & System Design"
+              placeholder="Enter your main goal"
               value={form.mainGoal}
               onChange={(e) => setForm({ ...form, mainGoal: e.target.value })}
               className="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-white/10 text-sm text-slate-100 placeholder-slate-500 focus:outline-hidden focus:border-indigo-500"
