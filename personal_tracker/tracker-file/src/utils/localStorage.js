@@ -21,11 +21,11 @@ export const STORAGE_KEYS = {
 
 // Default empty collections
 export const DEFAULT_PROFILE = {
-  name: 'Bharani',
-  email: 'bharani@example.com',
-  phone: '+1 (555) 234-5678',
-  education: 'Computer Science & Software Engineering',
-  role: 'Full-Stack Developer',
+  name: 'Enter your name',
+  email: 'Enter your email',
+  phone: 'Enter your phone number',
+  education: 'BRANCH/DEGREE',
+  role: 'Job title',
   bio: 'Passionate about building high-quality applications and achieving daily productivity milestones.',
   skills: ['React', 'JavaScript', 'Node.js', 'Tailwind CSS'],
   profileAvatar: lionAvatar,
