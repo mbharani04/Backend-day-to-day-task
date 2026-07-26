@@ -65,8 +65,8 @@ export const Dashboard = () => {
             progressPercentage={
               activeDailyTarget
                 ? Math.round(
-                    (activeDailyTarget.currentProgress / activeDailyTarget.targetValue) * 100
-                  )
+                  (activeDailyTarget.currentProgress / activeDailyTarget.targetValue) * 100
+                )
                 : 0
             }
             icon={Target}
@@ -123,7 +123,6 @@ export const Dashboard = () => {
           <StudyTimerCard />
           <TodaysTargets />
         </div>
-
         {/* ROW 4: Upcoming Reminders & Upcoming Events */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <UpcomingReminders />
@@ -133,15 +132,15 @@ export const Dashboard = () => {
         {/* ROW 5: Learning Progress & Attendance Summary */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <LearningProgress />
-          <AttendanceSummary />
+          <QuickNotesWidget />
+
         </div>
 
         {/* ROW 6: Quick Notes & Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <QuickNotesWidget />
+          <AttendanceSummary />
           <RecentActivity />
-        </div>
-      </div>
+        </div>     </div>
     </PageTransition>
   );
 };

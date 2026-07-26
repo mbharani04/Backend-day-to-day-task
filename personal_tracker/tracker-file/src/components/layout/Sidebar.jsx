@@ -27,15 +27,15 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
 
   const navItems = [
     { name: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { name: 'Profile', icon: User, path: '/profile' },
-    { name: 'Calendar', icon: Calendar, path: '/calendar' },
-    { name: 'Reminders', icon: Bell, path: '/reminders' },
     { name: 'Targets', icon: Target, path: '/targets' },
+    { name: 'Events', icon: PartyPopper, path: '/events' },
+    { name: 'Reminders', icon: Bell, path: '/reminders' },
     { name: 'Productivity & Improvement', icon: BarChart3, path: '/productivity' },
     { name: 'Learning / Skills', icon: BookOpen, path: '/learning' },
-    { name: 'Attendance', icon: ClipboardCheck, path: '/attendance' },
-    { name: 'Events', icon: PartyPopper, path: '/events' },
+    { name: 'Profile', icon: User, path: '/profile' },
+    { name: 'Calendar', icon: Calendar, path: '/calendar' },
     { name: 'Notes', icon: FileText, path: '/notes' },
+    { name: 'Attendance', icon: ClipboardCheck, path: '/attendance' },
     { name: 'Settings', icon: Settings, path: '/settings' },
   ];
 
