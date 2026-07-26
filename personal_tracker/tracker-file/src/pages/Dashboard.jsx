@@ -123,24 +123,7 @@ export const Dashboard = () => {
           <StudyTimerCard />
           <TodaysTargets />
         </div>
-        {/* ROW 4: Upcoming Reminders & Upcoming Events */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <UpcomingReminders />
-          <UpcomingEvents />
-        </div>
-
-        {/* ROW 5: Learning Progress & Attendance Summary */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <LearningProgress />
-          <QuickNotesWidget />
-
-        </div>
-
-        {/* ROW 6: Quick Notes & Recent Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <AttendanceSummary />
-          <RecentActivity />
-        </div>     </div>
+      </div>
     </PageTransition>
   );
 };
