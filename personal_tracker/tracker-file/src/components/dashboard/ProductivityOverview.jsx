@@ -5,10 +5,11 @@ import { useProductivity } from '../../context/ProductivityContext';
 
 export const ProductivityOverview = () => {
   const { tasks } = useProductivity();
+  const todayStr = new Date().toISOString().split('T')[0];
 
-  const completedCount = tasks.filter((t) => t.status === 'Completed').length;
-  const pendingCount = tasks.filter((t) => t.status === 'Pending').length;
-  const overdueCount = tasks.filter((t) => t.status === 'Overdue').length;
+  const completedCount = tasks.filter((t) => t.status === 'Completed' || t.completed === true).length;
+  const pendingCount = tasks.filter((t) => t.status === 'Pending' && !t.completed).length;
+  const overdueCount = tasks.filter((t) => (t.status === 'Overdue' || (t.dueDate < todayStr && t.status !== 'Completed')) && !t.completed).length;
 
   const data = [
     { name: 'Completed', value: completedCount || 1, color: '#10b981' },

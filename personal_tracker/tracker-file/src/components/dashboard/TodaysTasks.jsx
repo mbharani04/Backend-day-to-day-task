@@ -26,11 +26,20 @@ export const TodaysTasks = () => {
   const [taskToDelete, setTaskToDelete] = useState(null);
 
   const todayStr = new Date().toISOString().split('T')[0];
-  const todaysTasks = tasks.filter((t) => t.dueDate === todayStr);
+  
+  // Show all active incomplete tasks (due today or carried forward from previous days) + tasks completed today
+  const todaysTasks = tasks.filter((t) => {
+    const isCompleted = t.status === 'Completed' || t.completed === true;
+    if (!isCompleted) {
+      return true; // Pending & Overdue tasks carried forward stay active until completed!
+    }
+    return t.completedAt === todayStr || t.dueDate === todayStr;
+  });
 
   const filteredTasks = todaysTasks.filter((t) => {
-    if (filter === 'Pending') return t.status === 'Pending';
-    if (filter === 'Completed') return t.status === 'Completed';
+    const isCompleted = t.status === 'Completed' || t.completed === true;
+    if (filter === 'Pending') return !isCompleted;
+    if (filter === 'Completed') return isCompleted;
     return true;
   });
 
@@ -88,10 +97,10 @@ export const TodaysTasks = () => {
           <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
             Today's Tasks
             <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
-              {todaysTasks.length}
+              {todaysTasks.filter((t) => t.status !== 'Completed' && !t.completed).length} Pending
             </span>
           </h3>
-          <p className="text-xs text-slate-400">Manage and check off your daily goals</p>
+          <p className="text-xs text-slate-400">Manage and check off your daily & carried-forward goals</p>
         </div>
 
         <button
@@ -128,7 +137,7 @@ export const TodaysTasks = () => {
             </div>
             <div>
               <p className="font-bold text-slate-200 text-sm">No tasks yet ✨</p>
-              <p className="text-slate-400 text-xs mt-0.5">Start your day by adding your first task.</p>
+              <p className="text-slate-400 text-xs mt-0.5">All pending tasks are finished or clear!</p>
             </div>
             <button
               onClick={handleOpenAddModal}
@@ -139,54 +148,66 @@ export const TodaysTasks = () => {
             </button>
           </div>
         ) : (
-          filteredTasks.map((task) => (
-            <div
-              key={task.id}
-              className={`relative p-3.5 rounded-2xl border transition-all duration-200 flex items-start justify-between gap-3 ${task.status === 'Completed'
-                ? 'bg-slate-900/30 border-white/5 opacity-65'
-                : 'glass-card border-white/10 hover:border-indigo-500/30'
-                }`}
-            >
-              <div className="flex items-start gap-3 min-w-0 flex-1">
-                <button
-                  onClick={() => toggleTaskCompletion(task.id)}
-                  className="mt-0.5 text-slate-400 hover:text-indigo-400 transition-colors shrink-0"
-                  title={task.status === 'Completed' ? 'Mark Pending' : 'Mark Completed'}
-                >
-                  {task.status === 'Completed' ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                  ) : (
-                    <Circle className="w-5 h-5 text-slate-500 hover:text-indigo-400" />
-                  )}
-                </button>
-
-                <div className="min-w-0 flex-1">
-                  <p
-                    className={`text-sm font-semibold truncate ${task.status === 'Completed'
-                      ? 'line-through text-slate-500'
-                      : 'text-slate-100'
-                      }`}
+          filteredTasks.map((task) => {
+            const isCompleted = task.status === 'Completed' || task.completed === true;
+            const isCarried = !isCompleted && task.dueDate && task.dueDate < todayStr;
+            return (
+              <div
+                key={task.id}
+                className={`relative p-3.5 rounded-2xl border transition-all duration-200 flex items-start justify-between gap-3 ${isCompleted
+                  ? 'bg-slate-900/30 border-white/5 opacity-65'
+                  : isCarried
+                  ? 'glass-card border-amber-500/30 bg-amber-500/5 hover:border-amber-500/50'
+                  : 'glass-card border-white/10 hover:border-indigo-500/30'
+                  }`}
+              >
+                <div className="flex items-start gap-3 min-w-0 flex-1">
+                  <button
+                    onClick={() => toggleTaskCompletion(task.id)}
+                    className="mt-0.5 text-slate-400 hover:text-indigo-400 transition-colors shrink-0"
+                    title={isCompleted ? 'Mark Pending' : 'Mark Completed'}
                   >
-                    {task.title}
-                  </p>
-                  {task.description && (
-                    <p className="text-xs text-slate-400 truncate mt-0.5">
-                      {task.description}
-                    </p>
-                  )}
+                    {isCompleted ? (
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                    ) : (
+                      <Circle className="w-5 h-5 text-slate-500 hover:text-indigo-400" />
+                    )}
+                  </button>
 
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
-                      <Tag className="w-3 h-3 text-cyan-400" />
-                      {task.category}
-                    </span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-indigo-400" />
-                      {task.dueTime || 'Anytime'}
-                    </span>
+                  <div className="min-w-0 flex-1">
+                    <p
+                      className={`text-sm font-semibold truncate ${isCompleted
+                        ? 'line-through text-slate-500'
+                        : 'text-slate-100'
+                        }`}
+                    >
+                      {task.title}
+                    </p>
+                    {task.description && (
+                      <p className="text-xs text-slate-400 truncate mt-0.5">
+                        {task.description}
+                      </p>
+                    )}
+
+                    <div className="flex flex-wrap items-center gap-2 mt-2">
+                      <span className="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
+                        <Tag className="w-3 h-3 text-cyan-400" />
+                        {task.category}
+                      </span>
+                      {isCarried ? (
+                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-amber-400" />
+                          Carried Forward ({task.dueDate})
+                        </span>
+                      ) : (
+                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-indigo-400" />
+                          {task.dueDate === todayStr ? 'Today' : task.dueDate} {task.dueTime ? `at ${task.dueTime}` : ''}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
               {/* Priority & Action Dropdown */}
               <div className="flex items-center gap-2 shrink-0">
@@ -233,7 +254,8 @@ export const TodaysTasks = () => {
                 </div>
               </div>
             </div>
-          ))
+          );
+        })
         )}
       </div>
 

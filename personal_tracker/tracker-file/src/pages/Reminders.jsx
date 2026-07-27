@@ -5,19 +5,46 @@ import { useProductivity } from '../context/ProductivityContext';
 import { requestBrowserNotificationPermission } from '../utils/notifications';
 
 export const Reminders = () => {
-  const { reminders, toggleReminderCompletion, deleteReminder, openQuickAdd } = useProductivity();
+  const { reminders, toggleReminderCompletion, deleteReminder, tasks, toggleTaskCompletion, deleteTask, openQuickAdd } = useProductivity();
   const [activeSection, setActiveSection] = useState('All'); // All | Today | Tomorrow | Upcoming | Overdue | Completed
 
   const todayStr = new Date().toISOString().split('T')[0];
   const tomorrowObj = new Date(Date.now() + 86400000);
   const tomorrowStr = tomorrowObj.toISOString().split('T')[0];
 
-  const filteredReminders = reminders.filter((rem) => {
-    if (activeSection === 'Today') return rem.date === todayStr && rem.status !== 'Completed';
-    if (activeSection === 'Tomorrow') return rem.date === tomorrowStr && rem.status !== 'Completed';
-    if (activeSection === 'Upcoming') return rem.date > tomorrowStr && rem.status !== 'Completed';
-    if (activeSection === 'Overdue') return rem.date < todayStr && rem.status !== 'Completed';
-    if (activeSection === 'Completed') return rem.status === 'Completed';
+  const reminderItems = reminders.map((rem) => ({
+    ...rem,
+    itemType: 'reminder',
+    date: rem.date,
+    time: rem.time,
+    badgeLabel: rem.status === 'Completed' ? 'Completed' : (rem.date < todayStr ? 'Overdue' : 'Pending'),
+  }));
+
+  const taskItems = tasks.map((t) => {
+    const isCompleted = t.status === 'Completed' || t.completed === true;
+    const isOverdue = !isCompleted && t.dueDate && t.dueDate < todayStr;
+    return {
+      id: t.id,
+      title: t.title,
+      description: t.description,
+      date: t.dueDate,
+      time: t.dueTime || 'Anytime',
+      status: isCompleted ? 'Completed' : (isOverdue ? 'Overdue' : 'Pending'),
+      priority: t.priority,
+      itemType: 'task',
+      badgeLabel: isCompleted ? 'Completed' : (isOverdue ? 'Carried Forward' : 'Pending Task'),
+    };
+  });
+
+  const allCombined = [...reminderItems, ...taskItems];
+
+  const filteredReminders = allCombined.filter((rem) => {
+    const isCompleted = rem.status === 'Completed';
+    if (activeSection === 'Today') return rem.date === todayStr && !isCompleted;
+    if (activeSection === 'Tomorrow') return rem.date === tomorrowStr && !isCompleted;
+    if (activeSection === 'Upcoming') return rem.date > tomorrowStr && !isCompleted;
+    if (activeSection === 'Overdue') return rem.date < todayStr && !isCompleted;
+    if (activeSection === 'Completed') return isCompleted;
     return true;
   });
 
@@ -29,10 +56,10 @@ export const Reminders = () => {
           <div>
             <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
               <Bell className="w-6 h-6 text-amber-400" />
-              Reminders & Notification System
+              Reminders & Task Notification System
             </h1>
             <p className="text-xs text-slate-400 mt-1">
-              Time-sensitive alerts that trigger in-app & browser popups
+              Time-sensitive alerts, carried-forward tasks & browser popups
             </p>
           </div>
 
@@ -75,7 +102,7 @@ export const Reminders = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredReminders.length === 0 ? (
             <div className="col-span-full py-16 text-center text-slate-400 text-sm glass-panel rounded-3xl">
-              No reminders in "{activeSection}" category.
+              No reminders or tasks in "{activeSection}" category.
             </div>
           ) : (
             filteredReminders.map((rem) => (
@@ -84,13 +111,15 @@ export const Reminders = () => {
                 className={`p-5 rounded-2xl border transition-all duration-200 flex flex-col justify-between ${
                   rem.status === 'Completed'
                     ? 'bg-slate-900/30 border-white/5 opacity-60'
+                    : rem.date < todayStr
+                    ? 'glass-card border-amber-500/30 bg-amber-500/5 hover:border-amber-500/50'
                     : 'glass-card border-white/10 hover:border-amber-500/30'
                 }`}
               >
                 <div>
                   <div className="flex items-start justify-between gap-3">
                     <button
-                      onClick={() => toggleReminderCompletion(rem.id)}
+                      onClick={() => (rem.itemType === 'task' ? toggleTaskCompletion(rem.id) : toggleReminderCompletion(rem.id))}
                       className="mt-0.5 text-slate-400 hover:text-amber-400 transition-colors"
                     >
                       {rem.status === 'Completed' ? (
@@ -100,15 +129,17 @@ export const Reminders = () => {
                       )}
                     </button>
                     <div className="flex-1 min-w-0">
-                      <h4
-                        className={`text-sm font-bold truncate ${
-                          rem.status === 'Completed'
-                            ? 'line-through text-slate-500'
-                            : 'text-slate-100'
-                        }`}
-                      >
-                        {rem.title}
-                      </h4>
+                      <div className="flex items-center gap-2">
+                        <h4
+                          className={`text-sm font-bold truncate ${
+                            rem.status === 'Completed'
+                              ? 'line-through text-slate-500'
+                              : 'text-slate-100'
+                          }`}
+                        >
+                          {rem.title}
+                        </h4>
+                      </div>
                       {rem.description && (
                         <p className="text-xs text-slate-400 mt-1 line-clamp-2">
                           {rem.description}
@@ -117,10 +148,13 @@ export const Reminders = () => {
                     </div>
                   </div>
 
-                  <div className="mt-4 flex items-center gap-2 text-xs text-amber-400 font-semibold bg-amber-500/10 p-2 rounded-xl border border-amber-500/20">
-                    <Clock className="w-4 h-4 shrink-0" />
-                    <span>
-                      {rem.date} at {rem.time}
+                  <div className="mt-4 flex items-center justify-between text-xs text-amber-400 font-semibold bg-amber-500/10 p-2 rounded-xl border border-amber-500/20">
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-4 h-4 shrink-0" />
+                      {rem.date === todayStr ? 'Today' : rem.date} {rem.time ? `at ${rem.time}` : ''}
+                    </span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                      {rem.badgeLabel}
                     </span>
                   </div>
                 </div>
@@ -130,9 +164,9 @@ export const Reminders = () => {
                     {rem.priority || 'Medium'} Priority
                   </span>
                   <button
-                    onClick={() => deleteReminder(rem.id)}
+                    onClick={() => (rem.itemType === 'task' ? deleteTask(rem.id) : deleteReminder(rem.id))}
                     className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800"
-                    title="Delete Reminder"
+                    title="Delete Item"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

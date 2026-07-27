@@ -33,10 +33,11 @@ export const Tasks = () => {
 
   const filteredTasks = tasks
     .filter((t) => {
-      if (activeTab === 'Pending') return t.status === 'Pending';
-      if (activeTab === 'Completed') return t.status === 'Completed';
+      const isCompleted = t.status === 'Completed' || t.completed === true;
+      if (activeTab === 'Pending') return !isCompleted;
+      if (activeTab === 'Completed') return isCompleted;
       if (activeTab === 'High Priority') return t.priority === 'High';
-      if (activeTab === 'Overdue') return t.dueDate < todayStr && t.status !== 'Completed';
+      if (activeTab === 'Overdue') return t.dueDate < todayStr && !isCompleted;
       return true;
     })
     .filter((t) => {
@@ -52,8 +53,8 @@ export const Tasks = () => {
       );
     })
     .sort((a, b) => {
-      if (sortBy === 'Newest') return new Date(b.createdAt) - new Date(a.createdAt);
-      if (sortBy === 'Oldest') return new Date(a.createdAt) - new Date(b.createdAt);
+      if (sortBy === 'Newest') return new Date(b.createdAt || b.id) - new Date(a.createdAt || a.id);
+      if (sortBy === 'Oldest') return new Date(a.createdAt || a.id) - new Date(b.createdAt || b.id);
       if (sortBy === 'Due Date') return new Date(a.dueDate) - new Date(b.dueDate);
       if (sortBy === 'Priority') {
         const order = { High: 1, Medium: 2, Low: 3 };
@@ -179,54 +180,66 @@ export const Tasks = () => {
               No tasks match your selected criteria.
             </div>
           ) : (
-            filteredTasks.map((t) => (
-              <div
-                key={t.id}
-                className={`p-5 rounded-2xl border transition-all duration-200 flex flex-col justify-between ${
-                  t.status === 'Completed'
-                    ? 'bg-slate-900/30 border-white/5 opacity-70'
-                    : 'glass-card border-white/10 hover:border-indigo-500/30'
-                }`}
-              >
-                <div>
-                  <div className="flex items-start justify-between gap-2">
-                    <button
-                      onClick={() => toggleTaskCompletion(t.id)}
-                      className="mt-0.5 text-slate-400 hover:text-indigo-400 transition-colors"
-                    >
-                      {t.status === 'Completed' ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                      ) : (
-                        <Circle className="w-5 h-5 text-slate-500 hover:text-indigo-400" />
-                      )}
-                    </button>
-                    <div className="flex-1 min-w-0">
-                      <h4
-                        className={`text-sm font-bold truncate ${
-                          t.status === 'Completed'
-                            ? 'line-through text-slate-500'
-                            : 'text-slate-100'
-                        }`}
+            filteredTasks.map((t) => {
+              const isCompleted = t.status === 'Completed' || t.completed === true;
+              const isOverdue = !isCompleted && t.dueDate && t.dueDate < todayStr;
+              return (
+                <div
+                  key={t.id}
+                  className={`p-5 rounded-2xl border transition-all duration-200 flex flex-col justify-between ${
+                    isCompleted
+                      ? 'bg-slate-900/30 border-white/5 opacity-70'
+                      : isOverdue
+                      ? 'glass-card border-amber-500/30 bg-amber-500/5 hover:border-amber-500/50'
+                      : 'glass-card border-white/10 hover:border-indigo-500/30'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-start justify-between gap-2">
+                      <button
+                        onClick={() => toggleTaskCompletion(t.id)}
+                        className="mt-0.5 text-slate-400 hover:text-indigo-400 transition-colors"
                       >
-                        {t.title}
-                      </h4>
-                      <p className="text-xs text-slate-400 mt-1 line-clamp-2">
-                        {t.description || 'No description provided.'}
-                      </p>
+                        {isCompleted ? (
+                          <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                        ) : (
+                          <Circle className="w-5 h-5 text-slate-500 hover:text-indigo-400" />
+                        )}
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <h4
+                          className={`text-sm font-bold truncate ${
+                            isCompleted
+                              ? 'line-through text-slate-500'
+                              : 'text-slate-100'
+                          }`}
+                        >
+                          {t.title}
+                        </h4>
+                        <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                          {t.description || 'No description provided.'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 mt-4 text-[10px]">
+                      <span className="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
+                        <Tag className="w-3 h-3 text-cyan-400" />
+                        {t.category}
+                      </span>
+                      {isOverdue ? (
+                        <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-amber-400" />
+                          Carried Forward ({t.dueDate})
+                        </span>
+                      ) : (
+                        <span className="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-indigo-400" />
+                          {t.dueDate === todayStr ? 'Today' : t.dueDate}
+                        </span>
+                      )}
                     </div>
                   </div>
-
-                  <div className="flex flex-wrap items-center gap-2 mt-4 text-[10px]">
-                    <span className="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
-                      <Tag className="w-3 h-3 text-cyan-400" />
-                      {t.category}
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-indigo-400" />
-                      {t.dueDate}
-                    </span>
-                  </div>
-                </div>
 
                 <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
                   <span

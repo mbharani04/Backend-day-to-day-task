@@ -38,9 +38,45 @@ export const ProductivityProvider = ({ children }) => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
+  // Helper to ensure carry-forward and status consistency for all tasks
+  const syncTaskStatuses = (tasksList = []) => {
+    const todayStr = new Date().toISOString().split('T')[0];
+    return tasksList.map((t) => {
+      const isCompleted = t.status === 'Completed' || t.completed === true;
+      if (isCompleted) {
+        return {
+          ...t,
+          status: 'Completed',
+          completed: true,
+        };
+      }
+      const isOverdue = Boolean(t.dueDate && t.dueDate < todayStr);
+      return {
+        ...t,
+        status: isOverdue ? 'Overdue' : (t.status || 'Pending'),
+        completed: false,
+        isCarriedForward: isOverdue,
+      };
+    });
+  };
+
   // State definitions from localStorage
   const [profile, setProfile] = useState(() => getFromStorage(STORAGE_KEYS.PROFILE, null));
-  const [tasks, setTasks] = useState(() => getFromStorage(STORAGE_KEYS.TASKS, []));
+  const [tasks, setTasks] = useState(() => syncTaskStatuses(getFromStorage(STORAGE_KEYS.TASKS, [])));
+
+  // Auto-sync tasks whenever window gains focus (e.g. date changes next morning)
+  useEffect(() => {
+    const handleSync = () => {
+      setTasks((prevTasks) => {
+        const synced = syncTaskStatuses(prevTasks);
+        saveToStorage(STORAGE_KEYS.TASKS, synced);
+        return synced;
+      });
+    };
+    window.addEventListener('focus', handleSync);
+    return () => window.removeEventListener('focus', handleSync);
+  }, []);
+
   const [targets, setTargets] = useState(() => getFromStorage(STORAGE_KEYS.TARGETS, []));
   const [reminders, setReminders] = useState(() => getFromStorage(STORAGE_KEYS.REMINDERS, []));
   const [events, setEvents] = useState(() => getFromStorage(STORAGE_KEYS.EVENTS, []));
@@ -95,14 +131,21 @@ export const ProductivityProvider = ({ children }) => {
 
   // Task Actions
   const addTask = (taskData) => {
+    const todayStr = new Date().toISOString().split('T')[0];
+    const dueDate = taskData.dueDate || todayStr;
+    const isOverdue = dueDate < todayStr;
     const newTask = {
       id: `task-${Date.now()}`,
-      createdAt: new Date().toISOString().split('T')[0],
+      createdAt: todayStr,
+      dueDate,
+      dueTime: taskData.dueTime || '18:00',
       completedAt: null,
-      status: 'Pending',
+      status: isOverdue ? 'Overdue' : 'Pending',
+      completed: false,
+      isCarriedForward: isOverdue,
       ...taskData,
     };
-    const updated = [newTask, ...tasks];
+    const updated = syncTaskStatuses([newTask, ...tasks]);
     setTasks(updated);
     saveToStorage(STORAGE_KEYS.TASKS, updated);
     addNotification('New Task Created', `Task "${newTask.title}" was added.`, 'info');
@@ -110,8 +153,9 @@ export const ProductivityProvider = ({ children }) => {
 
   const updateTask = (id, updatedFields) => {
     const updated = tasks.map((t) => (t.id === id ? { ...t, ...updatedFields } : t));
-    setTasks(updated);
-    saveToStorage(STORAGE_KEYS.TASKS, updated);
+    const synced = syncTaskStatuses(updated);
+    setTasks(synced);
+    saveToStorage(STORAGE_KEYS.TASKS, synced);
   };
 
   const deleteTask = (id) => {
@@ -124,11 +168,14 @@ export const ProductivityProvider = ({ children }) => {
     const todayStr = new Date().toISOString().split('T')[0];
     const updated = tasks.map((t) => {
       if (t.id === id) {
-        const isCompleted = t.status === 'Completed';
-        const newStatus = isCompleted ? 'Pending' : 'Completed';
-        const newCompletedAt = isCompleted ? null : todayStr;
+        const isCompleted = t.status === 'Completed' || t.completed === true;
+        const newCompleted = !isCompleted;
+        const newStatus = newCompleted
+          ? 'Completed'
+          : (t.dueDate && t.dueDate < todayStr ? 'Overdue' : 'Pending');
+        const newCompletedAt = newCompleted ? todayStr : null;
 
-        if (!isCompleted) {
+        if (newCompleted) {
           addActivity('task_completed', `Completed task: ${t.title}`, t.category);
           addNotification('Task Completed! 🎉', `"${t.title}" marked as finished.`, 'success');
         }
@@ -136,13 +183,15 @@ export const ProductivityProvider = ({ children }) => {
         return {
           ...t,
           status: newStatus,
+          completed: newCompleted,
           completedAt: newCompletedAt,
         };
       }
       return t;
     });
-    setTasks(updated);
-    saveToStorage(STORAGE_KEYS.TASKS, updated);
+    const synced = syncTaskStatuses(updated);
+    setTasks(synced);
+    saveToStorage(STORAGE_KEYS.TASKS, synced);
   };
 
   // Target Actions

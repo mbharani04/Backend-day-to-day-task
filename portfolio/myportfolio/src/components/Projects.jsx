@@ -51,32 +51,9 @@ const projects = [
     glowColor: 'bg-brand-secondary/10',
     badgeIcon: FaLaptop
   },
+
   {
     id: 3,
-    title: 'Sociagram Frontend',
-    type: 'Social Platform Frontend',
-    description: 'Developed a modern, interactive social media frontend experience (Sociagram) featuring responsive design layouts, client-side routing, and real-time interactive components.',
-    features: [
-      'Modern Interactive User Feed',
-      'Responsive Mobile & Desktop layouts',
-      'Sleek UI/UX transitions & animations',
-      'State Management integration',
-      'Dynamic user profiles preview',
-      'Interactive post creation and feeds'
-    ],
-    tech: ['React.js', 'Tailwind CSS', 'ES6 JavaScript', 'Vite'],
-    links: {
-      demo: 'https://fs-project-gamma.vercel.app/',
-      demoLabel: 'Live Demo',
-      demoIcon: FaExternalLinkAlt,
-      github: 'https://github.com/mbharani04/'
-    },
-    accent: 'border-purple-400/20 hover:border-purple-400/50',
-    glowColor: 'bg-brand-secondary/10',
-    badgeIcon: FaLaptop
-  },
-  {
-    id: 4,
     title: 'Planets Explorer Frontend',
     type: 'Space Visualizer Frontend',
     description: 'Built a visually stunning, responsive Planets Explorer application showcasing celestial data cards, orbital system stats, and interactive planetary facts.',
@@ -88,7 +65,7 @@ const projects = [
       'Custom styled solar vector diagrams',
       'Detailed planetary structure analysis'
     ],
-    tech: ['HTML5', 'CSS3', 'JavaScript', 'Vite'],
+    tech: ['HTML5', 'CSS3', 'JavaScript'],
     links: {
       demo: 'https://planetsexplorer-sigma.vercel.app/',
       demoLabel: 'Live Demo',
@@ -97,6 +74,52 @@ const projects = [
     },
     accent: 'border-brand-accent/20 hover:border-brand-accent/50',
     glowColor: 'bg-brand-accent/10',
+    badgeIcon: FaLaptop
+  },
+
+  {
+    id: 4,
+    title: 'Sociagram Frontend',
+    type: 'Social Platform Frontend',
+    description: 'Developed a modern, interactive social media frontend experience (Sociagram) featuring responsive design layouts, client-side routing, and real-time interactive components.',
+    features: [
+      'it has login  signup & create ,post',
+      'Responsive Mobile & Desktop layouts',
+      'Sleek UI/UX transitions & animations',
+      'Dynamic user profiles preview'
+    ],
+    tech: ['React.js', 'Tailwind CSS', 'ES6 JavaScript', 'Vite'],
+    links: {
+      demo: 'https://fs-project-gamma.vercel.app/',
+      demoLabel: 'Live Demo',
+      demoIcon: FaExternalLinkAlt,
+      github: 'https://github.com/mbharani04/fs-project/tree/main/team_projects/react/appname/'
+    },
+    accent: 'border-purple-400/20 hover:border-purple-400/50',
+    glowColor: 'bg-brand-secondary/10',
+    badgeIcon: FaLaptop
+  },
+
+  {
+    id: 5,
+    title: 'Personal Productivity Web App',
+    type: 'Productivity & Tooling',
+    description: 'Built a personal productivity web application designed for efficient daily task tracking and workflow optimization, featuring client-side data persistence via LocalStorage.',
+    features: [
+      'Persistent LocalStorage State Management',
+      'Daily Task & Productivity Workflow Tracking',
+      'Minimalist & Responsive User Interface',
+      'Client-Side Data Privacy & Zero Latency'
+    ],
+    tech: ['React.js', 'LocalStorage', 'JavaScript', 'Tailwind CSS'],
+    links: {
+      demo: 'https://my-productivity-gamma.vercel.app/',
+      demoLabel: 'Live Demo',
+      demoIcon: FaExternalLinkAlt,
+      github: 'https://github.com/mbharani04/Backend-day-to-day-task/tree/main/personal_tracker/tracker-file/'
+    },
+    accent: 'border-emerald-400/20 hover:border-emerald-400/50',
+    glowColor: 'bg-emerald-500/10',
     badgeIcon: FaLaptop
   }
 ];
@@ -109,7 +132,7 @@ export default function Projects() {
       <div className="absolute bottom-[20%] right-[-10%] w-[500px] h-[500px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        
+
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
           <motion.h4
@@ -214,7 +237,7 @@ export default function Projects() {
                     <DemoIcon size={14} />
                     <span>{project.links.demoLabel}</span>
                   </a>
-                  
+
                   <a
                     href={project.links.github}
                     target="_blank"
