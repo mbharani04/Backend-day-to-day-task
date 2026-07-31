@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Target as TargetIcon, Sparkles } from 'lucide-react';
+import { X, Target as TargetIcon } from 'lucide-react';
 import { useProductivity } from '../../context/ProductivityContext';
 
 export const TargetModal = ({ isOpen, onClose, targetToEdit = null }) => {

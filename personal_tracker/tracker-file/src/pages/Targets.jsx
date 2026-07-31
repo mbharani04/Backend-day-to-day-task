@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Target as TargetIcon, Plus, Trash2, Edit2, PlusCircle, CheckCircle, AlertTriangle, X } from 'lucide-react';
+import { Target as TargetIcon, Plus, Trash2, Edit2, PlusCircle, AlertTriangle, X } from 'lucide-react';
 import { PageTransition } from '../components/layout/PageTransition';
 import { useProductivity } from '../context/ProductivityContext';
 import { TargetModal } from '../components/common/TargetModal';
