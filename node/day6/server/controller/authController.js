@@ -15,3 +15,19 @@ export const posting = async  (req,res)=>{
   
   })
 }
+
+export const studget = async (req,res)=>{
+res.status(200).json({
+ msg: "students get"
+})
+
+}
+
+export const studpost = async  (req,res)=>{
+  const studata = req.body
+
+  return res.status(201).json({
+    msg:studata
+  
+  })
+}
