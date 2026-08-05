@@ -10,3 +10,4 @@ const userSchema = new mongoose.Schema({
 })
 
 const authmodel = mongoose.model("dbname",userSchema)
+export default authmodel
