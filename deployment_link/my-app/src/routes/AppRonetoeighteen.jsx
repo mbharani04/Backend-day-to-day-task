@@ -1,3 +1,4 @@
+import React, { lazy, Suspense } from "react"
 import { Route, Routes } from "react-router-dom"
 import Navbar from "../components/navbar/Navbar"
 import Home from "../pages/Home"
@@ -35,13 +36,9 @@ import TwentyTwo from "../pages/react/day22/TwentyTwo"
 import TwentyThree from "../pages/react/day23/TwentyThree"
 import DayTwentyFour from "../pages/react/day24/DayTwentyFour"
 
-
-
-
+const DayTwentysix = lazy(() => import("../pages/react/day26/Twentysix"))
 
 const AppRonetoeighteen = () => {
-
-
   return (
 <>
 
@@ -84,7 +81,9 @@ const AppRonetoeighteen = () => {
            <Route path = "/twentyone" element = {<TwentyOne/>}/>      
            <Route path = "/twentytwo" element = {<TwentyTwo/>}/>
            <Route path = "/twentythree" element = {<TwentyThree/>}/>
-            <Route path = "/twentyfour" element = {<DayTwentyFour/>}/>
+           <Route path = "/twentyfour" element = {<DayTwentyFour/>}/>
+           <Route path = "/twentysix" element={<Suspense fallback={<div className="p-12 text-center text-slate-500 font-bold">Loading Day 26 Route Bundle...</div>}><DayTwentysix/></Suspense>} />
+           <Route path = "/daytwentysix" element={<Suspense fallback={<div className="p-12 text-center text-slate-500 font-bold">Loading Day 26 Route Bundle...</div>}><DayTwentysix/></Suspense>} />
         </Routes>
       </main>
     </div>

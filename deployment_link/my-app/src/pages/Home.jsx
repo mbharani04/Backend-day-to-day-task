@@ -270,6 +270,17 @@ const tasksData = [
     routes: [
       { label: "MERN Day 24", path: "/twentyfour" }
     ]
+  },
+  {
+    day: "Day 26",
+    title: "Environment Variables, Lazy Loading & React Suspense",
+    description: "Configuring .env API endpoints and dynamically lazy-loading 3 feature pages (Products, Users, Posts) using React.lazy() & Suspense with fallback loaders.",
+    category: "Advanced Patterns",
+    tags: [".env API", "React.lazy", "Suspense", "Fallback UI", "Code Splitting"],
+    difficulty: "Hard",
+    routes: [
+      { label: "Day Twenty Six", path: "/twentysix" }
+    ]
   }
 ];
 
