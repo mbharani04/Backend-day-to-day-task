@@ -65,3 +65,7 @@ export const loginprocess = async (req, res) => {
         });
     }
 };
+
+export const dashboardData = async (req,res)=>{
+    console.log(req)
+}
