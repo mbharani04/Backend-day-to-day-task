@@ -4,8 +4,8 @@ export const initialAuth = {
   isAuthenticated: true,
   user: {
     id: 'user-default-1',
-    name: 'Bharani',
-    email: 'bharani@example.com',
+    name: 'Guest User',
+    email: 'user@example.com',
     avatar: lionImg,
     degree: '',
     bio: '',
@@ -19,8 +19,8 @@ export const initialAuth = {
 };
 
 export const initialProfile = {
-  name: 'Bharani',
-  email: 'bharani@example.com',
+  name: 'Guest User',
+  email: 'user@example.com',
   avatar: lionImg,
   degree: '',
   skills: [],

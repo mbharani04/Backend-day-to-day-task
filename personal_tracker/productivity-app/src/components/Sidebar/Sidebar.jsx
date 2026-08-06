@@ -174,10 +174,10 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                 />
                 <div className="truncate">
                   <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">
-                    {user?.name || 'Bharani Kumar'}
+                    {user?.name || 'Guest User'}
                   </p>
                   <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
-                    {user?.email || 'bharani@example.com'}
+                    {user?.email || 'user@example.com'}
                   </p>
                 </div>
               </div>

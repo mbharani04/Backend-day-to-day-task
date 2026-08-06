@@ -17,8 +17,8 @@ export const AuthProvider = ({ children }) => {
   const login = (email, password) => {
     const userPayload = {
       id: 'user-' + Date.now(),
-      name: email ? email.split('@')[0].replace('.', ' ') : 'Bharani Kumar',
-      email: email || 'bharani@example.com',
+      name: email ? email.split('@')[0].replace('.', ' ') : 'Guest User',
+      email: email || 'user@example.com',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
       degree: 'B.S. Computer Science & AI Systems',
       bio: 'Obsessed with deep focus, high performance routines, full-stack engineering, and lifelong growth.',
