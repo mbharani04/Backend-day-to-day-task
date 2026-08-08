@@ -1,0 +1,430 @@
+import { getUsers, saveUsers, getEvents, saveEvents, getBookings, saveBookings, getOrganizations, saveOrganizations } from './storage';
+
+export const DEMO_USERS = [
+  {
+    id: 'usr-demo-01',
+    name: 'Demo User',
+    email: 'user@example.com',
+    mobile: '9876543210',
+    role: 'user',
+    joinedDate: '2026-01-15',
+    status: 'active'
+  },
+  {
+    id: 'usr-admin-01',
+    name: 'Demo Admin',
+    email: 'admin@example.com',
+    mobile: '9876543211',
+    role: 'admin',
+    joinedDate: '2026-01-01',
+    status: 'active'
+  },
+  {
+    id: 'usr-org-01',
+    name: 'Chennai Events Organization',
+    email: 'org@example.com',
+    mobile: '044-24356789',
+    role: 'organization',
+    organizationId: 'org-chennai-01',
+    joinedDate: '2026-01-10',
+    status: 'active'
+  },
+  {
+    id: 'usr-demo-02',
+    name: 'Priya Sundaram',
+    email: 'priya@example.com',
+    mobile: '9840123456',
+    role: 'user',
+    joinedDate: '2026-02-01',
+    status: 'active'
+  },
+  {
+    id: 'usr-demo-03',
+    name: 'Karthik Raja',
+    email: 'karthik@example.com',
+    mobile: '9790987654',
+    role: 'user',
+    joinedDate: '2026-02-12',
+    status: 'active'
+  }
+];
+
+export const DEMO_ORGANIZATIONS = [
+  {
+    id: 'org-chennai-01',
+    name: 'Chennai Events Organization',
+    email: 'org@example.com',
+    phone: '044-24356789',
+    address: 'Anna Salai, T. Nagar, Chennai - 600017',
+    status: 'active',
+    registeredDate: '2026-01-10'
+  },
+  {
+    id: 'org-tn-culture',
+    name: 'Tamil Nadu Cultural & Heritage Society',
+    email: 'culture@tn.gov.in',
+    phone: '044-28521000',
+    address: 'Egmore Museum Campus, Chennai - 600008',
+    status: 'active',
+    registeredDate: '2026-01-14'
+  },
+  {
+    id: 'org-tech-hub',
+    name: 'Chennai Tech Collective',
+    email: 'hello@chennaitech.org',
+    phone: '044-43900000',
+    address: 'IIT Madras Research Park, Taramani, Chennai - 600113',
+    status: 'active',
+    registeredDate: '2026-01-18'
+  },
+  {
+    id: 'org-sports-fed',
+    name: 'Chennai Marathon & Sports Foundation',
+    email: 'info@chennaisports.in',
+    phone: '044-25361234',
+    address: 'Nehru Stadium Complex, Park Town, Chennai - 600003',
+    status: 'active',
+    registeredDate: '2026-01-20'
+  }
+];
+
+export const DEMO_EVENTS = [
+  {
+    id: 'evt-001',
+    title: 'Chennai International Trade Fair 2026',
+    description: 'Experience Chennai\'s flagship international trade showcase bringing together over 300 Global exhibitors displaying industrial tech, consumer electronics, green energy innovations, and artisanal crafts.',
+    category: 'Exhibition',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-09-15',
+    startTime: '10:00 AM',
+    endTime: '07:00 PM',
+    venue: 'Chennai Trade Centre',
+    address: 'Mount Poonamallee Road, Nandambakkam',
+    city: 'Chennai',
+    pincode: '600089',
+    maxParticipants: 500,
+    registeredCount: 142,
+    price: 150,
+    eventType: 'Paid',
+    registrationDeadline: '2026-09-14',
+    organizationId: 'org-chennai-01',
+    organizationName: 'Chennai Events Organization',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-002',
+    title: 'Chennai Annual Coastal Marathon 2026',
+    description: 'Run alongside the scenic Bay of Bengal! Featuring 5K, 10K, and Half Marathon runs starting from Island Grounds through ECR. Includes official chip timing, runner t-shirts, medals, and breakfast.',
+    category: 'Sports',
+    image: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-08-25',
+    startTime: '05:30 AM',
+    endTime: '10:30 AM',
+    venue: 'Island Grounds to ECR Promenade',
+    address: 'Anna Salai, Park Town',
+    city: 'Chennai',
+    pincode: '600009',
+    maxParticipants: 1000,
+    registeredCount: 450,
+    price: 499,
+    eventType: 'Paid',
+    registrationDeadline: '2026-08-23',
+    organizationId: 'org-sports-fed',
+    organizationName: 'Chennai Marathon & Sports Foundation',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-003',
+    title: 'Technology Expo & AI Summit Chennai',
+    description: 'South India\'s premier technology summit highlighting Generative AI, Robotics, Cloud Architecture, and IoT solutions. Features keynotes from industry pioneers and interactive demo zones.',
+    category: 'Technology',
+    image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-09-02',
+    startTime: '09:30 AM',
+    endTime: '05:30 PM',
+    venue: 'IIT Madras Research Park',
+    address: 'Kanagam Road, Taramani',
+    city: 'Chennai',
+    pincode: '600113',
+    maxParticipants: 400,
+    registeredCount: 280,
+    price: 0,
+    eventType: 'Free',
+    registrationDeadline: '2026-08-30',
+    organizationId: 'org-tech-hub',
+    organizationName: 'Chennai Tech Collective',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-004',
+    title: 'Margazhi Heritage Art & Classical Dance Festival',
+    description: 'A grand celebration of Classical Bharatanatyam, Carnatic Vocal performances, and traditional temple architecture showcases presented by renowned masters and promising prodigies.',
+    category: 'Cultural',
+    image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-09-20',
+    startTime: '05:00 PM',
+    endTime: '09:30 PM',
+    venue: 'Kalakshetra Foundation',
+    address: 'Kalakshetra Road, Thiruvanmiyur',
+    city: 'Chennai',
+    pincode: '600041',
+    maxParticipants: 350,
+    registeredCount: 190,
+    price: 0,
+    eventType: 'Free',
+    registrationDeadline: '2026-09-18',
+    organizationId: 'org-tn-culture',
+    organizationName: 'Tamil Nadu Cultural & Heritage Society',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-005',
+    title: 'Chennai Startup Conclave & Founder Pitching',
+    description: 'Connect with over 50 VC funds, angel networks, and successful tech founders. Features live pitch sessions, co-founder networking lounge, and workshops on fundraising.',
+    category: 'Business',
+    image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-10-05',
+    startTime: '10:00 AM',
+    endTime: '06:00 PM',
+    venue: 'Guindy Industrial Estate Convention Hall',
+    address: 'SIDCO Industrial Estate, Guindy',
+    city: 'Chennai',
+    pincode: '600032',
+    maxParticipants: 300,
+    registeredCount: 120,
+    price: 0,
+    eventType: 'Free',
+    registrationDeadline: '2026-10-01',
+    organizationId: 'org-chennai-01',
+    organizationName: 'Chennai Events Organization',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-006',
+    title: 'TN Mega Government Job & Career Fair 2026',
+    description: 'Over 100 top public sector enterprises, government agencies, and IT majors hiring across engineering, banking, healthcare, and civil administration. Free entry for job seekers.',
+    category: 'Government',
+    image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-09-10',
+    startTime: '09:00 AM',
+    endTime: '05:00 PM',
+    venue: 'Jawaharlal Nehru Outdoor Stadium',
+    address: 'Sydenhams Road, Periamet',
+    city: 'Chennai',
+    pincode: '600003',
+    maxParticipants: 2000,
+    registeredCount: 890,
+    price: 0,
+    eventType: 'Free',
+    registrationDeadline: '2026-09-08',
+    organizationId: 'org-tn-culture',
+    organizationName: 'Tamil Nadu Cultural & Heritage Society',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-007',
+    title: 'Chennai Higher Education & Study Abroad Expo',
+    description: 'Interact directly with university representatives from UK, USA, Germany, Australia, and premier Indian institutions. Free career counselling and scholarship guidance.',
+    category: 'Education',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-09-28',
+    startTime: '10:00 AM',
+    endTime: '05:00 PM',
+    venue: 'Loyola College Auditorium',
+    address: 'Sterling Road, Nungambakkam',
+    city: 'Chennai',
+    pincode: '600034',
+    maxParticipants: 600,
+    registeredCount: 310,
+    price: 0,
+    eventType: 'Free',
+    registrationDeadline: '2026-09-26',
+    organizationId: 'org-chennai-01',
+    organizationName: 'Chennai Events Organization',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-008',
+    title: 'Chennai Street Food Festival & Flea Market',
+    description: 'Savor traditional South Indian delicacies, Fusion Chennai dishes, international street bites, live music performances, and handmade craft pop-ups at Marina Beach promenade.',
+    category: 'Arts',
+    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-10-12',
+    startTime: '04:00 PM',
+    endTime: '11:00 PM',
+    venue: 'Besant Nagar Beach Promenade',
+    address: 'Elliot\'s Beach, Besant Nagar',
+    city: 'Chennai',
+    pincode: '600090',
+    maxParticipants: 1500,
+    registeredCount: 680,
+    price: 100,
+    eventType: 'Paid',
+    registrationDeadline: '2026-10-11',
+    organizationId: 'org-chennai-01',
+    organizationName: 'Chennai Events Organization',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-009',
+    title: 'Monsoon Photography Masterclass & Heritage Walk',
+    description: 'Learn urban photography framing, lighting, and portraiture techniques during a guided morning walking tour through historical Mylapore and Kapaleeshwarar tank.',
+    category: 'Workshop',
+    image: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-09-08',
+    startTime: '06:00 AM',
+    endTime: '11:00 AM',
+    venue: 'DakshinaChitra Heritage Museum',
+    address: 'East Coast Road, Muttukadu',
+    city: 'Chennai',
+    pincode: '603112',
+    maxParticipants: 50,
+    registeredCount: 38,
+    price: 750,
+    eventType: 'Paid',
+    registrationDeadline: '2026-09-06',
+    organizationId: 'org-tn-culture',
+    organizationName: 'Tamil Nadu Cultural & Heritage Society',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-010',
+    title: 'Chennai Live Symphony & Indie Rock Night',
+    description: 'A stellar musical evening featuring top indie bands, acoustic artists, and orchestral arrangements under the stars at Phoenix Marketcity Amphitheatre.',
+    category: 'Entertainment',
+    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-10-20',
+    startTime: '06:30 PM',
+    endTime: '10:30 PM',
+    venue: 'Phoenix Marketcity Courtyard',
+    address: 'Velachery Main Road, Velachery',
+    city: 'Chennai',
+    pincode: '600042',
+    maxParticipants: 800,
+    registeredCount: 420,
+    price: 350,
+    eventType: 'Paid',
+    registrationDeadline: '2026-10-19',
+    organizationId: 'org-chennai-01',
+    organizationName: 'Chennai Events Organization',
+    status: 'approved',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-011',
+    title: 'Clean Marina Coastal Hackathon 2026',
+    description: 'Join developers, marine biologists, and civic leaders to build IoT waste-tracking and eco-monitoring applications for Chennai beaches.',
+    category: 'Technology',
+    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-11-01',
+    startTime: '09:00 AM',
+    endTime: '06:00 PM',
+    venue: 'Anna University Campus Hall',
+    address: 'Sardar Patel Road, Guindy',
+    city: 'Chennai',
+    pincode: '600025',
+    maxParticipants: 150,
+    registeredCount: 45,
+    price: 0,
+    eventType: 'Free',
+    registrationDeadline: '2026-10-28',
+    organizationId: 'org-chennai-01',
+    organizationName: 'Chennai Events Organization',
+    status: 'pending',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-012',
+    title: 'Chennai EV & Clean Energy Summit',
+    description: 'Exploring electric mobility infrastructure, battery tech, and renewable power integration across Tamil Nadu.',
+    category: 'Technology',
+    image: 'https://images.unsplash.com/photo-1558441719-443b38605ad5?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-11-15',
+    startTime: '10:00 AM',
+    endTime: '05:00 PM',
+    venue: 'Hotel Le Royal Méridien',
+    address: 'GST Road, St Thomas Mount',
+    city: 'Chennai',
+    pincode: '600016',
+    maxParticipants: 250,
+    registeredCount: 15,
+    price: 500,
+    eventType: 'Paid',
+    registrationDeadline: '2026-11-12',
+    organizationId: 'org-tech-hub',
+    organizationName: 'Chennai Tech Collective',
+    status: 'pending',
+    rejectionReason: ''
+  },
+  {
+    id: 'evt-013',
+    title: 'Unverified Commercial Carnival',
+    description: 'An unapproved pop-up event lacking safety permits.',
+    category: 'Entertainment',
+    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop',
+    date: '2026-08-30',
+    startTime: '04:00 PM',
+    endTime: '10:00 PM',
+    venue: 'Private Open Plot',
+    address: 'Madhavaram High Road',
+    city: 'Chennai',
+    pincode: '600060',
+    maxParticipants: 300,
+    registeredCount: 0,
+    price: 200,
+    eventType: 'Paid',
+    registrationDeadline: '2026-08-28',
+    organizationId: 'org-chennai-01',
+    organizationName: 'Chennai Events Organization',
+    status: 'rejected',
+    rejectionReason: 'Event submission lacks mandatory police & fire department clearance certificates.'
+  }
+];
+
+export const DEMO_BOOKINGS = [
+  {
+    id: 'bk-demo-01',
+    bookingId: 'EVT-2026-881920',
+    userId: 'usr-demo-01',
+    userName: 'Demo User',
+    userEmail: 'user@example.com',
+    eventId: 'evt-001',
+    eventTitle: 'Chennai International Trade Fair 2026',
+    eventDate: '2026-09-15',
+    eventVenue: 'Chennai Trade Centre, Nandambakkam',
+    organizationId: 'org-chennai-01',
+    status: 'confirmed',
+    bookingDate: '2026-08-01'
+  }
+];
+
+export const initSeedData = () => {
+  const existingUsers = getUsers();
+  if (!existingUsers || existingUsers.length === 0) {
+    saveUsers(DEMO_USERS);
+  }
+
+  const existingOrgs = getOrganizations();
+  if (!existingOrgs || existingOrgs.length === 0) {
+    saveOrganizations(DEMO_ORGANIZATIONS);
+  }
+
+  const existingEvents = getEvents();
+  if (!existingEvents || existingEvents.length === 0) {
+    saveEvents(DEMO_EVENTS);
+  }
+
+  const existingBookings = getBookings();
+  if (!existingBookings || existingBookings.length === 0) {
+    saveBookings(DEMO_BOOKINGS);
+  }
+};
