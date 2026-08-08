@@ -4,13 +4,13 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider } from './context/ToastContext';
 
-import { ProtectedRoute, UserRoute, AdminRoute, OrganizationRoute } from './routes/ProtectedRoutes';
+import { RequireAuth, UserRoute, AdminRoute, OrganizationRoute } from './routes/ProtectedRoutes';
 
-// Public Pages
+// Public/Auth Pages
+import { Login } from './pages/Login';
 import { Landing } from './pages/Landing';
 import { Events } from './pages/Events';
 import { EventDetails } from './pages/EventDetails';
-import { Login } from './pages/Login';
 import { NotFound } from './pages/NotFound';
 
 // User Portal Pages
@@ -39,36 +39,40 @@ export function App() {
         <AuthProvider>
           <Router>
             <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<Landing />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/events/:id" element={<EventDetails />} />
+              {/* Unauthenticated Login / Register Entry Point */}
               <Route path="/login" element={<Login />} />
 
-              {/* User Protected Routes */}
-              <Route element={<UserRoute />}>
-                <Route path="/user/dashboard" element={<UserDashboard />} />
-                <Route path="/user/bookings" element={<UserBookings />} />
-                <Route path="/user/profile" element={<UserProfile />} />
-              </Route>
+              {/* All Platform Pages Require Login/Registration First */}
+              <Route element={<RequireAuth />}>
+                <Route path="/" element={<Landing />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/events/:id" element={<EventDetails />} />
 
-              {/* Admin Protected Routes */}
-              <Route element={<AdminRoute />}>
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                <Route path="/admin/events" element={<AdminEvents />} />
-                <Route path="/admin/users" element={<AdminUsers />} />
-                <Route path="/admin/organizations" element={<AdminOrganizations />} />
-                <Route path="/admin/bookings" element={<AdminBookings />} />
-              </Route>
+                {/* User Protected Routes */}
+                <Route element={<UserRoute />}>
+                  <Route path="/user/dashboard" element={<UserDashboard />} />
+                  <Route path="/user/bookings" element={<UserBookings />} />
+                  <Route path="/user/profile" element={<UserProfile />} />
+                </Route>
 
-              {/* Organization Protected Routes */}
-              <Route element={<OrganizationRoute />}>
-                <Route path="/organization/dashboard" element={<OrganizationDashboard />} />
-                <Route path="/organization/events" element={<OrganizationEvents />} />
-                <Route path="/organization/events/create" element={<CreateEvent />} />
-                <Route path="/organization/events/edit/:id" element={<CreateEvent />} />
-                <Route path="/organization/bookings" element={<OrganizationBookings />} />
-                <Route path="/organization/profile" element={<OrganizationProfile />} />
+                {/* Admin Protected Routes */}
+                <Route element={<AdminRoute />}>
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                  <Route path="/admin/events" element={<AdminEvents />} />
+                  <Route path="/admin/users" element={<AdminUsers />} />
+                  <Route path="/admin/organizations" element={<AdminOrganizations />} />
+                  <Route path="/admin/bookings" element={<AdminBookings />} />
+                </Route>
+
+                {/* Organization Protected Routes */}
+                <Route element={<OrganizationRoute />}>
+                  <Route path="/organization/dashboard" element={<OrganizationDashboard />} />
+                  <Route path="/organization/events" element={<OrganizationEvents />} />
+                  <Route path="/organization/events/create" element={<CreateEvent />} />
+                  <Route path="/organization/events/edit/:id" element={<CreateEvent />} />
+                  <Route path="/organization/bookings" element={<OrganizationBookings />} />
+                  <Route path="/organization/profile" element={<OrganizationProfile />} />
+                </Route>
               </Route>
 
               {/* 404 Catch All */}

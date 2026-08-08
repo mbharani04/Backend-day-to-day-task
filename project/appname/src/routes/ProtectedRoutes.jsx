@@ -3,6 +3,30 @@ import { Navigate, Outlet, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ShieldAlert, ArrowLeft, LayoutDashboard } from 'lucide-react';
 
+// General Auth Guard: Requires user to be logged in before entering any page on the platform
+export const RequireAuth = () => {
+  const { isAuthenticated, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Verifying security credentials...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <Outlet />;
+};
+
+// Role-Based Auth Guard: Restricts specific portal sections (User, Admin, Org)
 export const ProtectedRoute = ({ allowedRoles }) => {
   const { isAuthenticated, user, loading } = useAuth();
   const location = useLocation();
@@ -46,7 +70,7 @@ export const ProtectedRoute = ({ allowedRoles }) => {
           </span>
           <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">Access Denied</h2>
           <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-            You do not have administrative permissions to view this route. You are logged in as{' '}
+            You do not have permission to view this section. Logged in as{' '}
             <span className="font-semibold capitalize text-indigo-600 dark:text-indigo-400">{user?.role}</span>.
           </p>
           
@@ -59,11 +83,11 @@ export const ProtectedRoute = ({ allowedRoles }) => {
               Go to My {user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : ''} Dashboard
             </Link>
             <Link
-              to="/events"
+              to="/"
               className="w-full py-2.5 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium rounded-xl flex items-center justify-center gap-2 transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
-              Explore Public Events
+              Go to Home Landing Page
             </Link>
           </div>
         </div>

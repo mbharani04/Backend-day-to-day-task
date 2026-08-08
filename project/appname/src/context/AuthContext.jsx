@@ -16,8 +16,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const sendOTP = async (identifier, selectedRole) => {
-    // Mock OTP dispatch
+  const sendOTP = async (identifier, selectedRole, mode = 'login') => {
     const users = getUsers();
     const cleanIdentifier = identifier.trim().toLowerCase();
     
@@ -25,10 +24,23 @@ export const AuthProvider = ({ children }) => {
       (u) => u.email.toLowerCase() === cleanIdentifier || u.mobile === cleanIdentifier
     );
 
-    if (existingUser && existingUser.role !== selectedRole) {
-      throw new Error(
-        `Access denied. Account with email/mobile '${identifier}' is registered as '${existingUser.role.toUpperCase()}', not '${selectedRole.toUpperCase()}'.`
-      );
+    if (mode === 'login') {
+      if (!existingUser) {
+        throw new Error(
+          `No account found for '${identifier}'. Please switch to the 'Register' tab to create an account.`
+        );
+      }
+      if (existingUser.role !== selectedRole) {
+        throw new Error(
+          `Account '${identifier}' is registered as '${existingUser.role.toUpperCase()}', not '${selectedRole.toUpperCase()}'.`
+        );
+      }
+    } else if (mode === 'register') {
+      if (existingUser) {
+        throw new Error(
+          `An account with '${identifier}' already exists. Please switch to the 'Login' tab to log in.`
+        );
+      }
     }
 
     return {
@@ -38,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     };
   };
 
-  const verifyOTP = async (identifier, otp, selectedRole, optionalName = '') => {
+  const verifyOTP = async (identifier, otp, selectedRole, mode = 'login', fullName = '') => {
     if (otp !== '123456') {
       throw new Error('Invalid OTP! Please enter demo OTP 123456.');
     }
@@ -49,18 +61,21 @@ export const AuthProvider = ({ children }) => {
       (u) => u.email.toLowerCase() === cleanIdentifier || u.mobile === cleanIdentifier
     );
 
-    if (existingUser) {
+    if (mode === 'login') {
+      if (!existingUser) {
+        throw new Error('Account not found! Please register first.');
+      }
       if (existingUser.role !== selectedRole) {
         throw new Error(
-          `Login denied! Your registered role is '${existingUser.role.toUpperCase()}'. You selected '${selectedRole.toUpperCase()}'.`
+          `Role mismatch! Account registered as '${existingUser.role.toUpperCase()}'.`
         );
       }
     } else {
-      // Auto-register new user for smooth demo testing
+      // Register Mode
       const isEmail = cleanIdentifier.includes('@');
       const newUser = {
         id: `usr-${Date.now()}`,
-        name: optionalName || (isEmail ? cleanIdentifier.split('@')[0] : 'New User'),
+        name: fullName.trim() || (isEmail ? cleanIdentifier.split('@')[0] : 'New User'),
         email: isEmail ? cleanIdentifier : `${cleanIdentifier}@example.com`,
         mobile: isEmail ? '9876543210' : cleanIdentifier,
         role: selectedRole,
@@ -73,7 +88,7 @@ export const AuthProvider = ({ children }) => {
       existingUser = newUser;
     }
 
-    // Set current active user session
+    // Save session in state and localStorage
     setUser(existingUser);
     setCurrentUser(existingUser);
     return { success: true, user: existingUser };
