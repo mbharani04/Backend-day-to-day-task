@@ -14,6 +14,7 @@ export default function PillNav({
     { name: 'Skills', href: '#technical-skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Experience', href: '#experience' },
+    { name: 'Education', href: '#education' },
     { name: 'Contact', href: '#contact' }
   ],
   logoText = 'BM',
@@ -48,9 +49,10 @@ export default function PillNav({
         const sectionId = item.href.substring(1);
         const element = document.getElementById(sectionId);
         if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-          if (currentScrollY >= offsetTop && currentScrollY < offsetTop + offsetHeight) {
+          const rect = element.getBoundingClientRect();
+          const offsetTop = rect.top + window.scrollY;
+          const offsetHeight = rect.height;
+          if (currentScrollY >= offsetTop - 100 && currentScrollY < offsetTop + offsetHeight) {
             active = sectionId;
           }
         }
@@ -188,7 +190,8 @@ export default function PillNav({
     const targetId = href.substring(1);
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      const offsetTop = targetElement.offsetTop - 85;
+      const rect = targetElement.getBoundingClientRect();
+      const offsetTop = rect.top + window.scrollY - 85;
       window.scrollTo({
         top: offsetTop,
         behavior: 'smooth'
@@ -222,7 +225,7 @@ export default function PillNav({
       {/* Main Pill Floating Header */}
       <header
         ref={navContainerRef}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-6xl transition-all duration-500 rounded-full"
+        className="fixed top-4 inset-x-0 mx-auto z-40 w-[95%] max-w-6xl transition-all duration-500 rounded-full"
         role="navigation"
         aria-label="Main Portfolio Navigation"
       >
@@ -238,13 +241,13 @@ export default function PillNav({
             href={logoHref}
             onClick={(e) => handleNavClick(e, logoHref)}
             onMouseEnter={handleLogoMouseEnter}
-            className="flex items-center gap-3 group focus:outline-none"
+            className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none shrink-0"
             aria-label="Homepage"
           >
             {/* Circular Rounded Logo Badge with 360 Rotation */}
             <div
               ref={logoRef}
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-tr from-brand-primary via-brand-secondary to-brand-accent p-[2px] shadow-md shadow-brand-primary/20 shrink-0"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-gradient-to-tr from-brand-primary via-brand-secondary to-brand-accent p-[2px] shadow-md shadow-brand-primary/20 shrink-0"
             >
               <div className="w-full h-full rounded-full bg-[#0B0F19] flex items-center justify-center text-white font-mono font-bold text-xs tracking-wider">
                 {logoText}
@@ -252,13 +255,13 @@ export default function PillNav({
             </div>
 
             {/* Brand Name Text */}
-            <span className="font-display font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-white via-gray-200 to-brand-accent bg-clip-text text-transparent group-hover:opacity-90 transition-opacity hidden sm:inline-block">
+            <span className="font-display font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-white via-gray-200 to-brand-accent bg-clip-text text-transparent group-hover:opacity-90 transition-opacity hidden lg:inline-block">
               {logoFullText}
             </span>
           </a>
 
           {/* Desktop Navigation - PillNav Items */}
-          <nav className="hidden md:flex items-center gap-1.5 p-1 bg-white/[0.03] rounded-full border border-white/5">
+          <nav className="hidden md:flex items-center gap-1 xl:gap-1.5 p-1 bg-white/[0.03] rounded-full border border-white/5">
             {items.map((item, index) => {
               const sectionId = item.href.substring(1);
               const isActive = activeSection === sectionId;
@@ -271,7 +274,7 @@ export default function PillNav({
                   onClick={(e) => handleNavClick(e, item.href)}
                   onMouseEnter={handlePillMouseEnter}
                   onMouseLeave={handlePillMouseLeave}
-                  className={`pill-item px-4 py-2 text-xs sm:text-sm font-medium rounded-full transition-all duration-300 ${
+                  className={`pill-item px-3 xl:px-4 py-1.5 xl:py-2 text-xs xl:text-sm font-medium rounded-full transition-all duration-300 ${
                     isActive
                       ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md shadow-brand-primary/20 font-semibold border border-white/20'
                       : 'text-gray-300 hover:text-white border border-transparent'
@@ -292,11 +295,11 @@ export default function PillNav({
           </nav>
 
           {/* CTA / Quick Action (Desktop) */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden lg:flex items-center shrink-0">
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, '#contact')}
-              className="text-xs font-mono font-semibold uppercase tracking-wider px-4.5 py-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 hover:bg-brand-primary hover:border-brand-primary text-brand-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-brand-primary/20"
+              className="text-xs font-mono font-semibold uppercase tracking-wider px-3.5 xl:px-4.5 py-1.5 xl:py-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 hover:bg-brand-primary hover:border-brand-primary text-brand-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-brand-primary/20"
             >
               Let's Connect
             </a>

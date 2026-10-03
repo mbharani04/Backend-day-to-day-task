@@ -1,0 +1,55 @@
+/* Skills.css - Technical Skills Marquee & Interactive Styles */
+
+.skills-marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.skills-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  will-change: transform;
+  animation: skills-marquee-left var(--marquee-speed, 35s) linear infinite;
+}
+
+.skills-marquee-track.direction-reverse {
+  animation-name: skills-marquee-right;
+}
+
+.skills-marquee-track:hover,
+.skills-marquee-container:hover .skills-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes skills-marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes skills-marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .skills-marquee-track {
+    animation: none !important;
+  }
+  .skills-marquee-container {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+}

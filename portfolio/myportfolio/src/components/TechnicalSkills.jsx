@@ -1,168 +1,150 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  SiHtml5,
-  SiBootstrap,
-  SiTailwindcss,
-  SiJavascript,
-  SiReact,
+  FaHtml5,
+  FaCss3Alt,
+  FaJs,
+  FaReact,
+  FaNodeJs,
+  FaBootstrap,
+  FaGitAlt,
+  FaGithub,
+  FaServer,
+  FaDatabase,
+  FaLock,
+  FaLayerGroup
+} from 'react-icons/fa';
+import {
   SiVite,
-  SiNodedotjs,
+  SiReactrouter,
+  SiTailwindcss,
   SiExpress,
   SiMongodb,
-  SiPython,
-  SiCplusplus,
-  SiClaude,
-  SiGooglegemini
+  SiFirebase,
+  SiSupabase,
+  SiVercel
 } from 'react-icons/si';
-import { FaCss3Alt } from 'react-icons/fa';
-import { TbBrandOpenai, TbBrandVscode } from 'react-icons/tb';
-import { BsStars } from 'react-icons/bs';
-import LogoLoop from './LogoLoop';
+import { VscVscode } from 'react-icons/vsc';
+import SkillCard from './skills/SkillCard';
+import './skills/Skills.css';
 
-// Master array of technologies and tools
-export const techLogos = [
-  // Frontend
-  {
-    id: 'html5',
-    name: 'HTML5',
-    category: 'Frontend',
-    icon: SiHtml5,
-    color: '#E34F26'
-  },
-  {
-    id: 'css3',
-    name: 'CSS3',
-    category: 'Frontend',
-    icon: FaCss3Alt,
-    color: '#1572B6'
-  },
-  {
-    id: 'bootstrap',
-    name: 'Bootstrap CSS',
-    category: 'Frontend',
-    icon: SiBootstrap,
-    color: '#7952B3'
-  },
-  {
-    id: 'tailwindcss',
-    name: 'Tailwind CSS',
-    category: 'Frontend',
-    icon: SiTailwindcss,
-    color: '#06B6D4'
-  },
-  {
-    id: 'javascript',
-    name: 'JavaScript (ES6+)',
-    category: 'Frontend',
-    icon: SiJavascript,
-    color: '#F7DF1E'
-  },
-  {
-    id: 'react',
-    name: 'React.js',
-    category: 'Frontend',
-    icon: SiReact,
-    color: '#61DAFB'
-  },
-  {
-    id: 'vite',
-    name: 'Vite',
-    category: 'Frontend',
-    icon: SiVite,
-    color: '#646CFF'
-  },
+// Primary row 1 skill cards (Frontend & Client-Side Core)
+const mainSkillsRow1 = [
+  { id: 'html5', name: 'HTML5', category: 'FRONTEND', icon: FaHtml5, color: '#E34F26' },
+  { id: 'css3', name: 'CSS3', category: 'FRONTEND', icon: FaCss3Alt, color: '#1572B6' },
+  { id: 'javascript', name: 'JavaScript (ES6+)', category: 'FRONTEND', icon: FaJs, color: '#F7DF1E' },
+  { id: 'react', name: 'React.js', category: 'FRONTEND', icon: FaReact, color: '#61DAFB' },
+  { id: 'vite', name: 'Vite', category: 'FRONTEND', icon: SiVite, color: '#646CFF' },
+  { id: 'reactrouter', name: 'React Router', category: 'FRONTEND', icon: SiReactrouter, color: '#CA4245' },
+  { id: 'tailwind', name: 'Tailwind CSS', category: 'FRONTEND', icon: SiTailwindcss, color: '#06B6D4' },
+  { id: 'bootstrap', name: 'Bootstrap', category: 'FRONTEND', icon: FaBootstrap, color: '#7952B3' }
+];
 
-  // Backend & Database
-  {
-    id: 'nodejs',
-    name: 'Node.js',
-    category: 'Backend',
-    icon: SiNodedotjs,
-    color: '#5FA04E'
-  },
-  {
-    id: 'express',
-    name: 'Express.js',
-    category: 'Backend',
-    icon: SiExpress,
-    color: '#E0E0E0'
-  },
-  {
-    id: 'mongodb',
-    name: 'MongoDB',
-    category: 'Database',
-    icon: SiMongodb,
-    color: '#47A248'
-  },
+// Primary row 2 skill cards (Backend, Database, Cloud & Dev Tools)
+const mainSkillsRow2 = [
+  { id: 'nodejs', name: 'Node.js', category: 'BACKEND', icon: FaNodeJs, color: '#5FA04E' },
+  { id: 'express', name: 'Express.js', category: 'BACKEND', icon: SiExpress, color: '#E0E0E0' },
+  { id: 'mongodb', name: 'MongoDB', category: 'DATABASE', icon: SiMongodb, color: '#47A248' },
+  { id: 'firebase', name: 'Firebase', category: 'DATABASE & SERVICES', icon: SiFirebase, color: '#FFCA28' },
+  { id: 'supabase', name: 'Supabase', category: 'DATABASE & SERVICES', icon: SiSupabase, color: '#3ECF8E' },
+  { id: 'git', name: 'Git', category: 'DEV TOOLS', icon: FaGitAlt, color: '#F05032' },
+  { id: 'github', name: 'GitHub', category: 'DEV TOOLS', icon: FaGithub, color: '#FFFFFF' },
+  { id: 'vscode', name: 'VS Code', category: 'DEV TOOLS', icon: VscVscode, color: '#007ACC' },
+  { id: 'vercel', name: 'Vercel', category: 'DEV TOOLS', icon: SiVercel, color: '#FFFFFF' }
+];
 
-  // Programming Languages
-  {
-    id: 'python',
-    name: 'Python',
-    category: 'Language',
-    icon: SiPython,
-    color: '#3776AB'
-  },
-  {
-    id: 'cpp',
-    name: 'C++',
-    category: 'Language',
-    icon: SiCplusplus,
-    color: '#00599C'
-  },
+// Master list of all main skills in sequential order
+const allMainSkills = [...mainSkillsRow1, ...mainSkillsRow2];
 
-  // AI Tools
+// Supporting Competency Groups
+const skillCapabilities = [
   {
-    id: 'chatgpt',
-    name: 'ChatGPT',
-    category: 'AI Tools',
-    icon: TbBrandOpenai,
-    color: '#10A37F'
+    title: 'React.js Core & Logic',
+    category: 'State & Architecture',
+    icon: FaReact,
+    iconColor: 'text-[#61DAFB] border-[#61DAFB]/20 bg-[#61DAFB]/10',
+    skills: [
+      'JSX',
+      'useState',
+      'useEffect',
+      'useContext',
+      'useReducer',
+      'useRef',
+      'useMemo',
+      'Component-based Architecture',
+      'API Integration',
+      'Form Handling',
+      'Client-side Routing'
+    ]
   },
   {
-    id: 'claude',
-    name: 'Claude (Sonnet)',
-    category: 'AI Tools',
-    icon: SiClaude,
-    color: '#D97706',
-    badge: 'v3.7'
+    title: 'Backend Development',
+    category: 'APIs & Services',
+    icon: FaServer,
+    iconColor: 'text-[#5FA04E] border-[#5FA04E]/20 bg-[#5FA04E]/10',
+    skills: [
+      'Node.js',
+      'Express.js',
+      'REST API Development',
+      'CRUD Operations',
+      'Authentication APIs',
+      'Backend Integration',
+      'LocalStorage Persistence',
+      'API Testing Tools'
+    ]
   },
   {
-    id: 'gemini',
-    name: 'Gemini AI',
-    category: 'AI Tools',
-    icon: SiGooglegemini,
-    color: '#8E75FF'
+    title: 'Database & Authentication',
+    category: 'Cloud & Security',
+    icon: FaLock,
+    iconColor: 'text-[#FFCA28] border-[#FFCA28]/20 bg-[#FFCA28]/10',
+    skills: [
+      'MongoDB',
+      'Firebase Auth',
+      'Firestore Database',
+      'Supabase',
+      'Email/Password Auth',
+      'Google Sign-In',
+      'Email Verification',
+      'Login & Registration',
+      'Auth State Management',
+      'Password Hashing Concepts'
+    ]
   },
   {
-    id: 'aigravity',
-    name: 'AI Gravity',
-    category: 'AI Tools',
-    icon: BsStars,
-    color: '#00F0FF',
-    badge: 'Pro'
-  },
-
-  // Development Tools
-  {
-    id: 'vscode',
-    name: 'VS Code',
-    category: 'Dev Tools',
-    icon: TbBrandVscode,
-    color: '#007ACC'
+    title: 'Full-Stack UI & Engineering',
+    category: 'UI/UX & Deployment',
+    icon: FaLayerGroup,
+    iconColor: 'text-[#06B6D4] border-[#06B6D4]/20 bg-[#06B6D4]/10',
+    skills: [
+      'Responsive Web Design',
+      'Tailwind-based UI',
+      'CSS Styling',
+      'Landing Pages',
+      'Dashboard Interfaces',
+      'Admin Dashboards',
+      'User / Business Roles',
+      'Reusable Components',
+      'Domain Integration',
+      'Vercel Deployment'
+    ]
   }
 ];
+
+
 
 export default function TechnicalSkills() {
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const categories = ['All', 'Frontend', 'Backend', 'Database', 'Language', 'AI Tools', 'Dev Tools'];
+  const categories = ['All', 'Frontend', 'Backend', 'Database & Services', 'Dev Tools'];
 
-  const filteredLogos =
+  const skillsToDisplay =
     activeCategory === 'All'
-      ? techLogos
-      : techLogos.filter((t) => t.category.toLowerCase() === activeCategory.toLowerCase());
+      ? allMainSkills
+      : allMainSkills.filter((s) => s.category.toLowerCase().includes(activeCategory.toLowerCase()));
+
+  // Duplicate items for continuous infinite marquee looping
+  const marqueeItems = [...skillsToDisplay, ...skillsToDisplay];
 
   return (
     <section id="technical-skills" className="py-24 relative overflow-hidden bg-black/20">
@@ -171,17 +153,10 @@ export default function TechnicalSkills() {
       <div className="absolute bottom-[10%] left-[-5%] w-96 h-96 bg-brand-secondary/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-12">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="text-xs font-bold uppercase tracking-widest text-brand-accent bg-brand-accent/10 px-3.5 py-1 rounded-full border border-brand-accent/20 mb-3"
-          >
-            Tech Ecosystem
-          </motion.span>
+
 
           <motion.h2
             initial={{ opacity: 0, y: 15 }}
@@ -190,7 +165,7 @@ export default function TechnicalSkills() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight"
           >
-            Technical Skills
+            Technical tools
           </motion.h2>
 
           <motion.div
@@ -208,7 +183,7 @@ export default function TechnicalSkills() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-sm sm:text-base text-gray-400 max-w-2xl font-sans leading-relaxed"
           >
-            Technologies and tools I use to build modern, scalable, and intelligent applications.
+            Core technologies, backend services, frameworks, and developer tools powering my full-stack web applications.
           </motion.p>
 
           {/* Interactive Category Filter Pills */}
@@ -225,11 +200,10 @@ export default function TechnicalSkills() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`text-xs font-mono px-3.5 py-1.5 rounded-full transition-all duration-300 border ${
-                    isActive
-                      ? 'bg-brand-primary text-white border-brand-primary shadow-lg shadow-brand-primary/20 scale-105 font-bold'
-                      : 'bg-white/5 text-gray-400 border-white/10 hover:text-white hover:bg-white/10'
-                  }`}
+                  className={`text-xs font-mono px-3.5 py-1.5 rounded-full transition-all duration-300 border ${isActive
+                    ? 'bg-brand-primary text-white border-brand-primary shadow-lg shadow-brand-primary/20 scale-105 font-bold'
+                    : 'bg-white/5 text-gray-400 border-white/10 hover:text-white hover:bg-white/10'
+                    }`}
                 >
                   {cat}
                 </button>
@@ -238,37 +212,85 @@ export default function TechnicalSkills() {
           </motion.div>
         </div>
 
-        {/* React Bits LogoLoop Infinite Animated Marquee */}
+        {/* Single Line Infinite Marquee */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="relative rounded-3xl glass-card border border-white/10 p-2 sm:p-4 bg-[#090d16]/90 overflow-hidden shadow-2xl"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="relative overflow-hidden mb-16 py-4"
         >
-          {/* Subtle Ambient Top Border Accent */}
-          <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-brand-primary/50 to-transparent" />
-
-          {/* Primary Row 1 - Leftward Scroll */}
-          <LogoLoop
-            items={filteredLogos}
-            speed={36}
-            direction="left"
-            pauseOnHover={true}
-          />
-
-          {/* Complementary Row 2 (When 'All' is selected) - Rightward Scroll for rich dual-layer visual depth */}
-          {activeCategory === 'All' && (
-            <div className="border-t border-white/5 pt-2 mt-1">
-              <LogoLoop
-                items={[...techLogos].reverse()}
-                speed={42}
-                direction="right"
-                pauseOnHover={true}
-              />
+          <div className="skills-marquee-container py-2" role="region" aria-label="Technical skills marquee">
+            <div className="skills-marquee-track" style={{ '--marquee-speed': activeCategory === 'All' ? '45s' : '28s' }}>
+              {marqueeItems.map((skill, index) => (
+                <SkillCard
+                  key={`${skill.id}-${index}`}
+                  name={skill.name}
+                  category={skill.category}
+                  icon={skill.icon}
+                  color={skill.color}
+                />
+              ))}
             </div>
-          )}
+          </div>
         </motion.div>
+
+        {/* Supporting React Skills & Architectural Capabilities Grid */}
+        <div>
+          <div className="flex items-center gap-3 mb-6 px-1">
+            <div className="h-4 w-1 bg-brand-primary rounded-full" />
+            <h3 className="text-lg sm:text-xl font-display font-bold text-white tracking-tight">
+              Specialized Capabilities & Technical Focus
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {skillCapabilities.map((group, gIdx) => {
+              const GroupIcon = group.icon;
+              return (
+                <motion.div
+                  key={group.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: gIdx * 0.08 }}
+                  className="glass-card p-6 sm:p-7 rounded-3xl border border-white/10 hover:border-white/20 transition-all duration-300 relative group overflow-hidden"
+                >
+                  {/* Subtle Corner Glow */}
+                  <div className="absolute -top-10 -right-10 w-28 h-28 bg-brand-primary/5 rounded-full blur-2xl group-hover:bg-brand-primary/10 transition-colors" />
+
+                  {/* Header */}
+                  <div className="flex items-center gap-3.5 mb-5">
+                    <div className={`p-2.5 rounded-xl border ${group.iconColor} shrink-0`}>
+                      <GroupIcon size={18} />
+                    </div>
+                    <div>
+                      <h4 className="font-display font-bold text-white text-base sm:text-lg">
+                        {group.title}
+                      </h4>
+                      <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider">
+                        {group.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Skill Badges / Tags */}
+                  <div className="flex flex-wrap gap-2">
+                    {group.skills.map((skill, sIdx) => (
+                      <span
+                        key={sIdx}
+                        className="text-xs font-mono px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-brand-primary/40 hover:bg-brand-primary/10 transition-all duration-200 cursor-default"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
       </div>
     </section>
   );

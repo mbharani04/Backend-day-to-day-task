@@ -1,10 +1,42 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaLinkedin, FaCheckCircle, FaLaptop, FaMicrochip } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaLinkedin, FaCheckCircle, FaLaptop, FaMicrochip, FaStore } from 'react-icons/fa';
 
 const projects = [
+
   {
     id: 1,
+    title: 'OfferMe – Local Offers & Business Discovery Platform',
+    type: 'Real-World Web Application',
+    description:
+      'Built a real-world web application that helps users discover nearby local businesses, explore offers, and connect with business owners through a location-focused digital platform.',
+    features: [
+      'Nearby Local Business & Offer Discovery',
+      'Category-Based Business and Offer Browsing',
+      'Customer, Business Owner & Admin Dashboards',
+      'Business Submission & Admin Approval Workflow',
+      'Responsive UI with Modern Dashboard Experience',
+      'Offer Claiming & Customer Interaction Flow'
+    ],
+    tech: [
+      'React.js',
+      'JavaScript',
+      'Tailwind CSS',
+      'React Router',
+      'Firebase Auth',
+      'Supabase'
+    ],
+    links: {
+      demo: 'https://offerme.in/',
+      demoLabel: 'Live',
+      demoIcon: FaExternalLinkAlt
+    },
+    accent: 'border-blue-400/20 hover:border-blue-400/50',
+    glowColor: 'bg-blue-500/10',
+    badgeIcon: FaStore
+  },
+  {
+    id: 2,
     title: 'Smart E-Cycle Rental System',
     type: 'IoT & Smart City Initiative',
     description: 'Designed and simulated an intelligent e-cycle rental platform inspired by smart city initiatives. Integrates firmware logic with real-time lock controls and payment triggers.',
@@ -28,7 +60,7 @@ const projects = [
     badgeIcon: FaMicrochip
   },
   {
-    id: 2,
+    id: 3,
     title: 'Secure E-Voting System',
     type: 'Database & Hardware Integration',
     description: 'Developed a secure offline electronic voting system integrating hardware voting terminals with a secure administrative dashboard and real-time result calculations.',
@@ -42,10 +74,10 @@ const projects = [
     ],
     tech: ['Python', 'MySQL', 'Arduino Nano', 'SQL Queries'],
     links: {
-      demo: 'https://linkedin.com',
-      demoLabel: 'LinkedIn Demo',
+      demo: 'https://www.linkedin.com/posts/bharani-m-2346982a0_python-arduino-mysql-activity-7459519857491959809-d8I-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEi3WEgBsMCvJW3XTTDkYnvP9bkW8H-nzT8',
+      demoLabel: 'LinkedIn',
       demoIcon: FaLinkedin,
-      github: 'https://github.com/mbharani04/'
+      github: 'https://github.com/mbharani04/e_voting_system_final'
     },
     accent: 'border-brand-secondary/20 hover:border-brand-secondary/50',
     glowColor: 'bg-brand-secondary/10',
@@ -53,7 +85,7 @@ const projects = [
   },
 
   {
-    id: 3,
+    id: 4,
     title: 'Planets Explorer Frontend',
     type: 'Space Visualizer Frontend',
     description: 'Built a visually stunning, responsive Planets Explorer application showcasing celestial data cards, orbital system stats, and interactive planetary facts.',
@@ -78,7 +110,7 @@ const projects = [
   },
 
   {
-    id: 4,
+    id: 5,
     title: 'Sociagram Frontend',
     type: 'Social Platform Frontend',
     description: 'Developed a modern, interactive social media frontend experience (Sociagram) featuring responsive design layouts, client-side routing, and real-time interactive components.',
@@ -101,7 +133,7 @@ const projects = [
   },
 
   {
-    id: 5,
+    id: 6,
     title: 'Personal Productivity Web App',
     type: 'Productivity & Tooling',
     description: 'Built a personal productivity web application designed for efficient daily task tracking and workflow optimization, featuring client-side data persistence via LocalStorage.',
@@ -122,6 +154,7 @@ const projects = [
     glowColor: 'bg-emerald-500/10',
     badgeIcon: FaLaptop
   }
+
 ];
 
 export default function Projects() {
@@ -238,15 +271,17 @@ export default function Projects() {
                     <span>{project.links.demoLabel}</span>
                   </a>
 
-                  <a
-                    href={project.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-semibold text-sm transition-all hover:scale-[1.02]"
-                  >
-                    <FaGithub size={14} />
-                    <span>GitHub Code</span>
-                  </a>
+                  {project.links.github && (
+                    <a
+                      href={project.links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-semibold text-sm transition-all hover:scale-[1.02]"
+                    >
+                      <FaGithub size={14} />
+                      <span>GitHub Code</span>
+                    </a>
+                  )}
                 </div>
 
               </motion.div>

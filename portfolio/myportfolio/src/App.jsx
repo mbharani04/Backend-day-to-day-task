@@ -5,11 +5,11 @@ import Background from './components/Background';
 import CursorGlow from './components/CursorGlow';
 import Hero from './components/Hero';
 import About from './components/About';
-import Projects from './components/Projects';
+import Projects from './components/project/Projects';
 import TechnicalSkills from './components/TechnicalSkills';
 import Timeline from './components/Timeline';
 import Certifications from './components/Certifications';
-import SkillsFeatures from './components/SkillsFeatures';
+import SkillsFeatures from './components/skills/SkillsFeatures';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -42,7 +42,7 @@ export default function App() {
           >
             {/* Visual glow backdrop in loader */}
             <div className="absolute w-64 h-64 bg-brand-primary/10 rounded-full blur-[80px]" />
-            
+
             <div className="space-y-6 text-center z-10">
               {/* Spinning / pulsing logo */}
               <div className="relative inline-flex items-center justify-center">
@@ -81,25 +81,25 @@ export default function App() {
           {/* Sections Layout */}
           <main className="relative">
             <Hero />
-            
+
             <div className="max-w-6xl mx-auto border-t border-white/5" />
             <About />
-            
+
             <div className="max-w-6xl mx-auto border-t border-white/5" />
             <Projects />
-            
+
             <div className="max-w-6xl mx-auto border-t border-white/5" />
             <TechnicalSkills />
-            
+
             <div className="max-w-6xl mx-auto border-t border-white/5" />
             <Timeline />
-            
+
             <div className="max-w-6xl mx-auto border-t border-white/5" />
             <Certifications />
-            
+
             <div className="max-w-6xl mx-auto border-t border-white/5" />
             <SkillsFeatures />
-            
+
             <div className="max-w-6xl mx-auto border-t border-white/5" />
             <Contact />
           </main>
