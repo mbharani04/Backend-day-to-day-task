@@ -145,7 +145,7 @@ const projects = [
     ],
     tech: ['React.js', 'LocalStorage', 'JavaScript', 'Tailwind CSS'],
     links: {
-      demo: 'https://my-productivity-gamma.vercel.app/',
+      demo: 'https://productivity-web-app-one.vercel.app/',
       demoLabel: 'Live Demo',
       demoIcon: FaExternalLinkAlt,
       github: 'https://github.com/mbharani04/Backend-day-to-day-task/tree/main/personal_tracker/tracker-file/'
