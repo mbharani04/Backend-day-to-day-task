@@ -16,7 +16,6 @@ export default function Navbar() {
     <PillNav
       items={navItems}
       logoText="BM"
-      logoFullText="BHARANI M"
       logoHref="#home"
     />
   );

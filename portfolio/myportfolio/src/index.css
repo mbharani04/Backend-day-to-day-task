@@ -4,64 +4,65 @@
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
   
-  --color-bg-dark: #0B0F19;
-  --color-brand-primary: #3B82F6;
-  --color-brand-secondary: #8B5CF6;
-  --color-brand-accent: #06B6D4;
+  /* Midnight Black, Electric Cobalt Blue, Acid Lime */
+  --color-bg-dark: #030611;
+  --color-brand-primary: #0052FF;
+  --color-brand-secondary: #1E3A8A;
+  --color-brand-accent: #CCFF00;
 }
 
 /* Custom styles for animations & effects */
 @utility glass-panel {
-  background: rgba(13, 18, 30, 0.7);
+  background: rgba(4, 8, 20, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 @utility glass-card {
-  background: rgba(17, 24, 39, 0.6);
+  background: rgba(6, 11, 26, 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @utility glass-card-hover {
   &:hover {
-    background: rgba(17, 24, 39, 0.75);
-    border-color: rgba(59, 130, 246, 0.3);
-    box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.15);
+    background: rgba(8, 15, 34, 0.88);
+    border-color: rgba(0, 82, 255, 0.45);
+    box-shadow: 0 20px 40px -15px rgba(0, 82, 255, 0.25);
     transform: translateY(-4px);
   }
 }
 
 @utility text-gradient-primary {
-  background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #06B6D4 100%);
+  background: linear-gradient(135deg, #0052FF 0%, #3B82F6 45%, #CCFF00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 @utility text-gradient-purple {
-  background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+  background: linear-gradient(135deg, #0052FF 0%, #CCFF00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 @utility text-gradient-cyan {
-  background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+  background: linear-gradient(135deg, #CCFF00 0%, #0052FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 @utility border-glow {
-  box-shadow: 0 0 20px 0px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 20px 0px rgba(0, 82, 255, 0.25);
 }
 
 @utility bg-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 82, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 82, 255, 0.04) 1px, transparent 1px);
 }
 
 /* Custom Scrollbar */
@@ -70,17 +71,17 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B0F19;
+  background: #030611;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.15);
+  background: rgba(0, 82, 255, 0.3);
   border-radius: 10px;
-  border: 2px solid #0B0F19;
+  border: 2px solid #030611;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.35);
+  background: #0052FF;
 }
 
 /* Styling particles container */
@@ -96,8 +97,8 @@
 .glow-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.15;
+  filter: blur(90px);
+  opacity: 0.18;
   mix-blend-mode: screen;
   pointer-events: none;
   animation: float-glow 20s infinite alternate ease-in-out;

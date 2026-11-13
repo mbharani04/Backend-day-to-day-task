@@ -18,7 +18,6 @@ export default function PillNav({
     { name: 'Contact', href: '#contact' }
   ],
   logoText = 'BM',
-  logoFullText = 'BHARANI M',
   logoHref = '#home'
 }) {
   const [activeSection, setActiveSection] = useState('home');
@@ -230,11 +229,10 @@ export default function PillNav({
         aria-label="Main Portfolio Navigation"
       >
         <div
-          className={`flex items-center justify-between px-3.5 sm:px-5 py-2.5 rounded-full transition-all duration-300 ${
-            isScrolled
-              ? 'bg-[#0B0F19]/85 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/40'
-              : 'bg-[#0F172A]/60 backdrop-blur-lg border border-white/5 shadow-lg shadow-black/10'
-          }`}
+          className={`flex items-center justify-between px-3.5 sm:px-5 py-2.5 rounded-full transition-all duration-300 ${isScrolled
+              ? 'bg-[#030611]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/60'
+              : 'bg-[#030611]/70 backdrop-blur-lg border border-white/5 shadow-lg shadow-black/20'
+            }`}
         >
           {/* Circular Logo & Portfolio Title */}
           <a
@@ -247,17 +245,12 @@ export default function PillNav({
             {/* Circular Rounded Logo Badge with 360 Rotation */}
             <div
               ref={logoRef}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-gradient-to-tr from-brand-primary via-brand-secondary to-brand-accent p-[2px] shadow-md shadow-brand-primary/20 shrink-0"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-gradient-to-tr from-brand-primary via-brand-secondary to-brand-accent p-[2px] shadow-md shadow-brand-primary/30 shrink-0"
             >
-              <div className="w-full h-full rounded-full bg-[#0B0F19] flex items-center justify-center text-white font-mono font-bold text-xs tracking-wider">
+              <div className="w-full h-full rounded-full bg-[#030611] flex items-center justify-center text-white font-mono font-bold text-xs tracking-wider">
                 {logoText}
               </div>
             </div>
-
-            {/* Brand Name Text */}
-            <span className="font-display font-extrabold text-sm sm:text-base tracking-tight bg-gradient-to-r from-white via-gray-200 to-brand-accent bg-clip-text text-transparent group-hover:opacity-90 transition-opacity hidden lg:inline-block">
-              {logoFullText}
-            </span>
           </a>
 
           {/* Desktop Navigation - PillNav Items */}
@@ -274,11 +267,10 @@ export default function PillNav({
                   onClick={(e) => handleNavClick(e, item.href)}
                   onMouseEnter={handlePillMouseEnter}
                   onMouseLeave={handlePillMouseLeave}
-                  className={`pill-item px-3 xl:px-4 py-1.5 xl:py-2 text-xs xl:text-sm font-medium rounded-full transition-all duration-300 ${
-                    isActive
+                  className={`pill-item px-3 xl:px-4 py-1.5 xl:py-2 text-xs xl:text-sm font-medium rounded-full transition-all duration-300 ${isActive
                       ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md shadow-brand-primary/20 font-semibold border border-white/20'
                       : 'text-gray-300 hover:text-white border border-transparent'
-                  }`}
+                    }`}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {/* React Bits Circular Hover Fill Background */}
@@ -299,7 +291,7 @@ export default function PillNav({
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, '#contact')}
-              className="text-xs font-mono font-semibold uppercase tracking-wider px-3.5 xl:px-4.5 py-1.5 xl:py-2 rounded-full border border-brand-primary/40 bg-brand-primary/10 hover:bg-brand-primary hover:border-brand-primary text-brand-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-brand-primary/20"
+              className="text-xs font-mono font-bold uppercase tracking-wider px-3.5 xl:px-4.5 py-1.5 xl:py-2 rounded-full border border-brand-accent/50 bg-brand-accent/10 hover:bg-brand-accent hover:border-brand-accent text-brand-accent hover:text-[#030611] transition-all duration-300 shadow-sm hover:shadow-brand-accent/25"
             >
               Let's Connect
             </a>
@@ -355,11 +347,10 @@ export default function PillNav({
                     key={item.name}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`text-base font-medium py-3 px-5 rounded-2xl transition-all duration-300 flex items-center justify-between ${
-                      isActive
+                    className={`text-base font-medium py-3 px-5 rounded-2xl transition-all duration-300 flex items-center justify-between ${isActive
                         ? 'bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 border-l-4 border-brand-primary text-white font-semibold'
                         : 'text-gray-300 hover:text-white hover:bg-white/5'
-                    }`}
+                      }`}
                   >
                     <span>{item.name}</span>
                     {isActive && (

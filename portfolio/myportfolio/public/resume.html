@@ -12,11 +12,13 @@
   <style>
     :root {
       --primary: #1e3a8a;
-      --secondary: #3b82f6;
-      --text: #1f2937;
+      --secondary: #2563eb;
+      --text: #111827;
+      --text-muted: #374151;
       --text-light: #4b5563;
       --bg: #ffffff;
-      --border: #e5e7eb;
+      --border: #d1d5db;
+      --border-light: #e5e7eb;
     }
 
     * {
@@ -26,195 +28,221 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: var(--text);
       background-color: #f3f4f6;
-      line-height: 1.5;
-      padding: 40px 20px;
+      line-height: 1.45;
+      padding: 30px 20px;
       -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     .resume-container {
-      max-width: 800px;
+      max-width: 820px;
       margin: 0 auto;
       background: var(--bg);
-      padding: 48px;
+      padding: 40px 48px;
       border-radius: 8px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
     }
 
     /* Header styling */
     header {
       text-align: center;
-      margin-bottom: 24px;
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
     }
 
     h1 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
+      font-family: 'Outfit', 'Inter', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
       color: var(--primary);
-      letter-spacing: -0.025em;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-light);
       margin-bottom: 8px;
     }
 
     .contact-info {
-      font-size: 13px;
-      color: var(--text-light);
+      font-size: 12.5px;
+      color: var(--text-muted);
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 8px;
+      gap: 8px;
+      align-items: center;
     }
 
-    .contact-info span::after {
-      content: "|";
-      margin-left: 12px;
-      color: var(--border);
-    }
-
-    .contact-info span:last-child::after {
-      content: "";
-    }
-
-    .social-links {
-      font-size: 13px;
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .social-links a {
+    .contact-info a {
       color: var(--secondary);
-      text-decoration: none;
+      text-decoration: underline;
       font-weight: 500;
     }
 
-    .social-links a:hover {
-      text-decoration: underline;
+    .contact-info a:hover {
+      color: #1d4ed8;
+    }
+
+    .sep {
+      color: var(--border);
+      margin: 0 2px;
     }
 
     /* Section structures */
     section {
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
+      font-family: 'Outfit', 'Inter', sans-serif;
+      font-size: 13.5px;
+      font-weight: 800;
       text-transform: uppercase;
       color: var(--primary);
-      letter-spacing: 0.05em;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 4px;
-      margin-bottom: 12px;
+      letter-spacing: 0.06em;
+      border-bottom: 1.5px solid #1e3a8a;
+      padding-bottom: 3px;
+      margin-bottom: 10px;
     }
 
-    p, li {
-      font-size: 13px;
-      color: var(--text-light);
+    p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      text-align: justify;
+      line-height: 1.5;
     }
 
-    /* Skills Grid */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-
-    .skill-item {
-      display: flex;
-      font-size: 13px;
-    }
-
-    .skill-category {
-      font-weight: 600;
-      width: 180px;
-      color: var(--text);
-      flex-shrink: 0;
-    }
-
-    /* Projects & Experiences */
-    .item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 4px;
-    }
-
-    .item-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .item-subtitle {
-      font-size: 13px;
-      color: var(--text-light);
-      font-style: italic;
-    }
-
-    .item-date {
-      font-size: 12px;
-      color: var(--text-light);
-      font-weight: 500;
-    }
-
-    .item-details {
-      margin-top: 2px;
-      margin-bottom: 12px;
-    }
-
+    /* Bullet lists */
     ul {
       list-style-position: outside;
       margin-left: 18px;
     }
 
     li {
-      margin-bottom: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 3.5px;
+      line-height: 1.45;
     }
 
-    .tech-stack {
-      font-size: 12px;
-      margin-top: 4px;
-      font-weight: 500;
+    li strong {
       color: var(--text);
     }
 
-    .tech-stack span {
-      font-weight: 400;
-      color: var(--text-light);
-    }
-
-    .project-link {
-      font-size: 12px;
+    .inline-link {
       color: var(--secondary);
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 4px;
-    }
-
-    .project-link:hover {
       text-decoration: underline;
+      font-weight: 500;
     }
 
-    /* Education Box */
-    .edu-box {
-      margin-bottom: 8px;
+    .inline-link:hover {
+      color: #1d4ed8;
     }
 
-    .score-badge {
+    /* Technical Skills List */
+    .skills-list {
+      list-style-type: disc;
+      margin-left: 18px;
+    }
+
+    .skills-list li {
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .skills-list strong {
+      color: var(--text);
+    }
+
+    /* Items layout (Internships / Projects) */
+    .item-block {
+      margin-bottom: 12px;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .item-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .item-role {
+      font-style: italic;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .item-date {
+      font-size: 11.5px;
+      color: var(--text-light);
       font-weight: 600;
-      color: var(--primary);
+      font-style: italic;
+    }
+
+    .item-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .item-meta strong {
+      color: var(--text);
+    }
+
+    /* Education Block */
+    .edu-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 12.5px;
+    }
+
+    .edu-title {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .edu-school {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .edu-cgpa {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .edu-date {
+      color: var(--text-light);
+      font-size: 12px;
+      font-style: italic;
+    }
+
+    /* Soft skills */
+    .soft-skills-text {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-align: center;
+      padding-top: 2px;
     }
 
     /* Action bar */
     .action-bar {
-      max-width: 800px;
+      max-width: 820px;
       margin: 0 auto 16px auto;
       display: flex;
       justify-content: space-between;
@@ -227,30 +255,35 @@
       gap: 8px;
       background: var(--primary);
       color: white;
-      padding: 10px 20px;
+      padding: 9px 18px;
       border-radius: 6px;
       text-decoration: none;
       font-size: 13px;
       font-weight: 600;
       border: none;
       cursor: pointer;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-      transition: background 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+      transition: all 0.2s;
     }
 
     .btn:hover {
       background: #1d4ed8;
+      transform: translateY(-1px);
     }
 
     .back-link {
       color: var(--text-light);
       text-decoration: none;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .back-link:hover {
-      color: var(--text);
+      color: var(--primary);
+      text-decoration: underline;
     }
 
     /* Print styles overrides */
@@ -258,13 +291,30 @@
       body {
         background-color: white;
         padding: 0;
+        margin: 0;
       }
       .resume-container {
-        padding: 0;
+        padding: 16px 20px;
         box-shadow: none;
+        max-width: 100%;
+        border-radius: 0;
       }
       .action-bar {
-        display: none;
+        display: none !important;
+      }
+      section {
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-size: 26px;
+      }
+      h2 {
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+      p, li {
+        font-size: 11px;
+        line-height: 1.35;
       }
     }
   </style>
@@ -275,7 +325,7 @@
   <div class="action-bar">
     <a href="/" class="back-link">← Back to Portfolio</a>
     <button onclick="window.print()" class="btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
       Print / Save as PDF
     </button>
   </div>
@@ -285,13 +335,18 @@
     <!-- HEADER -->
     <header>
       <h1>BHARANI M</h1>
+      <div class="subtitle">Electronics &amp; Communication Engineering Graduate | Full Stack &amp; Embedded Systems Developer</div>
       <div class="contact-info">
         <span>Chennai, Tamil Nadu</span>
+        <span class="sep">|</span>
         <span>+91 944-556-4242</span>
-        <span>bharani2004m@gmail.com</span>
-      </div>
-      <div class="social-links">
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="sep">|</span>
+        <a href="mailto:bharani2004m@gmail.com">bharani2004m@gmail.com</a>
+        <span class="sep">|</span>
+        <a href="/">Portfolio</a>
+        <span class="sep">|</span>
+        <a href="https://www.linkedin.com/in/bharani-m-2346982a0/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="sep">|</span>
         <a href="https://github.com/mbharani04/" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </header>
@@ -300,38 +355,49 @@
     <section>
       <h2>Career Objective</h2>
       <p>
-        Final-year Electronics and Communication Engineering student with hands-on experience in full-stack development, embedded systems, and AI-assisted workflows. Skilled in building end-to-end projects combining hardware, software, and database integration. Seeking a Junior Software Developer / Full Stack Developer role to apply strong problem-solving skills and a passion for building intelligent, real-world solutions.
+        Electronics and Communication Engineering graduate with hands-on experience in Full-Stack / MERN development, embedded systems, and AI-assisted workflows. Skilled in building end-to-end projects combining hardware, software, and database integration. Seeking a Junior Web Developer / Full Stack Developer role to apply strong problem-solving skills and build intelligent, real-world solutions. Eager to learn software testing to improve application quality and reliability.
       </p>
     </section>
 
     <!-- TECHNICAL SKILLS -->
     <section>
       <h2>Technical Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-item">
-          <div class="skill-category">Programming Languages:</div>
-          <div>Python, C, C++</div>
+      <ul class="skills-list">
+        <li><strong>Web Technologies:</strong> HTML5, CSS3, Tailwind CSS, JavaScript, TypeScript (currently learning), React.js, Express.js, Node.js</li>
+        <li><strong>Database &amp; Backend:</strong> OracleXE [MySQL], MongoDB, Supabase; REST API development, Backend validation, Firebase Authentication</li>
+        <li><strong>Languages:</strong> Python, C [basics]</li>
+        <li><strong>Git &amp; DevOps:</strong> Git/GitHub (clone, pull, commit, push, repo management); Build &amp; Lint, Vercel Deployment, Domain &amp; DNS</li>
+        <li><strong>Embedded &amp; Hardware:</strong> Arduino, ESP32, Proteus, Wokwi Simulation</li>
+        <li><strong>Tools &amp; AI:</strong> VS Code, Antigravity, MS Office; ChatGPT, Claude, Gemini, opencode</li>
+        <li><strong>Currently Exploring:</strong> Transformer architectures in Deep Learning (basics)</li>
+      </ul>
+    </section>
+
+    <!-- INTERNSHIP EXPERIENCE -->
+    <section>
+      <h2>Internship Experience</h2>
+      
+      <div class="item-block">
+        <div class="item-header">
+          <span class="item-title">Full Stack Web Developer Intern — Adbricks Media</span>
+          <span class="item-date">1.5 Months</span>
         </div>
-        <div class="skill-item">
-          <div class="skill-category">Web Technologies:</div>
-          <div>HTML5, CSS3, JavaScript, React.js</div>
+        <ul>
+          <li>Developed a SaaS-based B2B web application, OfferMe.in (<a href="https://offerme.in/" target="_blank" class="inline-link">offerme.in</a>) with responsive interfaces using React.js, JSX, JavaScript, and Tailwind CSS.</li>
+          <li>Implemented Google Sign-In, login/registration, and email verification using Firebase Authentication.</li>
+          <li>Built backend functionality with Node.js, integrated Supabase database and APIs, and added WhatsApp-related functionality.</li>
+          <li>Configured domain and DNS for deployment; gained practical experience in full-stack development, API integration, and deployment using AI.</li>
+        </ul>
+      </div>
+
+      <div class="item-block" style="margin-bottom: 0;">
+        <div class="item-header">
+          <span class="item-title">Embedded Systems Intern — Smart E-Cycle Rental System</span>
+          <span class="item-date">1 Month</span>
         </div>
-        <div class="skill-item">
-          <div class="skill-category">Database:</div>
-          <div>MySQL</div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-category">Embedded & Hardware:</div>
-          <div>Arduino, ESP32, Proteus, Wokwi Simulation</div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-category">Tools & Platforms:</div>
-          <div>Git, GitHub, VS Code, MS Office (Word, Excel, PowerPoint), Antigravity</div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-category">AI Tools:</div>
-          <div>ChatGPT, Claude (AI-assisted development and prompt engineering)</div>
-        </div>
+        <ul>
+          <li>Worked on design and simulation of a smart e-cycle rental prototype, contributing to embedded logic and payment/lock-unlock integration.</li>
+        </ul>
       </div>
     </section>
 
@@ -339,84 +405,78 @@
     <section>
       <h2>Projects</h2>
       
-      <!-- Project 1 -->
-      <div class="item-details">
+      <!-- Project 1: Productivity Web App -->
+      <div class="item-block">
         <div class="item-header">
-          <span class="item-title">Smart E-Cycle Rental System</span>
-          <span class="item-subtitle">Personal Project</span>
+          <span class="item-title">Productivity Web App <span class="item-role">| Personal Project</span></span>
         </div>
         <ul>
-          <li>Designed and simulated a smart e-cycle rental system inspired by government smart-bike-parking initiatives, using embedded hardware simulation on Wokwi.</li>
-          <li>Implemented payment verification, automatic lock/unlock mechanism, and user-defined rental timing with real-time ride duration tracking.</li>
-          <li>Built expiry alerts and auto-lock logic to enhance security and reduce unauthorized usage.</li>
+          <li>Built a fully frontend, responsive productivity web app using React and deployed it on Vercel. Link: <a href="https://productivity-web-app-one.vercel.app/" target="_blank" class="inline-link">View Website</a></li>
         </ul>
-        <div class="tech-stack">Tech Stack: <span>Arduino, ESP32, C/C++, Wokwi Simulation, Proteus</span></div>
-        <a href="https://wokwi.com/projects/437832574866624513" target="_blank" class="project-link">Project Simulation Link</a>
       </div>
 
-      <!-- Project 2 -->
-      <div class="item-details">
+      <!-- Project 2: Smart E-Cycle Rental System -->
+      <div class="item-block">
         <div class="item-header">
-          <span class="item-title">E-Voting System with Real-Time Result Calculation</span>
-          <span class="item-subtitle">Final Year Project</span>
+          <span class="item-title">Smart E-Cycle Rental System <span class="item-role">| Personal Project</span></span>
+        </div>
+        <ul>
+          <li>Designed and simulated a smart e-cycle rental system inspired by government smart-bike-parking initiatives, using Wokwi.</li>
+          <li>Implemented payment verification, automatic lock/unlock, rental timing with ride duration tracking, expiry alerts, and auto-lock logic.</li>
+        </ul>
+        <div class="item-meta">
+          <strong>Tech Stack:</strong> Arduino, ESP32, C/C++, Wokwi, Proteus &nbsp;|&nbsp; <strong>Link:</strong> <a href="https://wokwi.com/projects/437832574866624513" target="_blank" class="inline-link">Wokwi Simulation</a>
+        </div>
+      </div>
+
+      <!-- Project 3: E-Voting System -->
+      <div class="item-block" style="margin-bottom: 0;">
+        <div class="item-header">
+          <span class="item-title">E-Voting System with Real-Time Result Calculation <span class="item-role">| Final Year Project</span></span>
         </div>
         <ul>
           <li>Developed a secure offline e-voting system integrating Python, MySQL, and Arduino Nano for real-time hardware-software interaction.</li>
-          <li>Implemented role-based authentication and unique code verification to enforce one-person-one-vote integrity and restrict unauthorized database access.</li>
-          <li>Automated the end-to-end voting workflow and built an admin dashboard for live result monitoring.</li>
+          <li>Implemented role-based authentication and unique code verification to enforce one-person-one-vote integrity; built an admin dashboard for live results.</li>
         </ul>
-        <div class="tech-stack">Tech Stack: <span>Python, MySQL, Arduino Nano, Hardware Integration</span></div>
-        <a href="https://linkedin.com" target="_blank" class="project-link">Project Demonstration (LinkedIn)</a>
-      </div>
-    </section>
-
-    <!-- INTERNSHIP EXPERIENCE -->
-    <section>
-      <h2>Internship Experience</h2>
-      <div class="item-details">
-        <div class="item-header">
-          <span class="item-title">Embedded Systems Internship — Smart E-Cycle Rental System</span>
-          <span class="item-date">1 Month</span>
+        <div class="item-meta">
+          <strong>Tech Stack:</strong> Python, MySQL, Arduino Nano &nbsp;|&nbsp; <strong>Demo:</strong> <a href="https://www.linkedin.com/posts/bharani-m-2346982a0_python-arduino-mysql-activity-7459519857491959809-d8I-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEi3WEgBsMCvJW3XTTDkYnvP9bkW8H-nzT8" target="_blank" class="inline-link">View on LinkedIn</a> &nbsp;|&nbsp; <strong>Research paper:</strong> <a href="https://lnkd.in/p/g_-568Sp" target="_blank" class="inline-link">view link</a>
         </div>
-        <ul>
-          <li>Worked on the design and simulation of a smart e-cycle rental prototype, contributing to embedded logic and payment/lock-unlock integration.</li>
-        </ul>
       </div>
     </section>
 
     <!-- EDUCATION -->
     <section>
       <h2>Education</h2>
-      <div class="edu-box">
-        <div class="item-header">
-          <span class="item-title">B.E. Electronics and Communication Engineering</span>
-          <span class="item-date">2022 – 2026</span>
+      <div class="edu-row">
+        <div>
+          <span class="edu-title">B.E. Electronics and Communication Engineering</span>
+          <span class="sep">|</span>
+          <span class="edu-school">Meenakshi College of Engineering</span>
+          <span class="sep">|</span>
+          <span class="edu-cgpa">CGPA: 84%</span>
         </div>
-        <div class="item-header" style="margin-top: 2px;">
-          <span class="item-subtitle" style="font-style: normal;">Meenakshi College of Engineering</span>
-          <span class="item-date">CGPA / Percentage: <strong class="score-badge">82.0%</strong></span>
+        <div class="edu-date">
+          2022 – 2026 (Graduated)
         </div>
       </div>
     </section>
 
     <!-- CERTIFICATIONS & ACHIEVEMENTS -->
     <section>
-      <h2>Certifications & Achievements</h2>
+      <h2>Certifications &amp; Achievements</h2>
       <ul>
-        <li>Full Stack Web Development — Online Certification (1 Month)</li>
-        <li>Embedded C Programming — NSIC (1 Month)</li>
-        <li>Generative AI Mastermind Workshop — Outskill (2 Days)</li>
-        <li>English Typewriting Certification</li>
-        <li>Recognized for academic and technical achievements during engineering coursework</li>
+        <li>MERN Full Stack Development Training — SLA (Grade A) <a href="https://lnkd.in/p/gFtsgMg3" target="_blank" class="inline-link">View Certificate</a></li>
+        <li>Full Stack Web Development (1 Month) <a href="https://lnkd.in/p/gFtsgMg3" target="_blank" class="inline-link">View Certificate</a></li>
+        <li>Embedded C Programming — NSIC (1 Month) <a href="https://lnkd.in/p/ghPjKyNq" target="_blank" class="inline-link">View Certificate</a></li>
       </ul>
     </section>
 
     <!-- SOFT SKILLS -->
-    <section>
+    <section style="margin-bottom: 0;">
       <h2>Soft Skills</h2>
-      <p style="font-weight: 500;">
+      <div class="soft-skills-text">
         Communication &bull; Time Management &bull; Teamwork &bull; Adaptability &bull; Self-Motivated &bull; Presentation Skills
-      </p>
+      </div>
     </section>
 
   </div>

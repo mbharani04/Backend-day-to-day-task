@@ -32,7 +32,7 @@ export default function Timeline() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="text-xs font-bold uppercase tracking-widest text-[#06b6d4]"
+            className="text-xs font-bold uppercase tracking-widest text-[#CCFF00]"
           >
             Journey
           </motion.h4>
@@ -231,7 +231,7 @@ export default function Timeline() {
           {/* EDUCATION */}
           <div id="education" className="space-y-6 scroll-mt-28">
             <div className="flex items-center gap-3.5 mb-2">
-              <div className="p-2.5 rounded-xl bg-brand-accent/10 border border-brand-accent/20 text-[#06b6d4]">
+              <div className="p-2.5 rounded-xl bg-brand-accent/10 border border-brand-accent/20 text-brand-accent">
                 <FaGraduationCap size={20} />
               </div>
               <h3 className="text-xl sm:text-2xl font-display font-bold text-white tracking-tight">
@@ -247,7 +247,7 @@ export default function Timeline() {
               className="glass-card p-6 sm:p-8 rounded-3xl border border-brand-accent/10 relative overflow-hidden group hover:border-brand-accent/30"
             >
               {/* Highlight lines */}
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-[#06b6d4] to-brand-primary" />
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-brand-accent to-brand-primary" />
 
               <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                 <div>
@@ -281,7 +281,7 @@ export default function Timeline() {
                   <p className="text-xs text-gray-400 mt-0.5">Consistent engineering grade achievements</p>
                 </div>
                 <div className="flex flex-col items-center justify-center bg-brand-accent/10 px-4 py-2 rounded-xl border border-brand-accent/30">
-                  <span className="font-display font-extrabold text-white text-lg tracking-tight">82%</span>
+                  <span className="font-display font-extrabold text-white text-lg tracking-tight">84%</span>
                   <span className="text-[9px] uppercase tracking-wider text-brand-accent font-bold mt-0.5">Score</span>
                 </div>
               </div>

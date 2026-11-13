@@ -8,13 +8,13 @@
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  background: radial-gradient(ellipse at bottom, #0f172a 0%, #050811 100%);
+  background: radial-gradient(ellipse at bottom, #070e24 0%, #030611 100%);
 }
 
 .hero-starfield-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 8, 17, 0.8) 100%);
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(3, 6, 17, 0.85) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -162,8 +162,8 @@
 .hero-shooting-star {
   position: absolute;
   height: 2px;
-  background: linear-gradient(-45deg, rgba(56, 189, 248, 1), rgba(168, 85, 247, 0));
-  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.8));
+  background: linear-gradient(-45deg, rgba(204, 255, 0, 1), rgba(0, 82, 255, 0));
+  filter: drop-shadow(0 0 6px rgba(204, 255, 0, 0.9));
   animation: heroTail 3s ease-in-out infinite, heroShooting 3s ease-in-out infinite;
   pointer-events: none;
   opacity: 0;

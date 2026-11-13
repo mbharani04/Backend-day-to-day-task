@@ -138,10 +138,6 @@ export default function SkillsFeatures() {
                 </motion.div>
               ))}
             </div>
-
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/5 text-xs text-gray-500 font-sans text-center">
-              "Synergy is key. Great software isn't built in isolation—it requires communication, alignment, and adaptation."
-            </div>
           </div>
 
         </div>

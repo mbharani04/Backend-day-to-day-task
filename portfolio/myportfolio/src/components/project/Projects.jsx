@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaLinkedin, FaCheckCircle, FaLaptop, FaMicrochip, FaStore } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaLinkedin, FaCheckCircle, FaLaptop, FaMicrochip, FaStore, FaCar } from 'react-icons/fa';
 
 const projects = [
 
@@ -35,32 +35,55 @@ const projects = [
     glowColor: 'bg-blue-500/10',
     badgeIcon: FaStore
   },
+
   {
     id: 2,
-    title: 'Smart E-Cycle Rental System',
-    type: 'IoT & Smart City Initiative',
-    description: 'Designed and simulated an intelligent e-cycle rental platform inspired by smart city initiatives. Integrates firmware logic with real-time lock controls and payment triggers.',
+    title: 'Ottuner – On-Demand Acting Driver Booking Platform',
+    type: 'Real-World Web Application',
+    description:
+      'Developed a modern on-demand acting driver platform (ottuner.in) that connects vehicle owners with verified, professional drivers for city commutes, outstation trips, airport transfers, and round-the-clock travel assistance.',
     features: [
-      'Payment Verification Simulation',
-      'Automatic Lock & Unlock Mechanisms',
-      'Real-time Active Ride Timer',
-      'Automatic Auto-Lock on Timeout',
-      'Battery & Lock Expiry Alerts',
-      'Real-time Status Monitoring console'
+      'Instant & Scheduled Acting Driver Bookings (local and outstation)',
+      'City Commutes, Outstation Road Trips & Airport Transfers',
+      'Driver & customer booking Registration',
+      'Transparent Fare Estimation & Responsive Booking Flow'
     ],
-    tech: ['Arduino', 'ESP32', 'C/C++', 'Wokwi', 'Proteus'],
+    tech: ['React.js', 'Tailwind CSS', 'JavaScript', 'React Router', 'Vite'],
     links: {
-      demo: 'https://wokwi.com/projects/437832574866624513',
-      demoLabel: 'Live Simulation',
-      demoIcon: FaExternalLinkAlt,
-      github: 'https://github.com/mbharani04/'
+      demo: 'https://ottuner.in/',
+      demoLabel: 'Live',
+      demoIcon: FaExternalLinkAlt
     },
-    accent: 'border-brand-primary/20 hover:border-brand-primary/50',
-    glowColor: 'bg-brand-primary/10',
-    badgeIcon: FaMicrochip
+    accent: 'border-amber-400/20 hover:border-amber-400/50',
+    glowColor: 'bg-amber-500/10',
+    badgeIcon: FaCar
   },
+
   {
     id: 3,
+    title: 'Personal Productivity Web App',
+    type: 'Productivity & Tooling',
+    description: 'Built a personal productivity web application designed for efficient daily task tracking and workflow optimization, featuring client-side data persistence via LocalStorage.',
+    features: [
+      'Persistent LocalStorage State Management',
+      'Daily Task & Productivity Workflow Tracking',
+      'Minimalist & Responsive User Interface',
+      'Client-Side Data Privacy & Zero Latency'
+    ],
+    tech: ['React.js', 'LocalStorage', 'JavaScript', 'Tailwind CSS'],
+    links: {
+      demo: 'https://productivity-web-app-one.vercel.app/',
+      demoLabel: 'Live Demo',
+      demoIcon: FaExternalLinkAlt,
+      github: 'https://github.com/mbharani04/Backend-day-to-day-task/tree/main/personal_tracker/tracker-file/'
+    },
+    accent: 'border-emerald-400/20 hover:border-emerald-400/50',
+    glowColor: 'bg-emerald-500/10',
+    badgeIcon: FaLaptop
+  },
+
+  {
+    id: 4,
     title: 'Secure E-Voting System',
     type: 'Database & Hardware Integration',
     description: 'Developed a secure offline electronic voting system integrating hardware voting terminals with a secure administrative dashboard and real-time result calculations.',
@@ -74,9 +97,9 @@ const projects = [
     ],
     tech: ['Python', 'MySQL', 'Arduino Nano', 'SQL Queries'],
     links: {
-      demo: 'https://www.linkedin.com/posts/bharani-m-2346982a0_python-arduino-mysql-activity-7459519857491959809-d8I-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEi3WEgBsMCvJW3XTTDkYnvP9bkW8H-nzT8',
-      demoLabel: 'LinkedIn',
-      demoIcon: FaLinkedin,
+      demo: 'https://lnkd.in/p/g_-568Sp',
+      demoLabel: 'Research Paper',
+      demoIcon: FaExternalLinkAlt,
       github: 'https://github.com/mbharani04/e_voting_system_final'
     },
     accent: 'border-brand-secondary/20 hover:border-brand-secondary/50',
@@ -85,7 +108,7 @@ const projects = [
   },
 
   {
-    id: 4,
+    id: 5,
     title: 'Planets Explorer Frontend',
     type: 'Space Visualizer Frontend',
     description: 'Built a visually stunning, responsive Planets Explorer application showcasing celestial data cards, orbital system stats, and interactive planetary facts.',
@@ -107,53 +130,9 @@ const projects = [
     accent: 'border-brand-accent/20 hover:border-brand-accent/50',
     glowColor: 'bg-brand-accent/10',
     badgeIcon: FaLaptop
-  },
-
-  {
-    id: 5,
-    title: 'Sociagram Frontend',
-    type: 'Social Platform Frontend',
-    description: 'Developed a modern, interactive social media frontend experience (Sociagram) featuring responsive design layouts, client-side routing, and real-time interactive components.',
-    features: [
-      'it has login  signup & create ,post',
-      'Responsive Mobile & Desktop layouts',
-      'Sleek UI/UX transitions & animations',
-      'Dynamic user profiles preview'
-    ],
-    tech: ['React.js', 'Tailwind CSS', 'ES6 JavaScript', 'Vite'],
-    links: {
-      demo: 'https://fs-project-gamma.vercel.app/',
-      demoLabel: 'Live Demo',
-      demoIcon: FaExternalLinkAlt,
-      github: 'https://github.com/mbharani04/fs-project/tree/main/team_projects/react/appname/'
-    },
-    accent: 'border-purple-400/20 hover:border-purple-400/50',
-    glowColor: 'bg-brand-secondary/10',
-    badgeIcon: FaLaptop
-  },
-
-  {
-    id: 6,
-    title: 'Personal Productivity Web App',
-    type: 'Productivity & Tooling',
-    description: 'Built a personal productivity web application designed for efficient daily task tracking and workflow optimization, featuring client-side data persistence via LocalStorage.',
-    features: [
-      'Persistent LocalStorage State Management',
-      'Daily Task & Productivity Workflow Tracking',
-      'Minimalist & Responsive User Interface',
-      'Client-Side Data Privacy & Zero Latency'
-    ],
-    tech: ['React.js', 'LocalStorage', 'JavaScript', 'Tailwind CSS'],
-    links: {
-      demo: 'https://productivity-web-app-one.vercel.app/',
-      demoLabel: 'Live Demo',
-      demoIcon: FaExternalLinkAlt,
-      github: 'https://github.com/mbharani04/Backend-day-to-day-task/tree/main/personal_tracker/tracker-file/'
-    },
-    accent: 'border-emerald-400/20 hover:border-emerald-400/50',
-    glowColor: 'bg-emerald-500/10',
-    badgeIcon: FaLaptop
   }
+
+
 
 ];
 

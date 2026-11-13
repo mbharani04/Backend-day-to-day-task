@@ -176,15 +176,7 @@ export default function TechnicalSkills() {
             className="h-1 bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent my-4 rounded-full"
           />
 
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-sm sm:text-base text-gray-400 max-w-2xl font-sans leading-relaxed"
-          >
-            Core technologies, backend services, frameworks, and developer tools powering my full-stack web applications.
-          </motion.p>
+
 
           {/* Interactive Category Filter Pills */}
           <motion.div

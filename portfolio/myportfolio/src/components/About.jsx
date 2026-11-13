@@ -3,29 +3,29 @@ import { motion, useAnimation } from 'framer-motion';
 import { FaGraduationCap, FaNetworkWired, FaLaptopCode } from 'react-icons/fa';
 
 const stats = [
-  { 
-    id: 1, 
-    value: 2, 
-    suffix: '+', 
-    label: 'Major Projects', 
+  {
+    id: 1,
+    value: 3,
+    suffix: '+',
+    label: 'Major Projects',
     desc: 'Simulated and developed platforms',
     icon: FaLaptopCode,
     color: 'from-brand-primary to-brand-accent'
   },
-  { 
-    id: 2, 
-    value: 100, 
-    suffix: '%', 
-    label: 'Full Stack', 
+  {
+    id: 2,
+    value: 100,
+    suffix: '%',
+    label: 'Full Stack',
     desc: 'Python, JS, React & MySQL',
     icon: FaNetworkWired,
     color: 'from-brand-secondary to-brand-primary'
   },
-  { 
-    id: 3, 
-    value: 4, 
-    suffix: '+', 
-    label: 'Embedded Systems', 
+  {
+    id: 3,
+    value: 2,
+    suffix: '+',
+    label: 'Embedded Systems',
     desc: 'ESP32, Arduino & Proteus',
     icon: FaGraduationCap,
     color: 'from-brand-accent to-brand-secondary'
@@ -62,7 +62,7 @@ function CountUp({ value, suffix, duration = 1.5 }) {
 
     const totalMiliseconds = duration * 1000;
     const incrementTime = Math.max(10, Math.floor(totalMiliseconds / end));
-    
+
     const timer = setInterval(() => {
       start += 1;
       setCount(start);
@@ -87,7 +87,7 @@ export default function About() {
       <div className="absolute top-[40%] right-[-10%] w-80 h-80 bg-brand-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        
+
         {/* Title */}
         <div className="flex flex-col items-center text-center mb-16">
           <motion.h4
@@ -95,7 +95,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="text-xs font-bold uppercase tracking-widest text-brand-primary"
+            className="text-xs font-bold uppercase tracking-widest text-[#CCFF00]"
           >
             My Story
           </motion.h4>
@@ -119,36 +119,28 @@ export default function About() {
 
         {/* Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Side: Bio Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-6 space-y-6 text-gray-300"
+            className="lg:col-span-6 space-y-4 text-justify leading-relaxed text-sm sm:text-base text-gray-300 font-sans"
           >
-            <h3 className="text-xl sm:text-2xl font-display font-semibold text-white">
-              Bridging the gap between hardware systems and web technologies.
-            </h3>
-            
-            <p className="leading-relaxed text-sm sm:text-base">
-              I am a final-year Electronics and Communication Engineering student passionate about software development, embedded systems, and AI-powered applications. My interests lie in building complete end-to-end solutions that combine hardware, software, and databases.
+            <p>
+              I'm a passionate Full Stack Developer with a background in Electronics and Communication Engineering (ECE). My journey into web development started with curiosity about how websites and applications work.
             </p>
-            
-            <p className="leading-relaxed text-sm sm:text-base">
-              I enjoy transforming ideas into real-world projects while continuously learning modern technologies. I believe in writing clean code, solving practical problems, and creating impactful applications.
+            <p>
+              I work with technologies like React.js, JavaScript, Node.js, Express.js, and databases such as Supabase and MongoDB. Through hands-on projects and professional experience, I've gained practical knowledge of building web applications, developing backend functionality, integrating APIs, and solving real-world problems.
+            </p>
+            <p>
+              I enjoy learning new technologies, exploring AI-powered tools, experimenting with ideas, and working independently to build meaningful products.
+            </p>
+            <p className="text-[#CCFF00] font-medium">
+              I'm still learning, growing, and challenging myself every day.
             </p>
 
-            <div className="p-4 rounded-xl border border-white/5 bg-white/5 flex gap-4 items-start">
-              <span className="text-3xl text-brand-primary">💡</span>
-              <div>
-                <h4 className="font-semibold text-white text-sm">Philosophy</h4>
-                <p className="text-xs text-gray-400 mt-1">
-                  "The best way to predict the future is to build it. Engineering is not just about understanding rules, it's about solving real-world challenges through creative code."
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           {/* Right Side: Statistics Grid */}
@@ -162,13 +154,12 @@ export default function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between h-[160px] relative overflow-hidden group ${
-                    idx === 2 ? 'sm:col-span-2' : ''
-                  }`}
+                  className={`glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between h-[160px] relative overflow-hidden group ${idx === 2 ? 'sm:col-span-2' : ''
+                    }`}
                 >
                   {/* Decorative faint glow */}
                   <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${stat.color} opacity-[0.03] group-hover:opacity-[0.08] blur-xl rounded-full transition-opacity`} />
-                  
+
                   <div className="flex items-center justify-between">
                     <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-brand-primary group-hover:text-white transition-colors duration-300">
                       <Icon size={18} />
