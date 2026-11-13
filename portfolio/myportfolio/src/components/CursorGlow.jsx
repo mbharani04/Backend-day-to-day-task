@@ -28,7 +28,7 @@ export default function CursorGlow() {
       className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-500 hidden md:block"
       style={{
         opacity: isVisible ? 1 : 0,
-        background: `radial-gradient(500px at ${position.x}px ${position.y}px, rgba(0, 82, 255, 0.09), rgba(204, 255, 0, 0.04) 40%, transparent 80%)`
+        background: `radial-gradient(550px at ${position.x}px ${position.y}px, rgba(139, 92, 246, 0.12), rgba(192, 132, 252, 0.05) 40%, transparent 80%)`
       }}
     />
   );

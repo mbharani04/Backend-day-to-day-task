@@ -32,7 +32,7 @@ export default function Timeline() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="text-xs font-bold uppercase tracking-widest text-[#CCFF00]"
+            className="text-xs font-bold uppercase tracking-widest text-[#C084FC]"
           >
             Journey
           </motion.h4>

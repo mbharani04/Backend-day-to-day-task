@@ -230,8 +230,8 @@ export default function PillNav({
       >
         <div
           className={`flex items-center justify-between px-3.5 sm:px-5 py-2.5 rounded-full transition-all duration-300 ${isScrolled
-              ? 'bg-[#030611]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/60'
-              : 'bg-[#030611]/70 backdrop-blur-lg border border-white/5 shadow-lg shadow-black/20'
+              ? 'bg-[#07040d]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/60'
+              : 'bg-[#07040d]/70 backdrop-blur-lg border border-white/5 shadow-lg shadow-black/20'
             }`}
         >
           {/* Circular Logo & Portfolio Title */}
@@ -247,7 +247,7 @@ export default function PillNav({
               ref={logoRef}
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-gradient-to-tr from-brand-primary via-brand-secondary to-brand-accent p-[2px] shadow-md shadow-brand-primary/30 shrink-0"
             >
-              <div className="w-full h-full rounded-full bg-[#030611] flex items-center justify-center text-white font-mono font-bold text-xs tracking-wider">
+              <div className="w-full h-full rounded-full bg-[#07040d] flex items-center justify-center text-white font-mono font-bold text-xs tracking-wider">
                 {logoText}
               </div>
             </div>
@@ -291,7 +291,7 @@ export default function PillNav({
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, '#contact')}
-              className="text-xs font-mono font-bold uppercase tracking-wider px-3.5 xl:px-4.5 py-1.5 xl:py-2 rounded-full border border-brand-accent/50 bg-brand-accent/10 hover:bg-brand-accent hover:border-brand-accent text-brand-accent hover:text-[#030611] transition-all duration-300 shadow-sm hover:shadow-brand-accent/25"
+              className="text-xs font-mono font-bold uppercase tracking-wider px-3.5 xl:px-4.5 py-1.5 xl:py-2 rounded-full border border-brand-accent/50 bg-brand-accent/10 hover:bg-brand-accent hover:border-brand-accent text-brand-accent hover:text-[#07040d] transition-all duration-300 shadow-sm hover:shadow-brand-accent/25"
             >
               Let's Connect
             </a>
@@ -322,7 +322,7 @@ export default function PillNav({
           {/* Mobile Rounded Popover Menu */}
           <div
             ref={mobileMenuRef}
-            className="fixed top-20 right-4 left-4 z-50 p-6 rounded-3xl bg-[#0D1322]/95 border border-white/10 shadow-2xl backdrop-blur-xl md:hidden flex flex-col gap-4"
+            className="fixed top-20 right-4 left-4 z-50 p-6 rounded-3xl bg-[#130b24]/95 border border-white/10 shadow-2xl backdrop-blur-xl md:hidden flex flex-col gap-4"
           >
             <div className="flex justify-between items-center pb-3 border-b border-white/5">
               <span className="text-xs font-mono tracking-widest text-brand-accent uppercase font-bold">

@@ -40,9 +40,9 @@ export default function Hero() {
       </div>
 
       {/* Ambient background glows */}
-      <div className="absolute top-[18%] left-[5%] w-80 h-80 bg-[#0052FF]/15 rounded-full blur-[110px] pointer-events-none z-0" />
-      <div className="absolute bottom-[15%] right-[5%] w-96 h-96 bg-[#CCFF00]/10 rounded-full blur-[120px] pointer-events-none z-0" />
-      <div className="absolute top-[50%] left-[45%] w-72 h-72 bg-[#0052FF]/10 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute top-[18%] left-[5%] w-80 h-80 bg-[#8B5CF6]/20 rounded-full blur-[110px] pointer-events-none z-0" />
+      <div className="absolute bottom-[15%] right-[5%] w-96 h-96 bg-[#C084FC]/15 rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-[50%] left-[45%] w-72 h-72 bg-[#7C3AED]/18 rounded-full blur-[100px] pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center w-full">
@@ -55,11 +55,11 @@ export default function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#0052FF]/35 text-xs text-[#CCFF00] font-medium tracking-wide backdrop-blur-md shadow-sm shadow-[#0052FF]/15"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/40 text-xs text-[#C084FC] font-medium tracking-wide backdrop-blur-md shadow-sm shadow-[#8B5CF6]/20"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#CCFF00] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#CCFF00]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C084FC] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C084FC]" />
               </span>
               <span>Available for Developer Roles &amp; Opportunities</span>
             </motion.div>
@@ -70,7 +70,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-xs sm:text-sm font-bold tracking-widest text-[#CCFF00] uppercase font-mono"
+                className="text-xs sm:text-sm font-bold tracking-widest text-[#C084FC] uppercase font-mono"
               >
                 Electronics &amp; Communication Graduate • Full-Stack Developer
               </motion.h4>
@@ -79,7 +79,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.18 }}
-                className="text-4xl sm:text-6xl md:text-7xl font-display font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-[#93C5FD] bg-clip-text text-transparent"
+                className="text-4xl sm:text-6xl md:text-7xl font-display font-extrabold tracking-tight bg-gradient-to-r from-white via-purple-100 to-[#C084FC] bg-clip-text text-transparent"
               >
                 BHARANI M
               </motion.h1>
@@ -101,23 +101,23 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.34 }}
               className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1"
             >
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-cyan-300 hover:border-[#0052FF]/50 transition-colors">
-                <FaReact className="text-[#0052FF]" /> React.js
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-purple-200 hover:border-[#8B5CF6]/50 transition-colors">
+                <FaReact className="text-[#8B5CF6]" /> React.js
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-yellow-300 hover:border-[#0052FF]/50 transition-colors">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-yellow-300 hover:border-[#8B5CF6]/50 transition-colors">
                 <SiJavascript className="text-yellow-400" /> JavaScript
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-emerald-300 hover:border-[#0052FF]/50 transition-colors">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-emerald-300 hover:border-[#8B5CF6]/50 transition-colors">
                 <FaNodeJs className="text-emerald-400" /> Node.js
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-sky-300 hover:border-[#0052FF]/50 transition-colors">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-sky-300 hover:border-[#8B5CF6]/50 transition-colors">
                 <SiTailwindcss className="text-sky-400" /> Tailwind
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-[#CCFF00] hover:border-[#CCFF00]/50 transition-colors">
-                <SiSupabase className="text-[#CCFF00]" /> Supabase
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-[#C084FC] hover:border-[#C084FC]/50 transition-colors">
+                <SiSupabase className="text-[#C084FC]" /> Supabase
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-blue-300 hover:border-[#0052FF]/50 transition-colors">
-                <FaPython className="text-[#0052FF]" /> Python
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-blue-300 hover:border-[#8B5CF6]/50 transition-colors">
+                <FaPython className="text-[#8B5CF6]" /> Python
               </span>
             </motion.div>
 
@@ -130,25 +130,25 @@ export default function Hero() {
             >
               <button
                 onClick={() => handleScrollTo('projects')}
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-3 bg-gradient-to-r from-[#0052FF] to-[#1E3A8A] hover:from-[#1E50FF] hover:to-[#0052FF] text-white font-semibold rounded-xl transition-all duration-300 border border-[#0052FF]/50 shadow-lg shadow-[#0052FF]/30 hover:shadow-[#0052FF]/50 cursor-pointer hover:scale-[1.02]"
+                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-3 bg-gradient-to-r from-[#7C3AED] via-[#8B5CF6] to-[#A855F7] hover:from-[#6D28D9] hover:to-[#7C3AED] text-white font-semibold rounded-xl transition-all duration-300 border border-[#A855F7]/50 shadow-lg shadow-[#8B5CF6]/30 hover:shadow-[#8B5CF6]/50 cursor-pointer hover:scale-[1.02]"
               >
                 <span>View Projects</span>
-                <FaArrowRight size={13} className="text-white/80" />
+                <FaArrowRight size={13} className="text-white/90" />
               </button>
 
               <a
                 href="/resume.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-3 bg-white/5 hover:bg-white/10 text-white hover:text-[#CCFF00] font-semibold rounded-xl transition-all duration-300 border border-white/15 hover:border-[#CCFF00]/50 cursor-pointer hover:scale-[1.02] backdrop-blur-sm"
+                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-3 bg-white/5 hover:bg-white/10 text-white hover:text-[#C084FC] font-semibold rounded-xl transition-all duration-300 border border-white/15 hover:border-[#C084FC]/50 cursor-pointer hover:scale-[1.02] backdrop-blur-sm"
               >
-                <FaDownload size={13} className="text-[#CCFF00]" />
+                <FaDownload size={13} className="text-[#C084FC]" />
                 <span>Resume</span>
               </a>
 
               <button
                 onClick={() => handleScrollTo('contact')}
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-3 bg-transparent hover:bg-[#0052FF]/15 text-[#93c5fd] hover:text-[#CCFF00] font-semibold rounded-xl transition-all duration-300 border border-[#0052FF]/40 hover:border-[#CCFF00] cursor-pointer hover:scale-[1.02]"
+                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-3 bg-transparent hover:bg-[#8B5CF6]/15 text-purple-200 hover:text-[#C084FC] font-semibold rounded-xl transition-all duration-300 border border-[#8B5CF6]/40 hover:border-[#C084FC] cursor-pointer hover:scale-[1.02]"
               >
                 <FaEnvelope size={13} />
                 <span>Contact Me</span>
@@ -164,13 +164,13 @@ export default function Hero() {
             className="lg:col-span-5 flex justify-center items-center relative w-full"
           >
             {/* Ambient Glow behind Card */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#0052FF]/30 via-[#0052FF]/15 to-[#CCFF00]/20 rounded-3xl blur-2xl opacity-75 pointer-events-none -z-10" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#8B5CF6]/35 via-[#7C3AED]/25 to-[#C084FC]/25 rounded-3xl blur-2xl opacity-80 pointer-events-none -z-10" />
 
             {/* IDE Glassmorphic Container */}
-            <div className="w-full max-w-[480px] bg-[#050914]/95 border border-[#0052FF]/20 rounded-2xl overflow-hidden shadow-2xl shadow-black/80 backdrop-blur-xl">
+            <div className="w-full max-w-[480px] bg-[#0c0717]/95 border border-[#8B5CF6]/25 rounded-2xl overflow-hidden shadow-2xl shadow-black/80 backdrop-blur-xl">
 
               {/* Window Header / Tab Bar */}
-              <div className="bg-[#030611]/95 px-4 py-3 flex items-center justify-between border-b border-white/10">
+              <div className="bg-[#07040d]/95 px-4 py-3 flex items-center justify-between border-b border-white/10">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-rose-500/90" />
                   <div className="w-3 h-3 rounded-full bg-amber-500/90" />
@@ -183,28 +183,28 @@ export default function Hero() {
                     onClick={() => setActiveTab('react')}
                     className={`text-[11px] font-mono flex items-center gap-1.5 py-1 px-3 rounded-md transition-all ${
                       activeTab === 'react'
-                        ? 'bg-[#0052FF]/20 text-[#CCFF00] border border-[#0052FF]/50'
+                        ? 'bg-[#8B5CF6]/25 text-[#C084FC] border border-[#8B5CF6]/50'
                         : 'text-gray-400 hover:text-gray-200'
                     }`}
                   >
-                    <FaReact className="text-[#0052FF]" />
+                    <FaReact className="text-[#8B5CF6]" />
                     <span>Developer.jsx</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('server')}
                     className={`text-[11px] font-mono flex items-center gap-1.5 py-1 px-3 rounded-md transition-all ${
                       activeTab === 'server'
-                        ? 'bg-[#0052FF]/20 text-[#CCFF00] border border-[#0052FF]/50'
+                        ? 'bg-[#8B5CF6]/25 text-[#C084FC] border border-[#8B5CF6]/50'
                         : 'text-gray-400 hover:text-gray-200'
                     }`}
                   >
-                    <FaNodeJs className="text-[#CCFF00]" />
+                    <FaNodeJs className="text-[#C084FC]" />
                     <span>server.js</span>
                   </button>
                 </div>
 
-                <div className="text-[10px] font-mono text-[#CCFF00] flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] animate-pulse" />
+                <div className="text-[10px] font-mono text-[#C084FC] flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C084FC] animate-pulse" />
                   <span className="hidden sm:inline">LIVE</span>
                 </div>
               </div>
@@ -215,68 +215,68 @@ export default function Hero() {
                 {/* Active Tab Code View */}
                 {activeTab === 'react' ? (
                   <div className="space-y-1 bg-black/50 p-4 rounded-xl border border-white/5 font-mono">
-                    <div><span className="text-[#0052FF] font-bold">const</span> <span className="text-[#CCFF00]">developer</span> = &#123;</div>
-                    <div className="pl-4"><span className="text-gray-400">name:</span> <span className="text-[#93c5fd]">"Bharani M"</span>,</div>
-                    <div className="pl-4"><span className="text-gray-400">role:</span> <span className="text-[#93c5fd]">"Full-Stack Developer"</span>,</div>
-                    <div className="pl-4"><span className="text-gray-400">degree:</span> <span className="text-[#93c5fd]">"B.E. ECE (84%)"</span>,</div>
+                    <div><span className="text-[#8B5CF6] font-bold">const</span> <span className="text-[#C084FC]">developer</span> = &#123;</div>
+                    <div className="pl-4"><span className="text-gray-400">name:</span> <span className="text-purple-200">"Bharani M"</span>,</div>
+                    <div className="pl-4"><span className="text-gray-400">role:</span> <span className="text-purple-200">"Full-Stack Developer"</span>,</div>
+                    <div className="pl-4"><span className="text-gray-400">degree:</span> <span className="text-purple-200">"B.E. ECE (84%)"</span>,</div>
                     <div className="pl-4"><span className="text-gray-400">stack:</span> [</div>
-                    <div className="pl-8 text-cyan-200"><span className="text-[#CCFF00]">"React.js"</span>, <span className="text-[#CCFF00]">"Node.js"</span>, <span className="text-[#CCFF00]">"Express"</span>,</div>
-                    <div className="pl-8 text-cyan-200"><span className="text-[#CCFF00]">"Supabase"</span>, <span className="text-[#CCFF00]">"Python"</span>, <span className="text-[#CCFF00]">"MySQL"</span></div>
+                    <div className="pl-8 text-purple-200"><span className="text-[#C084FC]">"React.js"</span>, <span className="text-[#C084FC]">"Node.js"</span>, <span className="text-[#C084FC]">"Express"</span>,</div>
+                    <div className="pl-8 text-purple-200"><span className="text-[#C084FC]">"Supabase"</span>, <span className="text-[#C084FC]">"Python"</span>, <span className="text-[#C084FC]">"MySQL"</span></div>
                     <div className="pl-4">],</div>
-                    <div className="pl-4"><span className="text-gray-400">buildToSolve:</span> <span className="text-[#0052FF] font-bold">() =&gt;</span> <span className="text-[#CCFF00]">true</span></div>
+                    <div className="pl-4"><span className="text-gray-400">buildToSolve:</span> <span className="text-[#8B5CF6] font-bold">() =&gt;</span> <span className="text-[#C084FC]">true</span></div>
                     <div>&#125;;</div>
                   </div>
                 ) : (
                   <div className="space-y-1 bg-black/50 p-4 rounded-xl border border-white/5 font-mono">
-                    <div><span className="text-[#0052FF] font-bold">import</span> express <span className="text-[#0052FF] font-bold">from</span> <span className="text-[#CCFF00]">'express'</span>;</div>
-                    <div><span className="text-[#0052FF] font-bold">import</span> &#123; connectDB &#125; <span className="text-[#0052FF] font-bold">from</span> <span className="text-[#CCFF00]">'./config/db.js'</span>;</div>
+                    <div><span className="text-[#8B5CF6] font-bold">import</span> express <span className="text-[#8B5CF6] font-bold">from</span> <span className="text-[#C084FC]">'express'</span>;</div>
+                    <div><span className="text-[#8B5CF6] font-bold">import</span> &#123; connectDB &#125; <span className="text-[#8B5CF6] font-bold">from</span> <span className="text-[#C084FC]">'./config/db.js'</span>;</div>
                     <div className="text-gray-500 py-1">// REST API &amp; Auth Pipeline</div>
-                    <div><span className="text-[#0052FF] font-bold">const</span> app = <span className="text-[#93c5fd]">express</span>();</div>
-                    <div>app.<span className="text-[#CCFF00]">use</span>(express.<span className="text-[#93c5fd]">json</span>());</div>
-                    <div>app.<span className="text-[#CCFF00]">use</span>(<span className="text-[#CCFF00]">'/api/v1'</span>, routes);</div>
-                    <div className="text-[#CCFF00] pt-1">await connectDB(); // Supabase &amp; MongoDB</div>
-                    <div>app.<span className="text-[#CCFF00]">listen</span>(<span className="text-[#0052FF]">5000</span>, () =&gt; <span className="text-gray-300">console.log("Ready")</span>);</div>
+                    <div><span className="text-[#8B5CF6] font-bold">const</span> app = <span className="text-purple-200">express</span>();</div>
+                    <div>app.<span className="text-[#C084FC]">use</span>(express.<span className="text-purple-200">json</span>());</div>
+                    <div>app.<span className="text-[#C084FC]">use</span>(<span className="text-[#C084FC]">'/api/v1'</span>, routes);</div>
+                    <div className="text-[#C084FC] pt-1">await connectDB(); // Supabase &amp; MongoDB</div>
+                    <div>app.<span className="text-[#C084FC]">listen</span>(<span className="text-[#8B5CF6]">5000</span>, () =&gt; <span className="text-gray-300">console.log("Ready")</span>);</div>
                   </div>
                 )}
 
                 {/* Console Terminal Output */}
-                <div className="space-y-1.5 bg-[#030611]/95 p-3.5 rounded-xl border border-[#0052FF]/30 text-gray-400">
+                <div className="space-y-1.5 bg-[#07040d]/95 p-3.5 rounded-xl border border-[#8B5CF6]/30 text-gray-400">
                   <div className="flex items-center justify-between border-b border-white/5 pb-1.5 mb-1.5">
                     <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider flex items-center gap-1.5">
-                      <FaCode className="text-[#0052FF]" />
+                      <FaCode className="text-[#8B5CF6]" />
                       Runtime Console
                     </span>
-                    <span className="text-[10px] text-[#CCFF00] font-semibold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 bg-[#CCFF00] rounded-full animate-ping" />
+                    <span className="text-[10px] text-[#C084FC] font-semibold flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 bg-[#C084FC] rounded-full animate-ping" />
                       CONNECTED
                     </span>
                   </div>
-                  <div className="text-[#CCFF00] font-medium flex items-center gap-1.5">
+                  <div className="text-[#C084FC] font-medium flex items-center gap-1.5">
                     <span>$</span>
                     <span>npm run dev &amp;&amp; node server</span>
                   </div>
                   <div className="text-gray-400 text-[11px]">&gt; [Vite] Full-stack client compiled successfully</div>
-                  <div className="text-[#93c5fd] font-semibold text-[11px]">&gt; [API] RESTful endpoints listening on port 5000</div>
-                  <div className="text-[#CCFF00] font-semibold text-[11px]">&gt; [Database] Supabase &amp; Cloud DB linked</div>
+                  <div className="text-purple-200 font-semibold text-[11px]">&gt; [API] RESTful endpoints listening on port 5000</div>
+                  <div className="text-[#C084FC] font-semibold text-[11px]">&gt; [Database] Supabase &amp; Cloud DB linked</div>
                 </div>
 
                 {/* Quick Architecture Indicators */}
                 <div className="grid grid-cols-3 gap-2 pt-1">
                   <div className="bg-white/5 p-2 rounded-lg border border-white/5 flex flex-col items-center text-center">
                     <span className="text-[9px] uppercase tracking-wider text-gray-400 flex items-center gap-1">
-                      <FaReact className="text-[#0052FF]" /> Frontend
+                      <FaReact className="text-[#8B5CF6]" /> Frontend
                     </span>
                     <span className="text-xs font-bold text-white mt-1">React 19</span>
                   </div>
                   <div className="bg-white/5 p-2 rounded-lg border border-white/5 flex flex-col items-center text-center">
                     <span className="text-[9px] uppercase tracking-wider text-gray-400 flex items-center gap-1">
-                      <FaServer className="text-[#0052FF]" /> Backend
+                      <FaServer className="text-[#8B5CF6]" /> Backend
                     </span>
                     <span className="text-xs font-bold text-white mt-1">Node/Express</span>
                   </div>
                   <div className="bg-white/5 p-2 rounded-lg border border-white/5 flex flex-col items-center text-center">
                     <span className="text-[9px] uppercase tracking-wider text-gray-400 flex items-center gap-1">
-                      <FaDatabase className="text-[#CCFF00]" /> Database
+                      <FaDatabase className="text-[#C084FC]" /> Database
                     </span>
                     <span className="text-xs font-bold text-white mt-1">Supabase/SQL</span>
                   </div>

@@ -47,7 +47,7 @@ export default function Background() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 82, 255, ${p.alpha})`; // Electric Cobalt
+        ctx.fillStyle = `rgba(168, 85, 247, ${p.alpha})`; // Neon Violet
         ctx.fill();
       });
 
@@ -62,7 +62,7 @@ export default function Background() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(204, 255, 0, ${(1 - dist / 120) * 0.1})`; // Acid Lime subtle connectors
+            ctx.strokeStyle = `rgba(192, 132, 252, ${(1 - dist / 120) * 0.14})`; // Radiant Lavender subtle connectors
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

@@ -8,13 +8,13 @@
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  background: radial-gradient(ellipse at bottom, #070e24 0%, #030611 100%);
+  background: radial-gradient(ellipse at bottom, #160a2b 0%, #07040d 100%);
 }
 
 .hero-starfield-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(3, 6, 17, 0.85) 100%);
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(7, 4, 13, 0.88) 100%);
   pointer-events: none;
   z-index: 1;
 }

@@ -58,7 +58,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-[#030611]/60">
+    <section id="contact" className="py-24 relative overflow-hidden bg-[#07040d]/60">
       {/* Background Decorative Glows */}
       <div className="absolute top-[20%] left-[-10%] w-96 h-96 bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-10%] w-[380px] h-[380px] bg-brand-accent/10 rounded-full blur-[130px] pointer-events-none" />
@@ -115,7 +115,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative group rounded-2xl p-6 bg-[#030611]/80 backdrop-blur-xl border border-white/10 ${method.borderColor} transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/40 flex flex-col justify-between`}
+              className={`relative group rounded-2xl p-6 bg-[#07040d]/80 backdrop-blur-xl border border-white/10 ${method.borderColor} transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/40 flex flex-col justify-between`}
             >
               <div>
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${method.color} border border-white/10 flex items-center justify-center ${method.iconColor} mb-4 group-hover:scale-110 transition-transform`}>

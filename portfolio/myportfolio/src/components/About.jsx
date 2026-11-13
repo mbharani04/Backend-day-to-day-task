@@ -95,7 +95,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="text-xs font-bold uppercase tracking-widest text-[#CCFF00]"
+            className="text-xs font-bold uppercase tracking-widest text-[#C084FC]"
           >
             My Story
           </motion.h4>
@@ -137,7 +137,7 @@ export default function About() {
             <p>
               I enjoy learning new technologies, exploring AI-powered tools, experimenting with ideas, and working independently to build meaningful products.
             </p>
-            <p className="text-[#CCFF00] font-medium">
+            <p className="text-[#C084FC] font-medium">
               I'm still learning, growing, and challenging myself every day.
             </p>
 
