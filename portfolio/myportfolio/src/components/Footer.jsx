@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 
 export default function Footer() {
   const handleClick = (e, href) => {
@@ -65,13 +65,22 @@ export default function Footer() {
             <FaGithub size={18} />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/bharani-m-2346982a0/"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-brand-secondary hover:text-brand-secondary text-gray-400 transition-all duration-300 hover:scale-105"
             aria-label="LinkedIn"
           >
             <FaLinkedin size={18} />
+          </a>
+          <a
+            href="https://wa.me/919445564242?text=Hi%20Bharani%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-[#25D366] hover:text-[#25D366] text-gray-400 transition-all duration-300 hover:scale-105"
+            aria-label="WhatsApp"
+          >
+            <FaWhatsapp size={18} />
           </a>
           <a
             href="mailto:bharani2004m@gmail.com"

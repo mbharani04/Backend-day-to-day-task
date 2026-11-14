@@ -49,7 +49,7 @@ export default function Hero() {
 
           {/* Left Column: Developer Info & Clean Content */}
           <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 w-full">
-            
+
             {/* Status Pill */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -181,22 +181,20 @@ export default function Hero() {
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => setActiveTab('react')}
-                    className={`text-[11px] font-mono flex items-center gap-1.5 py-1 px-3 rounded-md transition-all ${
-                      activeTab === 'react'
+                    className={`text-[11px] font-mono flex items-center gap-1.5 py-1 px-3 rounded-md transition-all ${activeTab === 'react'
                         ? 'bg-[#8B5CF6]/25 text-[#C084FC] border border-[#8B5CF6]/50'
                         : 'text-gray-400 hover:text-gray-200'
-                    }`}
+                      }`}
                   >
                     <FaReact className="text-[#8B5CF6]" />
                     <span>Developer.jsx</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('server')}
-                    className={`text-[11px] font-mono flex items-center gap-1.5 py-1 px-3 rounded-md transition-all ${
-                      activeTab === 'server'
+                    className={`text-[11px] font-mono flex items-center gap-1.5 py-1 px-3 rounded-md transition-all ${activeTab === 'server'
                         ? 'bg-[#8B5CF6]/25 text-[#C084FC] border border-[#8B5CF6]/50'
                         : 'text-gray-400 hover:text-gray-200'
-                    }`}
+                      }`}
                   >
                     <FaNodeJs className="text-[#C084FC]" />
                     <span>server.js</span>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaLinkedin, FaGithub, FaFileAlt } from 'react-icons/fa';
+import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaLinkedin, FaGithub, FaFileAlt, FaWhatsapp } from 'react-icons/fa';
 
 export default function Contact() {
   const contactMethods = [
@@ -16,10 +16,12 @@ export default function Contact() {
     },
     {
       icon: <FaPhoneAlt size={20} />,
-      title: 'Phone',
+      title: 'Phone & WhatsApp',
       value: '+91 9445564242',
       action: 'tel:+919445564242',
       actionText: 'Call Now',
+      whatsappAction: 'https://wa.me/919445564242?text=Hi%20Bharani%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!',
+      whatsappText: 'WhatsApp',
       color: 'from-brand-secondary/20 to-brand-secondary/5',
       iconColor: 'text-blue-400',
       borderColor: 'hover:border-brand-secondary/40'
@@ -37,6 +39,12 @@ export default function Contact() {
   ];
 
   const socialLinks = [
+    {
+      name: 'WhatsApp',
+      href: 'https://wa.me/919445564242?text=Hi%20Bharani%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!',
+      icon: <FaWhatsapp size={18} className="text-[#25D366]" />,
+      color: 'hover:text-[#25D366] hover:border-[#25D366]/40'
+    },
     {
       name: 'LinkedIn',
       href: 'https://www.linkedin.com/in/bharani-m-2346982a0/',
@@ -129,11 +137,11 @@ export default function Contact() {
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/5">
+              <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between gap-3">
                 {method.action ? (
                   <a
                     href={method.action}
-                    className="inline-flex items-center gap-2 text-xs font-semibold text-brand-accent hover:underline group-hover:translate-x-0.5 transition-transform"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-accent hover:underline group-hover:translate-x-0.5 transition-transform"
                   >
                     <span>{method.actionText}</span>
                     <span>→</span>
@@ -142,6 +150,18 @@ export default function Contact() {
                   <span className="text-xs text-gray-400 font-medium">
                     {method.actionText}
                   </span>
+                )}
+
+                {method.whatsappAction && (
+                  <a
+                    href={method.whatsappAction}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/30 text-[#25D366] text-xs font-semibold transition-all hover:scale-105"
+                  >
+                    <FaWhatsapp size={13} />
+                    <span>{method.whatsappText || 'WhatsApp'}</span>
+                  </a>
                 )}
               </div>
             </motion.div>

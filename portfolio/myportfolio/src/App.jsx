@@ -12,6 +12,7 @@ import Certifications from './components/Certifications';
 import SkillsFeatures from './components/skills/SkillsFeatures';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +39,7 @@ export default function App() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0B0F19]"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#07040d]"
           >
             {/* Visual glow backdrop in loader */}
             <div className="absolute w-64 h-64 bg-brand-primary/10 rounded-full blur-[80px]" />
@@ -106,6 +107,9 @@ export default function App() {
 
           {/* Page footer */}
           <Footer />
+
+          {/* Floating WhatsApp Quick Action Button */}
+          <FloatingWhatsApp />
         </motion.div>
       )}
     </>
